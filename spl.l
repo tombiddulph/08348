@@ -1,9 +1,6 @@
 %{
     #include<stdio.h>
     #define PRINT_TOKEN(t) printf("TOKEN: " #t "\n");
-
-    #define GET_MACRO(_1,_2,_3,_4,NAME,...) NAME
-    #define FOO(...) GET_MACRO(__VA_ARGS__, FOO4, FOO3, FOO2)(__VA_ARGS__)
 %}
 
 delim                   [ \t\n]
@@ -54,8 +51,7 @@ ENDDO               PRINT_TOKEN(ENDDO);
 WHILE               PRINT_TOKEN(WHILE);
 ENDWHILE            PRINT_TOKEN(ENDWHILE);
 
-TEST                FOO(a,b,c,d)   
 
-{identifier}        printf("Identifier %s\n", yytext);
+{identifier}        printf("Identifier: %s\n", yytext);
 
 %%
