@@ -1,6 +1,18 @@
 %{
     #include<stdio.h>
+    //#define PRINT
+
+    #ifdef PRINT
+
     #define PRINT_TOKEN(t) printf("TOKEN: " #t "\n");
+    #define KEYWORD(k) PRINT_TOKEN(k);
+
+    #else
+
+    #define PRINT_TOKEN(t) return(t_##x);
+    #define KEYWORD(x) return(t_##x); PRINT_TOKEN(x);
+
+    #endif
 %}
 
 delim                   [ \t\n]
@@ -66,7 +78,7 @@ INTEGER				PRINT_TOKEN("TYPE: INTEGER");
 CHARACTER			PRINT_TOKEN("TYPE: CHARACTER");
 REAL				PRINT_TOKEN("TYPE: REAL");
 
-{characterConstant} PRINT_TOKEN(CHARACTER_CONSTANT);
+{characterConstant} KEYWORD(CHARACTER_CONSTANT);
 {identifier}        printf("Identifier: %s\n", yytext);
 
 %%
