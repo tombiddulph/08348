@@ -17,6 +17,7 @@
 
 // These are lexical togens
 %token<iVal> IDENTIFIER  DECLARATIONS CODE IF THEN ELSE ENDIF FOR IS BY TO ENDFOR WRITE READ NOT AND OR DO ENDDO WHILE ENDWHILE NEWLINE OF TYPE word
+             CHARACTER INTEGER REAL
     
 // These tokens don't return a value
 %token COLON FULLSTOP ENDP
@@ -31,13 +32,18 @@ program             : IDENTIFIER COLON block ENDP IDENTIFIER FULLSTOP
                     ;
                     
 block               : DECLARATIONS declaration_block CODE statement_list
+                    | CODE statement_list
                     ;
 
-declaration_block   : identifier OF TYPE
+declaration_block   : identifier OF TYPE type SEMICOLON
                     ;       
 
-identifier          : word     
+identifier          : IDENTIFIER COMMA declaration     
                     ;
+
+type                : CHARACTER
+                    | INTEGER
+                    | REAL                    
 
 
 %%

@@ -2,18 +2,22 @@
     #include<stdio.h>
     //#define PRINT
 
-
-    #define PRINT_TOKEN(t) printf("TOKEN: " #t "\n");
-    #define KEYWORD(k) PRINT_TOKEN(k);
+    #define PRINT
 
     #ifdef PRINT
+    #define _TOKEN_(t) printf("TOKEN: " #t "\n");
+    #define KEYWORD(k) _TOKEN_(k);
 
-   
+    #define _CHARACTER_CONSTANT_(c) printf("Character constant: " #c "\n", yytext);
+    #define _FLOAT_(f) printf("Float token: %d" #f "\n", atof(yytext));
+    #define _INTEGER_(i) printf("Integer token: %d" #i "\n", atoi(yytext));
+
+     
 
     #else
 
-    //#define PRINT_TOKEN(t) return(t_##x);
-    //#define KEYWORD(x) yylval.iVal = (t_##x); PRINT_TOKEN(x);
+    //#define _TOKEN_(t) return(t_##x);
+    //#define KEYWORD(x) yylval.iVal = (t_##x); _TOKEN_(x);
 
     #endif
 %}
@@ -34,52 +38,52 @@ characterConstant		\'{character}\'
 {float}             printf("float %f\n", atof(yytext));
 
 
-"="                 PRINT_TOKEN("Comparator: EQUALS");
-"<>"                PRINT_TOKEN("Comparator: NOT EQUAL");
-"<"                 PRINT_TOKEN("Comparator: LESS THAN");
-">"                 PRINT_TOKEN("Comparator: GREATER THAN");
-"<="                PRINT_TOKEN("Comparator: GREATER THAN EQUAL TO");
-">="                PRINT_TOKEN("Comparator: LESS THAN EQUAL TO");
-"'"					PRINT_TOKEN(APOSTROPHE);
-":"                 PRINT_TOKEN(COLON);
-";"                 PRINT_TOKEN(SEMI COLON);
-","                 PRINT_TOKEN(COMMA);
-"."                 PRINT_TOKEN(FULL STOP);
-"("                 PRINT_TOKEN(BRA);
-")"                 PRINT_TOKEN(KET);
-"*"					PRINT_TOKEN("OPERATOR: MULTIPLY");
-"+"					PRINT_TOKEN("OPERATOR: ADD");
-"-"					PRINT_TOKEN("OPERATOR: MINUS");
-"/"					PRINT_TOKEN("OPERATOR: DIVIDE");
-"->"				PRINT_TOKEN("OPERATOR: ASSIGNMENT");
+"="                 _TOKEN_(EQUALS);
+"<>"                _TOKEN_(NOTEQUAL);
+"<"                 _TOKEN_(LESSTHAN);
+">"                 _TOKEN_(GREATERTHAN);
+"<="                _TOKEN_(LESSTHANEQUALTO);
+">="                _TOKEN_(GREATERTHANEQAULTO);
+"'"					_TOKEN_(APOSTROPHE);
+":"                 _TOKEN_(COLON);
+";"                 _TOKEN_(SEMICOLON);
+","                 _TOKEN_(COMMA);
+"."                 _TOKEN_(FULLSTOP);
+"("                 _TOKEN_(BRA);
+")"                 _TOKEN_(KET);
+"*"					_TOKEN_(MULTIPLY);
+"+"					_TOKEN_(ADD);
+"-"					_TOKEN_(MINUS);
+"/"					_TOKEN_(DIVIDE);
+"->"				_TOKEN_(ASSIGNMENT);
 
-DECLARATIONS		PRINT_TOKEN(DECLARATIONS);
-CODE				PRINT_TOKEN(CODE);
-IF                  PRINT_TOKEN(IF);
-THEN                PRINT_TOKEN(THEN);
-ELSE                PRINT_TOKEN(ELSE);
-ENDIF               PRINT_TOKEN(ENDIF);
-FOR                 PRINT_TOKEN(FOR);
-IS                  PRINT_TOKEN(IS);
-BY                  PRINT_TOKEN(BY);
-TO                  PRINT_TOKEN(TO);
-ENDFOR              PRINT_TOKEN(ENDFOR);
-WRITE               PRINT_TOKEN(WRITE);
-READ                PRINT_TOKEN(READ);
-NOT                 PRINT_TOKEN(NOT);
-AND                 PRINT_TOKEN(AND);
-OR                  PRINT_TOKEN(OR);
-DO                  PRINT_TOKEN(DO);
-ENDDO               PRINT_TOKEN(ENDDO);
-WHILE               PRINT_TOKEN(WHILE);
-ENDWHILE            PRINT_TOKEN(ENDWHILE);
-NEWLINE				PRINT_TOKEN(NEWLINE);
-OF					PRINT_TOKEN(OF);
-TYPE				PRINT_TOKEN(TYPE);
-ENDP				PRINT_TOKEN(ENDP);
-INTEGER				PRINT_TOKEN("TYPE: INTEGER");
-CHARACTER			PRINT_TOKEN("TYPE: CHARACTER");
-REAL				PRINT_TOKEN("TYPE: REAL");
+DECLARATIONS		_TOKEN_(DECLARATIONS);
+CODE				_TOKEN_(CODE);
+IF                  _TOKEN_(IF);
+THEN                _TOKEN_(THEN);
+ELSE                _TOKEN_(ELSE);
+ENDIF               _TOKEN_(ENDIF);
+FOR                 _TOKEN_(FOR);
+IS                  _TOKEN_(IS);
+BY                  _TOKEN_(BY);
+TO                  _TOKEN_(TO);
+ENDFOR              _TOKEN_(ENDFOR);
+WRITE               _TOKEN_(WRITE);
+READ                _TOKEN_(READ);
+NOT                 _TOKEN_(NOT);
+AND                 _TOKEN_(AND);
+OR                  _TOKEN_(OR);
+DO                  _TOKEN_(DO);
+ENDDO               _TOKEN_(ENDDO);
+WHILE               _TOKEN_(WHILE);
+ENDWHILE            _TOKEN_(ENDWHILE);
+NEWLINE				_TOKEN_(NEWLINE);
+OF					_TOKEN_(OF);
+TYPE				_TOKEN_(TYPE);
+ENDP				_TOKEN_(ENDP);
+INTEGER				_TOKEN_("TYPE: INTEGER");
+CHARACTER			_TOKEN_("TYPE: CHARACTER");
+REAL				_TOKEN_("TYPE: REAL");
 
 
 {characterConstant} KEYWORD(CHARACTER_CONSTANT);
