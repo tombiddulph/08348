@@ -82,7 +82,7 @@ CHARACTER			PRINT_TOKEN("TYPE: CHARACTER");
 REAL				PRINT_TOKEN("TYPE: REAL");
 
 
-{characterConstant} KEYWORD(CHARACTER_CONSTANT);
+{characterConstant} printf("CHARACTER_CONSTANT: %s\n", yytext);
 {identifier}        printf("Identifier: %s\n", yytext);
 .|\n                printf("Unknown symbol! %s\n", yytext);
 
