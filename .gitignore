@@ -50,4 +50,14 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# Bison & Flex generated files
 *.yy.c
+*.tab.c
+
+#Test files
+a.SPL
+b.SPL
+c.SPL
+d.SPL
+e.SPL
