@@ -17,7 +17,7 @@
 
 /* make forward declarations to avoid compiler warnings */
 int yylex (void);
-int yyerror (char *);
+void yyerror (char *);
 
 /* 
    Some constants.
@@ -61,8 +61,6 @@ typedef  TREE_NODE        *TERNARY_TREE;
 /* ------------- forward declarations --------------------------- */
 
 TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
-void yyerror(char *);
-int yylex(void);
 
 /* ------------- symbol table definition --------------------------- */
 

@@ -1,20 +1,24 @@
 %{
     #include<stdio.h>
-    //#define PRINT
+ 
 
+	#ifdef PRINT
 
-    #define PRINT_TOKEN(t) printf("TOKEN: " #t "\n");
-    #define KEYWORD(k) PRINT_TOKEN(k);
-
-    #ifdef PRINT
-
-   
+    #define _TOKEN_(t) 				printf("Token: " #t "\n");
+	#define _TOKEN_INTEGER_(t) 		printf("Integer token:  %i\n", atoi(yytext));
+	#define _TOKEN_REAL_(t) 		printf("Real token: %f\n", atof(yytext));
+	#define _TOKEN_CHARACTER_(t) 	printf("Character token: %c\n", yytext[1]);
+    #define _TOKEN_IDENTIFIER_(t) 	printf("Identifier token: %s\n",yytext); 
+	#define _TOKEN_UNKNOWN_(t)		printf("Unkown token: %s\n", yytext);
 
     #else
 
-    //#define PRINT_TOKEN(t) return(t_##x);
-    //#define KEYWORD(x) yylval.iVal = (t_##x); PRINT_TOKEN(x);
-
+    #define _TOKEN_(t) 				return(t);
+	#define _TOKEN_INTEGER_(t) 		yylval.iVal	= atoi(yytext); return(t);
+	#define _TOKEN_REAL_(t) 		yylval.iVal	= atof(yytext); return(t);
+	#define _TOKEN_CHARACTER_(t) 	yylval.iVal	= strdup(yytext)[1]; return(t);
+	#define _TOKEN_UNKNOWN_(t)		printf("Unknown token:" #t  "\n");
+	    
     #endif
 %}
 
@@ -23,69 +27,66 @@ ws                      {delim}+
 character               [A-Za-z]
 digit                   [0-9]
 integer                 {digit}+
-float                   {integer}+\.{integer}+
+real                   	{integer}+\.{integer}+
 identifier              {character}({character}|{integer})*
 characterConstant		\'{character}\'
 
 %%
 
 {ws}                ; /* white space, do nothing */
-{integer}           printf("unsigned integer: %d\n", atoi(yytext)); 
-{float}             printf("float %f\n", atof(yytext));
 
 
-"="                 PRINT_TOKEN("Comparator: EQUALS");
-"<>"                PRINT_TOKEN("Comparator: NOT EQUAL");
-"<"                 PRINT_TOKEN("Comparator: LESS THAN");
-">"                 PRINT_TOKEN("Comparator: GREATER THAN");
-"<="                PRINT_TOKEN("Comparator: GREATER THAN EQUAL TO");
-">="                PRINT_TOKEN("Comparator: LESS THAN EQUAL TO");
-"'"					PRINT_TOKEN(APOSTROPHE);
-":"                 PRINT_TOKEN(COLON);
-";"                 PRINT_TOKEN(SEMI COLON);
-","                 PRINT_TOKEN(COMMA);
-"."                 PRINT_TOKEN(FULL STOP);
-"("                 PRINT_TOKEN(BRA);
-")"                 PRINT_TOKEN(KET);
-"*"					PRINT_TOKEN("OPERATOR: MULTIPLY");
-"+"					PRINT_TOKEN("OPERATOR: ADD");
-"-"					PRINT_TOKEN("OPERATOR: MINUS");
-"/"					PRINT_TOKEN("OPERATOR: DIVIDE");
-"->"				PRINT_TOKEN("OPERATOR: ASSIGNMENT");
+"="                 _TOKEN_(EQUAL_TO);
+"<>"                _TOKEN_(NOTEQUAL);
+"<"                 _TOKEN_(LESS THAN);
+">"                 _TOKEN_(GREATER THAN);
+"<="                _TOKEN_(LESS_THAN _EQUAL_TO);
+">="                _TOKEN_(GREATER_THAN_EQUAL_TO);
+"'"					_TOKEN_(APOSTROPHE);
+":"                 _TOKEN_(COLON);
+";"                 _TOKEN_(SEMI_COLON);
+","                 _TOKEN_(COMMA);
+"."                 _TOKEN_(FULL STOP);
+"("                 _TOKEN_(BRA);
+")"                 _TOKEN_(KET);
+"*"					_TOKEN_(MULTIPLY);
+"+"					_TOKEN_(ADD);
+"-"					_TOKEN_(MINUS);
+"/"					_TOKEN_(DIVIDE);
+"->"				_TOKEN_(ASSIGNMENT);
 
-DECLARATIONS		PRINT_TOKEN(DECLARATIONS);
-CODE				PRINT_TOKEN(CODE);
-IF                  PRINT_TOKEN(IF);
-THEN                PRINT_TOKEN(THEN);
-ELSE                PRINT_TOKEN(ELSE);
-ENDIF               PRINT_TOKEN(ENDIF);
-FOR                 PRINT_TOKEN(FOR);
-IS                  PRINT_TOKEN(IS);
-BY                  PRINT_TOKEN(BY);
-TO                  PRINT_TOKEN(TO);
-ENDFOR              PRINT_TOKEN(ENDFOR);
-WRITE               PRINT_TOKEN(WRITE);
-READ                PRINT_TOKEN(READ);
-NOT                 PRINT_TOKEN(NOT);
-AND                 PRINT_TOKEN(AND);
-OR                  PRINT_TOKEN(OR);
-DO                  PRINT_TOKEN(DO);
-ENDDO               PRINT_TOKEN(ENDDO);
-WHILE               PRINT_TOKEN(WHILE);
-ENDWHILE            PRINT_TOKEN(ENDWHILE);
-NEWLINE				PRINT_TOKEN(NEWLINE);
-OF					PRINT_TOKEN(OF);
-TYPE				PRINT_TOKEN(TYPE);
-ENDP				PRINT_TOKEN(ENDP);
-INTEGER				PRINT_TOKEN("TYPE: INTEGER");
-CHARACTER			PRINT_TOKEN("TYPE: CHARACTER");
-REAL				PRINT_TOKEN("TYPE: REAL");
-
-
-{characterConstant} printf("CHARACTER_CONSTANT: %c\n", yytext[1]);
-{identifier}        printf("Identifier: %s\n", yytext);
-.|\n                printf("Unknown symbol! %s\n", yytext);
+DECLARATIONS		_TOKEN_(DECLARATIONS);
+CODE				_TOKEN_(CODE);
+IF                  _TOKEN_(IF);
+THEN                _TOKEN_(THEN);
+ELSE                _TOKEN_(ELSE);
+ENDIF               _TOKEN_(ENDIF);
+FOR                 _TOKEN_(FOR);
+IS                  _TOKEN_(IS);
+BY                  _TOKEN_(BY);
+TO                  _TOKEN_(TO);
+ENDFOR              _TOKEN_(END_FOR);
+WRITE               _TOKEN_(WRITE);
+READ                _TOKEN_(READ);
+NOT                 _TOKEN_(NOT);
+AND                 _TOKEN_(AND);
+OR                  _TOKEN_(OR);
+DO                  _TOKEN_(DO);
+ENDDO               _TOKEN_(END_DO);
+WHILE               _TOKEN_(WHILE);
+ENDWHILE            _TOKEN_(END_WHILE);
+NEWLINE				_TOKEN_(NEWLINE);
+OF					_TOKEN_(OF);
+TYPE				_TOKEN_(TYPE);
+ENDP				_TOKEN_(ENDP);
+INTEGER				_TOKEN_(INTEGER);
+CHARACTER			_TOKEN_(CHARACTER);
+REAL				_TOKEN_(REAL);
 
 
+{characterConstant} _TOKEN_CHARACTER_(characterConstant);
+{identifier}        _TOKEN_IDENTIFIER_(identifier);
+{integer}           _TOKEN_INTEGER_(integer); 
+{real}             	_TOKEN_REAL_(real);
+.|\n				_TOKEN_UNKNOWN_(UNKOWN);
 
-%%

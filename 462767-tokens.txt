@@ -1,0 +1,380 @@
+--06/11/2017----------------------------------------------------- 
+Lexical Tokens for a.spl 
+--11:09:44.60----------------------------------------------------- 
+Identifier token: ProgA
+Token: COLON
+Token: CODE
+Token: WRITE
+Token: BRA
+Character token: h
+Token: COMMA
+Character token: e
+Token: COMMA
+Character token: l
+Token: COMMA
+Character token: l
+Token: COMMA
+Character token: o
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: ENDP
+Identifier token: ProgA
+Token: FULL STOP
+--06/11/2017----------------------------------------------------- 
+Lexical Tokens for b.spl 
+--11:09:49.89----------------------------------------------------- 
+Identifier token: ProgB
+Token: COLON
+Token: DECLARATIONS
+Identifier token: a
+Token: COMMA
+Identifier token: b
+Token: OF
+Token: TYPE
+Token: INTEGER
+Token: SEMI_COLON
+Identifier token: c
+Token: OF
+Token: TYPE
+Token: CHARACTER
+Token: SEMI_COLON
+Identifier token: d
+Token: COMMA
+Identifier token: e
+Token: OF
+Token: TYPE
+Token: REAL
+Token: SEMI_COLON
+Token: CODE
+Token: READ
+Token: BRA
+Identifier token: a
+Token: KET
+Token: SEMI_COLON
+Token: READ
+Token: BRA
+Identifier token: b
+Token: KET
+Token: SEMI_COLON
+Token: IF
+Identifier token: a
+Token: GREATER THAN
+Identifier token: b
+Token: THEN
+Token: WRITE
+Token: BRA
+Character token: A
+Token: KET
+Token: ELSE
+Token: WRITE
+Token: BRA
+Character token: B
+Token: KET
+Token: ENDIF
+Token: SEMI_COLON
+Token: NEWLINE
+Token: SEMI_COLON
+Token: READ
+Token: BRA
+Identifier token: d
+Token: KET
+Token: SEMI_COLON
+Identifier token: d
+Token: MULTIPLY
+Real token: 2.300000
+Token: ASSIGNMENT
+Identifier token: e
+Token: SEMI_COLON
+Token: WRITE
+Token: BRA
+Identifier token: e
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: SEMI_COLON
+Token: READ
+Token: BRA
+Identifier token: c
+Token: KET
+Token: SEMI_COLON
+Token: WRITE
+Token: BRA
+Identifier token: c
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: ENDP
+Identifier token: ProgB
+Token: FULL STOP
+--06/11/2017----------------------------------------------------- 
+Lexical Tokens for c.spl 
+--11:09:57.98----------------------------------------------------- 
+Identifier token: Prog3
+Token: COLON
+Token: DECLARATIONS
+Identifier token: a
+Token: OF
+Token: TYPE
+Token: INTEGER
+Token: SEMI_COLON
+Token: CODE
+Token: FOR
+Identifier token: a
+Token: IS
+Integer token:  1
+Token: BY
+Integer token:  1
+Token: TO
+Integer token:  13
+Token: DO
+Token: IF
+Token: NOT
+Identifier token: a
+Token: EQUAL_TO
+Integer token:  7
+Token: THEN
+Token: WRITE
+Token: BRA
+Identifier token: a
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: ENDIF
+Token: END_FOR
+Token: SEMI_COLON
+Integer token:  0
+Token: ASSIGNMENT
+Identifier token: a
+Token: SEMI_COLON
+Token: DO
+Identifier token: a
+Token: ADD
+Integer token:  1
+Token: ASSIGNMENT
+Identifier token: a
+Token: SEMI_COLON
+Token: IF
+Token: NOT
+Identifier token: a
+Token: EQUAL_TO
+Integer token:  6
+Token: AND
+Identifier token: a
+Token: NOTEQUAL
+Integer token:  8
+Token: THEN
+Token: WRITE
+Token: BRA
+Identifier token: a
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: ENDIF
+Token: WHILE
+Identifier token: a
+Token: LESS THAN
+Integer token:  14
+Token: END_DO
+Token: SEMI_COLON
+Integer token:  0
+Token: ASSIGNMENT
+Identifier token: a
+Token: SEMI_COLON
+Token: WHILE
+Identifier token: a
+Token: LESS THAN
+Integer token:  12
+Token: DO
+Token: WRITE
+Token: BRA
+Identifier token: a
+Token: KET
+Token: SEMI_COLON
+Identifier token: a
+Token: ADD
+Integer token:  1
+Token: ASSIGNMENT
+Identifier token: a
+Token: END_WHILE
+Token: SEMI_COLON
+Token: NEWLINE
+Token: ENDP
+Identifier token: Prog3
+Token: FULL STOP
+--06/11/2017----------------------------------------------------- 
+Lexical Tokens for d.spl 
+--11:10:09.02----------------------------------------------------- 
+Identifier token: Prog4D
+Token: COLON
+Token: DECLARATIONS
+Identifier token: r1
+Token: COMMA
+Identifier token: r2
+Token: COMMA
+Identifier token: r3
+Token: OF
+Token: TYPE
+Token: REAL
+Token: SEMI_COLON
+Token: CODE
+Token: MINUS
+Real token: 2.400000
+Token: ASSIGNMENT
+Identifier token: r1
+Token: SEMI_COLON
+Token: MINUS
+Real token: 34.989000
+Token: ASSIGNMENT
+Identifier token: r2
+Token: SEMI_COLON
+Identifier token: r1
+Token: MULTIPLY
+Identifier token: r2
+Token: DIVIDE
+Real token: 7.400000
+Token: ASSIGNMENT
+Identifier token: r3
+Token: SEMI_COLON
+Token: WRITE
+Token: BRA
+Identifier token: r3
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: SEMI_COLON
+Token: READ
+Token: BRA
+Identifier token: r1
+Token: KET
+Token: SEMI_COLON
+Identifier token: r1
+Token: ADD
+Identifier token: r3
+Token: ASSIGNMENT
+Identifier token: r3
+Token: SEMI_COLON
+Token: WRITE
+Token: BRA
+Identifier token: r3
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: ENDP
+Identifier token: Prog4D
+Token: FULL STOP
+--06/11/2017----------------------------------------------------- 
+Lexical Tokens for e.spl 
+--11:10:15.00----------------------------------------------------- 
+Identifier token: ProgV
+Token: COLON
+Token: DECLARATIONS
+Identifier token: integer
+Token: COMMA
+Identifier token: i
+Token: OF
+Token: TYPE
+Token: INTEGER
+Token: SEMI_COLON
+Token: CODE
+Token: READ
+Token: BRA
+Identifier token: integer
+Token: KET
+Token: SEMI_COLON
+Token: IF
+Identifier token: integer
+Token: LESS_THAN _EQUAL_TO
+Integer token:  5
+Token: OR
+Identifier token: integer
+Token: GREATER_THAN_EQUAL_TO
+Integer token:  12
+Token: THEN
+Token: WRITE
+Token: BRA
+Identifier token: integer
+Token: KET
+Token: ENDIF
+Token: SEMI_COLON
+Token: WRITE
+Token: BRA
+Token: BRA
+Integer token:  36
+Token: MINUS
+Integer token:  1
+Token: KET
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: SEMI_COLON
+Token: FOR
+Identifier token: integer
+Token: IS
+Token: MINUS
+Integer token:  1
+Token: BY
+Token: MINUS
+Integer token:  1
+Token: TO
+Token: MINUS
+Integer token:  5
+Token: DO
+Token: WRITE
+Token: BRA
+Identifier token: integer
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: END_FOR
+Token: SEMI_COLON
+Token: MINUS
+Integer token:  1
+Token: ASSIGNMENT
+Identifier token: i
+Token: SEMI_COLON
+Token: FOR
+Identifier token: integer
+Token: IS
+Identifier token: i
+Token: MULTIPLY
+Identifier token: i
+Token: MULTIPLY
+Identifier token: i
+Token: BY
+Identifier token: i
+Token: MULTIPLY
+Identifier token: i
+Token: MULTIPLY
+Identifier token: i
+Token: MULTIPLY
+Identifier token: i
+Token: MULTIPLY
+Identifier token: i
+Token: TO
+Identifier token: i
+Token: MULTIPLY
+Identifier token: i
+Token: MULTIPLY
+Token: BRA
+Identifier token: i
+Token: ADD
+Identifier token: i
+Token: ADD
+Identifier token: i
+Token: ADD
+Identifier token: i
+Token: ADD
+Identifier token: i
+Token: KET
+Token: DO
+Token: WRITE
+Token: BRA
+Identifier token: integer
+Token: KET
+Token: SEMI_COLON
+Token: NEWLINE
+Token: END_FOR
+Token: ENDP
+Identifier token: ProgV
+Token: FULL STOP
