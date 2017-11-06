@@ -1,11 +1,83 @@
 %{
 
-    #define YYDEBUG
-    extern int yylineno; /* from lexer */
-    void yyerror(char *s, ...);
+/* SPL01.y - SPL01 parser */
+/* Author: Peter Parsons */
+/* Revision: Oct 08 BCT */
 
+/* Skeleton yacc file that can be used */
+/* This file shows how a parser could build up a parse tree
+
+   Do not use this until you need to, and understand some
+   of the material on tree building and walking.             */
+
+/* declare some standard headers to be used to import declarations
+   and libraries into the parser. */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+/* make forward declarations to avoid compiler warnings */
+int yylex (void);
+void yyerror (char *);
+
+/* 
+   Some constants.
+*/
+
+  /* These constants are used later in the code */
+#define SYMTABSIZE     50
+#define IDLENGTH       15
+#define NOTHING        -1
+#define INDENTOFFSET    2
+
+  enum ParseTreeNodeType { PROGRAM, BLOCK } ;  
+                          /* Add more types here, as more nodes
+                                           added to tree */
+
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+#ifndef NULL
+#define NULL 0
+#endif
+
+/* ------------- parse tree definition --------------------------- */
+
+struct treeNode {
+    int  item;
+    int  nodeIdentifier;
+    struct treeNode *first;
+    struct treeNode *second;
+    struct treeNode *third;
+  };
+
+typedef  struct treeNode TREE_NODE;
+typedef  TREE_NODE        *TERNARY_TREE;
+
+/* ------------- forward declarations --------------------------- */
+
+TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
+
+/* ------------- symbol table definition --------------------------- */
+
+struct symTabNode {
+    char identifier[IDLENGTH];
+};
+
+typedef  struct symTabNode SYMTABNODE;
+typedef  SYMTABNODE        *SYMTABNODEPTR;
+
+SYMTABNODEPTR  symTab[SYMTABSIZE]; 
+
+int currentSymTabSize = 0;
 %}
 
+%start  program
 
 %debug
 
@@ -15,35 +87,324 @@
     TERNARY_TREE  tVal;
 }
 
-// These are lexical togens
-%token<iVal> IDENTIFIER  DECLARATIONS CODE IF THEN ELSE ENDIF FOR IS BY TO ENDFOR WRITE READ NOT AND OR DO ENDDO WHILE ENDWHILE NEWLINE OF TYPE word
-             CHARACTER INTEGER REAL
+// These are lexical tokens
+
+%token<iVal>			IDENTIFIER BRA KET CHARACTER_CONSTANT NUMBER_CONSTANT
+
+%token<iVal>			DECLARATIONS CODE IF THEN ELSE END_IF 
+				FOR IS BY TO END_FOR WRITE READ NOT AND OR DO END_DO 
+				WHILE END_WHILE NEWLINE OF TYPE word CHAR REAL INTEGER
+				ASSIGNMENT EQUAL_TO NOT_EQUAL LESS_THAN GREATER_THAN
+				LESS_THAN_EQUAL_TO GREATER_THAN_EQUAL_TO
+				MULTIPLY ADD MINUS DIVIDE
     
 // These tokens don't return a value
-%token COLON FULLSTOP ENDP
+%token 		COLON FULL_STOP ENDP SEMI_COLON COMMA
     
 
 // These rules return a type of tVal    
-%token<tVal>  block line expr term factor
+%type<tVal>  	program expr term factor statement_block statement 
+				for_statement if_statement declarations declaration_blocks 
+				declaration_block identifier_block assignment_statement value 
+				write_statement conditional comparator output_block read_statement 
+				character_constant constant number_constant while_statement do_statement
+
+
 
 %%
 
-program             : IDENTIFIER COLON block ENDP IDENTIFIER FULLSTOP
-                    ;
-                    
-block               : DECLARATIONS declaration_block CODE statement_list
-                    | CODE statement_list
-                    ;
+program             	: IDENTIFIER COLON declarations CODE ENDP IDENTIFIER FULL_STOP 
+						{
+							$$ = $1;
+						}
+						;
+						
+declarations			: DECLARATIONS declaration_blocks
+						{
+							$$ = $1;
+						}
+						;
+	
+declaration_blocks		: declaration_blocks declaration_block 
+						{
+							$$ = $1;
+						}
+						| declaration_block
+						{
+							$$ = $1;
+						}
+						;
+				
+declaration_block   	: IDENTIFIER OF TYPE CHAR SEMI_COLON
+						{
+							$$ = $1;
+						}
+						| IDENTIFIER OF TYPE INTEGER SEMI_COLON
+						{
+							$$ = $1;
+						}
+						| IDENTIFIER OF TYPE REAL SEMI_COLON
+						{
+							$$ = $1;
+						}
+						;       
+	
+identifier_block		: identifier_block COMMA IDENTIFIER
+						{
+							$$ = $1;
+						}
+						| IDENTIFIER
+						{
+							$$ = $1;
+						}
+						;
+						
+statement_block			: statement_block SEMI_COLON statement 
+						{
+							$$ = $1;
+						}
+						| statement
+						{
+							$$ = $1;
+						}
+						;
+	
+statement				: assignment_statement
+						{
+							$$ = $1;
+						}
+						| write_statement
+						{
+							$$ = $1;
+						}
+						| read_statement
+						{
+							$$ = $1;
+						}
+						| if_statement
+						{
+							$$ = $1;
+						}
+						| do_statement
+						{
+							$$ = $1;
+						}
+						| while_statement
+						{
+							$$ = $1;
+						}
+						| for_statement
+						{
+							$$ = $1;
+						}
+						;
+					
+assignment_statement	: expr ASSIGNMENT IDENTIFIER
+						{
+							$$ = $1;
+						}
+						;
 
-declaration_block   : identifier OF TYPE type SEMICOLON
-                    ;       
+write_statement			: WRITE BRA output_block KET
+						{
+							$$ = $1;
+						}
+						| NEWLINE
+						{
+							$$ = $1;
+						}
+						;
+						
+read_statement			: READ BRA IDENTIFIER KET
+						{
+							$$ = $1;
+						}
+						;
+						
+if_statement			: IF conditional THEN statement_block END_IF
+						{
+							$$ = $1;
+						}
+						| IF conditional THEN statement_block ELSE END_IF
+						{
+							$$ = $1;
+						}
+						;
+						
+do_statement			: DO statement_block WHILE conditional END_DO
+						{
+							$$ = $1;
+						}
+						;
+						
+while_statement			: WHILE conditional DO statement_block END_WHILE
+						{
+							$$ = $1;
+						}		
+						;
+						
+for_statement			: FOR IDENTIFIER IS expr BY expr TO expr DO statement_block END_FOR
+						{
+							$$ = $1;
+						}			
+						;			
+					
+output_block			: output_block COMMA value 
+						{
+							$$ = $1;
+						}
+						| value
+						{
+							$$ = $1;
+						}
+						;
+						
+value					: constant
+						| IDENTIFIER
+						{
+							$$ = $1;
+						}
+						| BRA expr KET
+						{
+							$$ = $1;
+						}
+						;
+						
+constant				: NUMBER_CONSTANT
+						| CHARACTER_CONSTANT
+						{
+							$$ = $1;
+						}
+						;
+						
+character_constant		: CHARACTER_CONSTANT
+						{
+							$$ = $1;
+						}
+						;
+						
+number_constant			: INTEGER 
+						{
+							$$ = $1;
+						}
+						| REAL
+						{
+							$$ = $1;
+						}
+						| MINUS INTEGER
+						{
+							$$ = $1;
+						}
+						| MINUS REAL
+						{
+							$$ = $1;
+						}
+						;
+						
+conditional				: expr comparator expr
+						{
+							$$ = $1;
+						}
+						| expr comparator OR conditional
+						{
+							$$ = $1;
+						}
+						| expr comparator AND conditional
+						{
+							$$ = $1;
+						}
+						| NOT conditional
+						{
+							$$ = $1;
+						}
+						;
 
-identifier          : IDENTIFIER COMMA declaration     
-                    ;
-
-type                : CHARACTER
-                    | INTEGER
-                    | REAL                    
-
+comparator				: EQUAL_TO
+						{
+							$$ = $1;
+						}
+						| NOT_EQUAL
+						{
+							$$ = $1;
+						}
+						| LESS_THAN
+						{
+							$$ = $1;
+						}
+						| GREATER_THAN
+						{
+							$$ = $1;
+						}
+						| LESS_THAN_EQUAL_TO
+						{
+							$$ = $1;
+						}
+						| GREATER_THAN_EQUAL_TO
+						{
+							$$ = $1;
+						}
+						;
+						
+expr					: expr ADD term
+						{
+							$$ = $1;
+						}
+						| expr MINUS term
+						{
+							$$ = $1;
+						}
+						| term
+						{
+							$$ = $1;
+						}
+						;
+						
+term					: term MULTIPLY factor
+						{
+							$$ = $1;
+						}
+						| term DIVIDE factor
+						{
+							$$ = $1;
+						}
+						| factor
+						{
+							$$ = $1;
+						}
+						;
+						
+factor					: IDENTIFIER
+						{
+							$$ = $1;
+						}
+						| constant
+						{
+							$$ = $1;
+						}
+						| BRA expr KET
+						{
+							$$ = $1;
+						}
+						;
 
 %%
+
+/* Code for routines for managing the Parse Tree */
+
+TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1,
+			 TERNARY_TREE  p2, TERNARY_TREE  p3)
+{
+    TERNARY_TREE t;
+    t = (TERNARY_TREE)malloc(sizeof(TREE_NODE));
+    t->item = ival;
+    t->nodeIdentifier = case_identifier;
+    t->first = p1;
+    t->second = p2;
+    t->third = p3;
+    return (t);
+}
+
+
+/* Put other auxiliary functions here */
+
+#include "lex.yy.c"
