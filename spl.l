@@ -1,5 +1,6 @@
 %{
     #include<stdio.h>
+	#include<string.h>
  
 
 	#ifdef PRINT
@@ -16,7 +17,8 @@
     #define _TOKEN_(t) 				return(t);
 	#define _TOKEN_INTEGER_(t) 		yylval.iVal	= atoi(yytext); return(t);
 	#define _TOKEN_REAL_(t) 		yylval.iVal	= atof(yytext); return(t);
-	#define _TOKEN_CHARACTER_(t) 	yylval.iVal	= strdup(yytext)[1]; return(t);
+	#define _TOKEN_IDENTIFIER_(t) 	return(t);
+	#define _TOKEN_CHARACTER_(t) 	return(t);
 	#define _TOKEN_UNKNOWN_(t)		printf("Unknown token:" #t  "\n");
 	    
     #endif
@@ -36,16 +38,16 @@ characterConstant		\'{character}\'
 {ws}                ; /* white space, do nothing */
 
 "="                 _TOKEN_(EQUAL_TO);
-"<>"                _TOKEN_(NOTEQUAL);
-"<"                 _TOKEN_(LESS THAN);
-">"                 _TOKEN_(GREATER THAN);
-"<="                _TOKEN_(LESS_THAN _EQUAL_TO);
+"<>"                _TOKEN_(NOT_EQUAL);
+"<"                 _TOKEN_(LESS_THAN);
+">"                 _TOKEN_(GREATER_THAN);
+"<="                _TOKEN_(LESS_THAN_EQUAL_TO);
 ">="                _TOKEN_(GREATER_THAN_EQUAL_TO);
 "'"					_TOKEN_(APOSTROPHE);
 ":"                 _TOKEN_(COLON);
 ";"                 _TOKEN_(SEMI_COLON);
 ","                 _TOKEN_(COMMA);
-"."                 _TOKEN_(FULL STOP);
+"."                 _TOKEN_(FULL_STOP);
 "("                 _TOKEN_(BRA);
 ")"                 _TOKEN_(KET);
 "*"					_TOKEN_(MULTIPLY);
@@ -59,7 +61,7 @@ CODE				_TOKEN_(CODE);
 IF                  _TOKEN_(IF);
 THEN                _TOKEN_(THEN);
 ELSE                _TOKEN_(ELSE);
-ENDIF               _TOKEN_(ENDIF);
+ENDIF               _TOKEN_(END_IF);
 FOR                 _TOKEN_(FOR);
 IS                  _TOKEN_(IS);
 BY                  _TOKEN_(BY);
@@ -83,8 +85,8 @@ CHARACTER			_TOKEN_(CHARACTER);
 REAL				_TOKEN_(REAL);
 
 
-{characterConstant} _TOKEN_CHARACTER_(characterConstant);
-{identifier}        _TOKEN_IDENTIFIER_(identifier);
-{integer}           _TOKEN_INTEGER_(integer); 
-{real}             	_TOKEN_REAL_(real);
+{characterConstant} _TOKEN_CHARACTER_(CHARACTER_CONSTANT);
+{identifier}        _TOKEN_IDENTIFIER_(ID);
+{integer}           _TOKEN_INTEGER_(INTEGER_CONSTANT); 
+{real}             	_TOKEN_REAL_(REAL_CONSTANT);
 .|\n				_TOKEN_UNKNOWN_(UNKOWN);

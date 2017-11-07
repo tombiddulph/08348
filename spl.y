@@ -89,14 +89,17 @@ int currentSymTabSize = 0;
 
 // These are lexical tokens
 
-%token<iVal>			IDENTIFIER BRA KET CHARACTER_CONSTANT NUMBER_CONSTANT
+%token<iVal>			ID BRA KET NUMBER_CONSTANT
 
-%token<iVal>			DECLARATIONS CODE IF THEN ELSE END_IF 
+%token<iVal>	DECLARATIONS CODE IF THEN ELSE END_IF 
 				FOR IS BY TO END_FOR WRITE READ NOT AND OR DO END_DO 
-				WHILE END_WHILE NEWLINE OF TYPE word CHAR REAL INTEGER
+				WHILE END_WHILE NEWLINE OF TYPE word 
 				ASSIGNMENT EQUAL_TO NOT_EQUAL LESS_THAN GREATER_THAN
 				LESS_THAN_EQUAL_TO GREATER_THAN_EQUAL_TO
-				MULTIPLY ADD MINUS DIVIDE
+				APOSTROPHE
+				MULTIPLY ADD MINUS DIVIDE STATEMENT_BLOCK
+				CHARACTER_CONSTANT INTEGER_CONSTANT REAL_CONSTANT
+				CHARACTER INTEGER REAL
     
 // These tokens don't return a value
 %token 		COLON FULL_STOP ENDP SEMI_COLON COMMA
@@ -113,7 +116,7 @@ int currentSymTabSize = 0;
 
 %%
 
-program             	: IDENTIFIER COLON declarations CODE ENDP IDENTIFIER FULL_STOP 
+program             	: ID COLON declarations CODE statement_block ENDP ID FULL_STOP 
 						{
 							$$ = $1;
 						}
@@ -135,25 +138,25 @@ declaration_blocks		: declaration_blocks declaration_block
 						}
 						;
 				
-declaration_block   	: IDENTIFIER OF TYPE CHAR SEMI_COLON
+declaration_block   	: identifier_block OF TYPE CHARACTER SEMI_COLON
 						{
 							$$ = $1;
 						}
-						| IDENTIFIER OF TYPE INTEGER SEMI_COLON
+						| identifier_block OF TYPE INTEGER SEMI_COLON
 						{
 							$$ = $1;
 						}
-						| IDENTIFIER OF TYPE REAL SEMI_COLON
+						| identifier_block OF TYPE REAL SEMI_COLON
 						{
 							$$ = $1;
 						}
 						;       
 	
-identifier_block		: identifier_block COMMA IDENTIFIER
+identifier_block		: identifier_block COMMA ID
 						{
 							$$ = $1;
 						}
-						| IDENTIFIER
+						| ID
 						{
 							$$ = $1;
 						}
@@ -199,7 +202,7 @@ statement				: assignment_statement
 						}
 						;
 					
-assignment_statement	: expr ASSIGNMENT IDENTIFIER
+assignment_statement	: expr ASSIGNMENT ID
 						{
 							$$ = $1;
 						}
@@ -215,7 +218,7 @@ write_statement			: WRITE BRA output_block KET
 						}
 						;
 						
-read_statement			: READ BRA IDENTIFIER KET
+read_statement			: READ BRA ID KET
 						{
 							$$ = $1;
 						}
@@ -243,7 +246,7 @@ while_statement			: WHILE conditional DO statement_block END_WHILE
 						}		
 						;
 						
-for_statement			: FOR IDENTIFIER IS expr BY expr TO expr DO statement_block END_FOR
+for_statement			: FOR ID IS expr BY expr TO expr DO statement_block END_FOR
 						{
 							$$ = $1;
 						}			
@@ -260,7 +263,10 @@ output_block			: output_block COMMA value
 						;
 						
 value					: constant
-						| IDENTIFIER
+						{
+							$$ = $1;
+						}
+						| ID
 						{
 							$$ = $1;
 						}
@@ -270,8 +276,11 @@ value					: constant
 						}
 						;
 						
-constant				: NUMBER_CONSTANT
-						| CHARACTER_CONSTANT
+constant				: number_constant
+						{
+							$$ = $1;
+						}
+						| character_constant
 						{
 							$$ = $1;
 						}
@@ -283,19 +292,19 @@ character_constant		: CHARACTER_CONSTANT
 						}
 						;
 						
-number_constant			: INTEGER 
+number_constant			: INTEGER_CONSTANT 
 						{
 							$$ = $1;
 						}
-						| REAL
+						| REAL_CONSTANT
 						{
 							$$ = $1;
 						}
-						| MINUS INTEGER
+						| MINUS INTEGER_CONSTANT
 						{
 							$$ = $1;
 						}
-						| MINUS REAL
+						| MINUS REAL_CONSTANT
 						{
 							$$ = $1;
 						}
@@ -373,7 +382,7 @@ term					: term MULTIPLY factor
 						}
 						;
 						
-factor					: IDENTIFIER
+factor					: ID
 						{
 							$$ = $1;
 						}
