@@ -13,6 +13,10 @@
 /* declare some standard headers to be used to import declarations
    and libraries into the parser. */
 
+   
+extern int yydebug;
+
+   
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -91,18 +95,17 @@ int currentSymTabSize = 0;
 
 %token<iVal>			ID BRA KET NUMBER_CONSTANT
 
-%token<iVal>	DECLARATIONS CODE IF THEN ELSE END_IF 
-				FOR IS BY TO END_FOR WRITE READ NOT AND OR DO END_DO 
-				WHILE END_WHILE NEWLINE OF TYPE word 
+%token<iVal>	DECLARATIONS IF_T THEN ELSE_T END_IF 
+				FOR_T IS BY TO END_FOR WRITE READ NOT AND OR DO_T END_DO 
+				WHILE_T END_WHILE NEWLINE OF TYPE word 
 				ASSIGNMENT EQUAL_TO NOT_EQUAL LESS_THAN GREATER_THAN
-				LESS_THAN_EQUAL_TO GREATER_THAN_EQUAL_TO
-				APOSTROPHE
+				LESS_THAN_EQUAL_TO GREATER_THAN_EQUAL_TO APOSTROPHE
 				MULTIPLY ADD MINUS DIVIDE STATEMENT_BLOCK
 				CHARACTER_CONSTANT INTEGER_CONSTANT REAL_CONSTANT
-				CHARACTER INTEGER REAL
+				CHARACTER_T INTEGER_T REAL_T
     
 // These tokens don't return a value
-%token 		COLON FULL_STOP ENDP SEMI_COLON COMMA
+%token 		COLON FULL_STOP ENDP SEMI_COLON COMMA CODE 
     
 
 // These rules return a type of tVal    
@@ -138,15 +141,15 @@ declaration_blocks		: declaration_blocks declaration_block
 						}
 						;
 				
-declaration_block   	: identifier_block OF TYPE CHARACTER SEMI_COLON
+declaration_block   	: identifier_block OF TYPE CHARACTER_T SEMI_COLON
 						{
 							$$ = $1;
 						}
-						| identifier_block OF TYPE INTEGER SEMI_COLON
+						| identifier_block OF TYPE INTEGER_T SEMI_COLON
 						{
 							$$ = $1;
 						}
-						| identifier_block OF TYPE REAL SEMI_COLON
+						| identifier_block OF TYPE REAL_T SEMI_COLON
 						{
 							$$ = $1;
 						}
@@ -224,29 +227,29 @@ read_statement			: READ BRA ID KET
 						}
 						;
 						
-if_statement			: IF conditional THEN statement_block END_IF
+if_statement			: IF_T conditional THEN statement_block END_IF
 						{
 							$$ = $1;
 						}
-						| IF conditional THEN statement_block ELSE END_IF
-						{
-							$$ = $1;
-						}
-						;
-						
-do_statement			: DO statement_block WHILE conditional END_DO
+						| IF_T conditional THEN statement_block ELSE_T END_IF
 						{
 							$$ = $1;
 						}
 						;
 						
-while_statement			: WHILE conditional DO statement_block END_WHILE
+do_statement			: DO_T statement_block WHILE_T conditional END_DO
+						{
+							$$ = $1;
+						}
+						;
+						
+while_statement			: WHILE_T conditional DO_T statement_block END_WHILE
 						{
 							$$ = $1;
 						}		
 						;
 						
-for_statement			: FOR ID IS expr BY expr TO expr DO statement_block END_FOR
+for_statement			: FOR_T ID IS expr BY expr TO expr DO_T statement_block END_FOR
 						{
 							$$ = $1;
 						}			

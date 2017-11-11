@@ -1,13 +1,15 @@
 #include <stdio.h>
 int yyparse(void);
 
-#if YYDEBUG == 1
-extern int yydebug;
-yydebug = 1;
-#endif
+
 
 int main(void)
 {
+	
+	#if YYDEBUG == 1
+	extern int yydebug;
+	yydebug = 1;
+	#endif
     return(yyparse());
 }
 

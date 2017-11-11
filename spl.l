@@ -15,8 +15,8 @@
     #else
 
     #define _TOKEN_(t) 				return(t);
-	#define _TOKEN_INTEGER_(t) 		yylval.iVal	= atoi(yytext); return(t);
-	#define _TOKEN_REAL_(t) 		yylval.iVal	= atof(yytext); return(t);
+	#define _TOKEN_INTEGER_(t) 		return(t);
+	#define _TOKEN_REAL_(t) 		return(t);
 	#define _TOKEN_IDENTIFIER_(t) 	return(t);
 	#define _TOKEN_CHARACTER_(t) 	return(t);
 	#define _TOKEN_UNKNOWN_(t)		printf("Unknown token:" #t  "\n");
@@ -58,11 +58,11 @@ characterConstant		\'{character}\'
 
 DECLARATIONS		_TOKEN_(DECLARATIONS);
 CODE				_TOKEN_(CODE);
-IF                  _TOKEN_(IF);
+IF                  _TOKEN_(IF_T);
 THEN                _TOKEN_(THEN);
-ELSE                _TOKEN_(ELSE);
+ELSE                _TOKEN_(ELSE_T);
 ENDIF               _TOKEN_(END_IF);
-FOR                 _TOKEN_(FOR);
+FOR                 _TOKEN_(FOR_T);
 IS                  _TOKEN_(IS);
 BY                  _TOKEN_(BY);
 TO                  _TOKEN_(TO);
@@ -72,17 +72,17 @@ READ                _TOKEN_(READ);
 NOT                 _TOKEN_(NOT);
 AND                 _TOKEN_(AND);
 OR                  _TOKEN_(OR);
-DO                  _TOKEN_(DO);
+DO                  _TOKEN_(DO_T);
 ENDDO               _TOKEN_(END_DO);
-WHILE               _TOKEN_(WHILE);
+WHILE               _TOKEN_(WHILE_T);
 ENDWHILE            _TOKEN_(END_WHILE);
 NEWLINE				_TOKEN_(NEWLINE);
 OF					_TOKEN_(OF);
 TYPE				_TOKEN_(TYPE);
 ENDP				_TOKEN_(ENDP);
-INTEGER				_TOKEN_(INTEGER);
-CHARACTER			_TOKEN_(CHARACTER);
-REAL				_TOKEN_(REAL);
+INTEGER				_TOKEN_(INTEGER_T);
+CHARACTER			_TOKEN_(CHARACTER_T);
+REAL				_TOKEN_(REAL_T);
 
 
 {characterConstant} _TOKEN_CHARACTER_(CHARACTER_CONSTANT);
