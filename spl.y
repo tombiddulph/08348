@@ -96,7 +96,7 @@ int currentSymTabSize = 0;
 %token<iVal>			ID BRA KET NUMBER_CONSTANT
 
 %token<iVal>	DECLARATIONS IF_T THEN ELSE_T END_IF 
-				FOR_T IS BY TO END_FOR WRITE READ NOT AND OR DO_T END_DO 
+				FOR_T IS BY TO END_FOR WRITE READ NOT AND OR  END_DO 
 				WHILE_T END_WHILE NEWLINE OF TYPE word 
 				ASSIGNMENT EQUAL_TO NOT_EQUAL LESS_THAN GREATER_THAN
 				LESS_THAN_EQUAL_TO GREATER_THAN_EQUAL_TO APOSTROPHE
@@ -105,13 +105,13 @@ int currentSymTabSize = 0;
 				CHARACTER_T INTEGER_T REAL_T CODE COMMA
     
 // These tokens don't return a value
-%token 		COLON FULL_STOP ENDP SEMI_COLON   
+%token 		COLON FULL_STOP ENDP SEMI_COLON DO_T
     
 
 // These rules return a type of tVal    
 %type<tVal>  	program expr term factor statement_block statement 
 				for_statement if_statement declarations declaration_blocks 
-				declaration_block identifier_block assignment_statement value 
+				declaration_block identifier_block assignment_statement  
 				write_statement conditional comparator output_block read_statement 
 				character_constant constant number_constant while_statement do_statement
 
@@ -242,7 +242,7 @@ if_statement			: IF_T conditional THEN statement_block END_IF
 						{
 							$$ = $1;
 						}
-						| IF_T conditional THEN statement_block ELSE_T END_IF
+						| IF_T conditional THEN statement_block ELSE_T statement_block END_IF
 						{
 							$$ = $1;
 						}
@@ -250,7 +250,7 @@ if_statement			: IF_T conditional THEN statement_block END_IF
 						
 do_statement			: DO_T statement_block WHILE_T conditional END_DO
 						{
-							$$ = $1;
+							$$ = 0;
 						}
 						;
 						
@@ -266,29 +266,17 @@ for_statement			: FOR_T ID IS expr BY expr TO expr DO_T statement_block END_FOR
 						}			
 						;			
 					
-output_block			: output_block COMMA value 
+output_block			: output_block COMMA term 
 						{
 							$$ = $1;
 						}
-						| value
+						| term
 						{
 							$$ = $1;
 						}
 						;
 						
-value					: constant
-						{
-							$$ = $1;
-						}
-						| ID
-						{
-							$$ = $1;
-						}
-						| BRA expr KET
-						{
-							$$ = $1;
-						}
-						;
+
 						
 constant				: number_constant
 						{
@@ -328,11 +316,11 @@ conditional				: expr comparator expr
 						{
 							$$ = $1;
 						}
-						| expr comparator OR conditional
+						| expr comparator expr OR conditional
 						{
 							$$ = $1;
 						}
-						| expr comparator AND conditional
+						| expr comparator expr AND conditional
 						{
 							$$ = $1;
 						}
