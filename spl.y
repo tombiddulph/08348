@@ -121,7 +121,8 @@ int currentSymTabSize = 0;
 
 program             	: ID COLON declarations CODE statement_block ENDP ID FULL_STOP 
 						{
-							TERNARY_TREE parseTree = create_node($1, PROGRAM, $3, NULL, NULL);
+							TERNARY_TREE parseTree;
+							parseTree = create_node($1, PROGRAM, $3, NULL, NULL);
 							
 							if($1 != $3)
 							{
@@ -134,11 +135,11 @@ program             	: ID COLON declarations CODE statement_block ENDP ID FULL_S
 						
 declarations			: DECLARATIONS declaration_blocks
 						{
-							$$ = $1;
+							
 						}
 						| /* empty*/
 						{
-							$$ = 0;
+							$$ = create_node(NULL, DECLARATION, NULL, NULL, NULL);
 						}
 						;
 	
@@ -402,8 +403,8 @@ factor					: ID
 
 /* Code for routines for managing the Parse Tree */
 
-TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1,
-			 TERNARY_TREE  p2, TERNARY_TREE  p3)
+TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY_TREE  p2, TERNARY_TREE  p3)
+			
 {
     TERNARY_TREE t;
     t = (TERNARY_TREE)malloc(sizeof(TREE_NODE));
