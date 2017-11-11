@@ -102,10 +102,10 @@ int currentSymTabSize = 0;
 				LESS_THAN_EQUAL_TO GREATER_THAN_EQUAL_TO APOSTROPHE
 				MULTIPLY ADD MINUS DIVIDE STATEMENT_BLOCK
 				CHARACTER_CONSTANT INTEGER_CONSTANT REAL_CONSTANT
-				CHARACTER_T INTEGER_T REAL_T
+				CHARACTER_T INTEGER_T REAL_T CODE COMMA
     
 // These tokens don't return a value
-%token 		COLON FULL_STOP ENDP SEMI_COLON COMMA CODE 
+%token 		COLON FULL_STOP ENDP SEMI_COLON   
     
 
 // These rules return a type of tVal    
@@ -121,13 +121,24 @@ int currentSymTabSize = 0;
 
 program             	: ID COLON declarations CODE statement_block ENDP ID FULL_STOP 
 						{
-							$$ = $1;
+							TERNARY_TREE parseTree = create_node($1, PROGRAM, $3, NULL, NULL);
+							
+							if($1 != $3)
+							{
+								/* IDs don't match work out how to handle this */
+								
+							}
+							
 						}
 						;
 						
 declarations			: DECLARATIONS declaration_blocks
 						{
 							$$ = $1;
+						}
+						| /* empty*/
+						{
+							$$ = 0;
 						}
 						;
 	

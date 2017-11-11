@@ -8,17 +8,20 @@
     #define _TOKEN_(t) 				printf("Token: " #t "\n");
 	#define _TOKEN_INTEGER_(t) 		printf("Integer token:  %i\n", atoi(yytext));
 	#define _TOKEN_REAL_(t) 		printf("Real token: %f\n", atof(yytext));
-	#define _TOKEN_CHARACTER_(t) 	printf("Character token: %c\n", yytext[1]);
+	#define _TOKEN_CHARACTER_(t) 	printf("Character constant token: %c\n", yytext[1]);
     #define _TOKEN_IDENTIFIER_(t) 	printf("Identifier token: %s\n",yytext); 
 	#define _TOKEN_UNKNOWN_(t)		printf("Unkown token: %s\n", yytext);
 
     #else
 
+	extern SYMTABNODEPTR symTab[SYMTABSIZE];
+	extern int currentSymTabSize;
+	
     #define _TOKEN_(t) 				return(t);
-	#define _TOKEN_INTEGER_(t) 		return(t);
-	#define _TOKEN_REAL_(t) 		return(t);
-	#define _TOKEN_IDENTIFIER_(t) 	return(t);
-	#define _TOKEN_CHARACTER_(t) 	return(t);
+	#define _TOKEN_INTEGER_(t) 		yylval.iVal = installId(yytext,0); return(t);
+	#define _TOKEN_REAL_(t) 		yylval.iVal = installId(yytext,1); return(t);
+	#define _TOKEN_IDENTIFIER_(t) 	yylval.iVal = installId(yytext,2); return(t);
+	#define _TOKEN_CHARACTER_(t) 	yylval.iVal = installId(yytext,3); return(t);
 	#define _TOKEN_UNKNOWN_(t)		printf("Unknown token:" #t  "\n");
 	    
     #endif
@@ -90,3 +93,67 @@ REAL				_TOKEN_(REAL_T);
 {integer}           _TOKEN_INTEGER_(INTEGER_CONSTANT); 
 {real}             	_TOKEN_REAL_(REAL_CONSTANT);
 .|\n				_TOKEN_UNKNOWN_(UNKOWN);
+
+
+%%
+
+/* Here is the code for the library of symbol table routines */
+
+/* code for a simple symbol table, which is an array of pointers to
+   structs, each of which contains an identifier.
+*/
+
+#ifndef PRINT
+
+SYMTABNODEPTR newSymTabNode()
+{
+    return ((SYMTABNODEPTR)malloc(sizeof(SYMTABNODE)));
+}
+
+int lookup(char *s)
+{
+    extern SYMTABNODEPTR symTab[SYMTABSIZE];
+    extern int currentSymTabSize;
+    int i;
+
+    for(i=0; i<currentSymTabSize; i++)
+    {
+        if(strncmp(s,symTab[i]->identifier,IDLENGTH) == 0)
+        {
+            return (i);
+        }
+    }
+    return (-1);    
+}
+
+/* Look up an identifier in the symbol table, if its there return
+   its index.  If its not there, put it in the end position,
+   as long as the table isn't full, and return its index.
+*/
+
+int installId(char *id) 
+{
+    extern SYMTABNODEPTR symTab[SYMTABSIZE]; 
+    extern int currentSymTabSize;
+    int index;
+
+    index = lookup(id);
+    if (index >= 0)
+    {
+        return (index);
+    }
+    else 
+       if (currentSymTabSize >= SYMTABSIZE) 
+          /* SYMTAB is full */
+          return (NOTHING) ;
+    else
+    {
+       symTab[currentSymTabSize] = newSymTabNode();
+       /* Recommended code for preventing buffer overrun on bounded strings */
+       strncpy(symTab[currentSymTabSize]->identifier,id,IDLENGTH);
+       symTab[currentSymTabSize]->identifier[IDLENGTH-1] = '\0';
+       return(currentSymTabSize++);
+    }
+}
+
+#endif
