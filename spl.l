@@ -17,7 +17,7 @@
 	extern SYMTABNODEPTR symTab[SYMTABSIZE];
 	extern int currentSymTabSize;
 	
-    #define _TOKEN_(t) 				return(t);
+    #define _TOKEN_(t) 				return(t##_T);
 	#define _TOKEN_INTEGER_(t) 		yylval.iVal = installId(yytext,0); return(t);
 	#define _TOKEN_REAL_(t) 		yylval.iVal = installId(yytext,1); return(t);
 	#define _TOKEN_IDENTIFIER_(t) 	yylval.iVal = installId(yytext,2); return(t);
@@ -61,11 +61,11 @@ characterConstant		\'{character}\'
 
 DECLARATIONS		_TOKEN_(DECLARATIONS);
 CODE				_TOKEN_(CODE);
-IF                  _TOKEN_(IF_T);
+IF                  _TOKEN_(IF);
 THEN                _TOKEN_(THEN);
-ELSE                _TOKEN_(ELSE_T);
+ELSE                _TOKEN_(ELSE);
 ENDIF               _TOKEN_(END_IF);
-FOR                 _TOKEN_(FOR_T);
+FOR                 _TOKEN_(FOR);
 IS                  _TOKEN_(IS);
 BY                  _TOKEN_(BY);
 TO                  _TOKEN_(TO);
@@ -75,17 +75,17 @@ READ                _TOKEN_(READ);
 NOT                 _TOKEN_(NOT);
 AND                 _TOKEN_(AND);
 OR                  _TOKEN_(OR);
-DO                  _TOKEN_(DO_T);
+DO                  _TOKEN_(DO);
 ENDDO               _TOKEN_(END_DO);
-WHILE               _TOKEN_(WHILE_T);
+WHILE               _TOKEN_(WHILE);
 ENDWHILE            _TOKEN_(END_WHILE);
 NEWLINE				_TOKEN_(NEWLINE);
 OF					_TOKEN_(OF);
 TYPE				_TOKEN_(TYPE);
 ENDP				_TOKEN_(ENDP);
-INTEGER				_TOKEN_(INTEGER_T);
-CHARACTER			_TOKEN_(CHARACTER_T);
-REAL				_TOKEN_(REAL_T);
+INTEGER				_TOKEN_(INTEGER);
+CHARACTER			_TOKEN_(CHARACTER);
+REAL				_TOKEN_(REAL);
 
 
 {characterConstant} _TOKEN_CHARACTER_(CHARACTER_CONSTANT);

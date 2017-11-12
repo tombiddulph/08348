@@ -1,29 +1,29 @@
---11/11/2017----------------------------------------------------- 
+--12/11/2017----------------------------------------------------- 
 Lexical Tokens for a.spl 
---14:51:44.60----------------------------------------------------- 
+--18:11:07.43----------------------------------------------------- 
 Identifier token: ProgA
 Token: COLON
 Token: CODE
 Token: WRITE
 Token: BRA
-Character token: h
+Character constant token: h
 Token: COMMA
-Character token: e
+Character constant token: e
 Token: COMMA
-Character token: l
+Character constant token: l
 Token: COMMA
-Character token: l
+Character constant token: l
 Token: COMMA
-Character token: o
+Character constant token: o
 Token: KET
 Token: SEMI_COLON
 Token: NEWLINE
 Token: ENDP
 Identifier token: ProgA
 Token: FULL_STOP
---11/11/2017----------------------------------------------------- 
+--12/11/2017----------------------------------------------------- 
 Lexical Tokens for b.spl 
---14:51:47.90----------------------------------------------------- 
+--18:11:09.26----------------------------------------------------- 
 Identifier token: ProgB
 Token: COLON
 Token: DECLARATIONS
@@ -32,19 +32,19 @@ Token: COMMA
 Identifier token: b
 Token: OF
 Token: TYPE
-Token: INTEGER_T
+Token: INTEGER
 Token: SEMI_COLON
 Identifier token: c
 Token: OF
 Token: TYPE
-Token: CHARACTER_T
+Token: CHARACTER
 Token: SEMI_COLON
 Identifier token: d
 Token: COMMA
 Identifier token: e
 Token: OF
 Token: TYPE
-Token: REAL_T
+Token: REAL
 Token: SEMI_COLON
 Token: CODE
 Token: READ
@@ -57,19 +57,19 @@ Token: BRA
 Identifier token: b
 Token: KET
 Token: SEMI_COLON
-Token: IF_T
+Token: IF
 Identifier token: a
 Token: GREATER_THAN
 Identifier token: b
 Token: THEN
 Token: WRITE
 Token: BRA
-Character token: A
+Character constant token: A
 Token: KET
-Token: ELSE_T
+Token: ELSE
 Token: WRITE
 Token: BRA
-Character token: B
+Character constant token: B
 Token: KET
 Token: END_IF
 Token: SEMI_COLON
@@ -107,19 +107,19 @@ Token: NEWLINE
 Token: ENDP
 Identifier token: ProgB
 Token: FULL_STOP
---11/11/2017----------------------------------------------------- 
+--12/11/2017----------------------------------------------------- 
 Lexical Tokens for c.spl 
---14:51:52.57----------------------------------------------------- 
+--18:11:10.96----------------------------------------------------- 
 Identifier token: Prog3
 Token: COLON
 Token: DECLARATIONS
 Identifier token: a
 Token: OF
 Token: TYPE
-Token: INTEGER_T
+Token: INTEGER
 Token: SEMI_COLON
 Token: CODE
-Token: FOR_T
+Token: FOR
 Identifier token: a
 Token: IS
 Integer token:  1
@@ -127,8 +127,8 @@ Token: BY
 Integer token:  1
 Token: TO
 Integer token:  13
-Token: DO_T
-Token: IF_T
+Token: DO
+Token: IF
 Token: NOT
 Identifier token: a
 Token: EQUAL_TO
@@ -147,14 +147,14 @@ Integer token:  0
 Token: ASSIGNMENT
 Identifier token: a
 Token: SEMI_COLON
-Token: DO_T
+Token: DO
 Identifier token: a
 Token: ADD
 Integer token:  1
 Token: ASSIGNMENT
 Identifier token: a
 Token: SEMI_COLON
-Token: IF_T
+Token: IF
 Token: NOT
 Identifier token: a
 Token: EQUAL_TO
@@ -171,7 +171,7 @@ Token: KET
 Token: SEMI_COLON
 Token: NEWLINE
 Token: END_IF
-Token: WHILE_T
+Token: WHILE
 Identifier token: a
 Token: LESS_THAN
 Integer token:  14
@@ -181,11 +181,11 @@ Integer token:  0
 Token: ASSIGNMENT
 Identifier token: a
 Token: SEMI_COLON
-Token: WHILE_T
+Token: WHILE
 Identifier token: a
 Token: LESS_THAN
 Integer token:  12
-Token: DO_T
+Token: DO
 Token: WRITE
 Token: BRA
 Identifier token: a
@@ -202,9 +202,9 @@ Token: NEWLINE
 Token: ENDP
 Identifier token: Prog3
 Token: FULL_STOP
---11/11/2017----------------------------------------------------- 
+--12/11/2017----------------------------------------------------- 
 Lexical Tokens for d.spl 
---14:51:54.96----------------------------------------------------- 
+--18:11:11.97----------------------------------------------------- 
 Identifier token: Prog4D
 Token: COLON
 Token: DECLARATIONS
@@ -215,7 +215,7 @@ Token: COMMA
 Identifier token: r3
 Token: OF
 Token: TYPE
-Token: REAL_T
+Token: REAL
 Token: SEMI_COLON
 Token: CODE
 Token: MINUS
@@ -263,9 +263,9 @@ Token: NEWLINE
 Token: ENDP
 Identifier token: Prog4D
 Token: FULL_STOP
---11/11/2017----------------------------------------------------- 
+--12/11/2017----------------------------------------------------- 
 Lexical Tokens for e.spl 
---14:51:59.71----------------------------------------------------- 
+--18:11:14.67----------------------------------------------------- 
 Identifier token: ProgV
 Token: COLON
 Token: DECLARATIONS
@@ -274,7 +274,7 @@ Token: COMMA
 Identifier token: i
 Token: OF
 Token: TYPE
-Token: INTEGER_T
+Token: INTEGER
 Token: SEMI_COLON
 Token: CODE
 Token: READ
@@ -282,7 +282,7 @@ Token: BRA
 Identifier token: integer
 Token: KET
 Token: SEMI_COLON
-Token: IF_T
+Token: IF
 Identifier token: integer
 Token: LESS_THAN_EQUAL_TO
 Integer token:  5
@@ -308,7 +308,7 @@ Token: KET
 Token: SEMI_COLON
 Token: NEWLINE
 Token: SEMI_COLON
-Token: FOR_T
+Token: FOR
 Identifier token: integer
 Token: IS
 Token: MINUS
@@ -319,7 +319,7 @@ Integer token:  1
 Token: TO
 Token: MINUS
 Integer token:  5
-Token: DO_T
+Token: DO
 Token: WRITE
 Token: BRA
 Identifier token: integer
@@ -333,7 +333,7 @@ Integer token:  1
 Token: ASSIGNMENT
 Identifier token: i
 Token: SEMI_COLON
-Token: FOR_T
+Token: FOR
 Identifier token: integer
 Token: IS
 Identifier token: i
@@ -367,7 +367,7 @@ Identifier token: i
 Token: ADD
 Identifier token: i
 Token: KET
-Token: DO_T
+Token: DO
 Token: WRITE
 Token: BRA
 Identifier token: integer
