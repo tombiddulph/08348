@@ -88,10 +88,10 @@ CHARACTER			_TOKEN_(CHARACTER);
 REAL				_TOKEN_(REAL);
 
 
-{characterConstant} _TOKEN_CHARACTER_(CHARACTER_CONSTANT);
+{characterConstant} _TOKEN_CHARACTER_(CHARACTER_CONSTANT_T);
 {identifier}        _TOKEN_IDENTIFIER_(ID);
-{integer}           _TOKEN_INTEGER_(INTEGER_CONSTANT); 
-{real}             	_TOKEN_REAL_(REAL_CONSTANT);
+{integer}           _TOKEN_INTEGER_(INTEGER_CONSTANT_T); 
+{real}             	_TOKEN_REAL_(REAL_CONSTANT_T);
 .|\n				_TOKEN_UNKNOWN_(UNKOWN);
 
 

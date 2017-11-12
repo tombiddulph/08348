@@ -34,7 +34,10 @@ void yyerror (char *);
 #define NOTHING        -1
 #define INDENTOFFSET    2
 
-  enum ParseTreeNodeType { PROGRAM, BLOCK, STATEMENT_BLOCK, DECLARATIONS_RULE, ASSIGNMENT_STATEMENT} ;  
+  enum ParseTreeNodeType { PROGRAM, BLOCK, STATEMENT_BLOCK, STATEMENT, DECLARTIONS, ASSIGNMENT_STATEMENT, WRITE_STATEMENT,
+							READ_STATEMENT, IF_STATEMENT, DO_STATEMENT, WHILE_STATEMENT, FOR_STATEMENT, FOR_BODY,
+							OUTPUT_BLOCK, NEWLINE, CONSTANT, CHARACTER_CONSTANT, NUMBER_CONSTANT
+							} ;  
                           /* Add more types here, as more nodes
                                            added to tree */
 
@@ -93,7 +96,7 @@ int currentSymTabSize = 0;
 
 // These are lexical tokens
 
-%token<iVal>			ID BRA_T KET_T NUMBER_CONSTANT
+%token<iVal>			ID BRA_T KET_T NUMBER_CONSTANT_T
 
 %token<iVal>	IF_T THEN_T ELSE_T END_IF_T DECLARATIONS_T
 				FOR_T IS_T BY_T TO_T END_FOR_T WRITE_T READ_T NOT_T AND_T OR_T END_DO_T
@@ -101,7 +104,7 @@ int currentSymTabSize = 0;
 				ASSIGNMENT_T EQUAL_TO_T NOT_EQUAL_T LESS_THAN_T GREATER_THAN_T
 				LESS_THAN_EQUAL_TO_T GREATER_THAN_EQUAL_TO_T APOSTROPHE_T
 				MULTIPLY_T ADD_T MINUS_T DIVIDE_T
-				CHARACTER_CONSTANT INTEGER_CONSTANT REAL_CONSTANT
+				CHARACTER_CONSTANT_T INTEGER_CONSTANT_T REAL_CONSTANT_T
 				CHARACTER_T INTEGER_T REAL_T CODE_T COMMA_T
     
 // These tokens don't return a value
@@ -110,7 +113,7 @@ int currentSymTabSize = 0;
 
 // These rules return a type of tVal    
 %type<tVal>  	program expr term factor statement_block statement 
-				for_statement if_statement declarations 
+				for_statement for_body if_statement declarations 
 				assignment_statement  
 				write_statement conditional comparator output_block read_statement 
 				character_constant constant number_constant while_statement do_statement block type
@@ -136,29 +139,28 @@ program             	: ID COLON_T  block ENDP_T ID FULL_STOP_T
 						
 block					: DECLARATIONS_T declarations CODE_T statement_block
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, BLOCK, $2, $4, NULL);
 						}
 						| CODE_T statement_block
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, BLOCK, $2, NULL, NULL);
 						}
 						
 						
 						
 declarations			: ID OF_T TYPE_T type SEMI_COLON_T
 						{
-							$$ = $1;
+							$$ = create_node($1, DECLARTIONS, $4, NULL, NULL);
 						}
 						
 						| ID OF_T TYPE_T type SEMI_COLON_T declarations
 						{
-							$$ = $1;
+							$$ = create_node($1, DECLARTIONS, $4, $6 , NULL);
 						}
 						| ID COMMA_T declarations
 						{
-							$$ = $1;
+							$$ = create_node($1, DECLARTIONS, $3, NULL, NULL);
 						}
-					
 						;
 	
 						
@@ -174,31 +176,31 @@ statement_block			: statement_block SEMI_COLON_T statement
 	
 statement				: assignment_statement
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, STATEMENT, $1, NULL, NULL);
 						}
 						| write_statement
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, STATEMENT, $1, NULL, NULL);
 						}
 						| read_statement
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, STATEMENT, $1, NULL, NULL);
 						}
 						| if_statement
 						{
-							$$ = $1;
+							$$ =  create_node(NOTHING, STATEMENT, $1, NULL, NULL);
 						}
 						| do_statement
 						{
-							$$ = $1;
+							$$ =  create_node(NOTHING, STATEMENT, $1, NULL, NULL);
 						}
 						| while_statement
 						{
-							$$ = $1;
+							$$ =  create_node(NOTHING, STATEMENT, $1, NULL, NULL);
 						}
 						| for_statement
 						{
-							$$ = $1;
+							$$ =  create_node(NOTHING, STATEMENT, $1, NULL, NULL);
 						}
 						;
 					
@@ -210,55 +212,61 @@ assignment_statement	: expr ASSIGNMENT_T ID
 
 write_statement			: WRITE_T BRA_T output_block KET_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, WRITE_STATEMENT, $3, NULL, NULL);
 						}
 						| NEWLINE_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, NEWLINE, NULL, NULL, NULL);
 						}
 						;
 						
 read_statement			: READ_T BRA_T ID KET_T
 						{
-							$$ = $1;
+							$$ = create_node($3, READ_STATEMENT, NULL, NULL, NULL);
 						}
 						;
 						
 if_statement			: IF_T conditional THEN_T statement_block END_IF_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, IF_STATEMENT, $2, $4, NULL);
 						}
 						| IF_T conditional THEN_T statement_block ELSE_T statement_block END_IF_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, IF_STATEMENT, $2, $4, $6);
 						}
 						;
 						
 do_statement			: DO_T statement_block WHILE_T conditional END_DO_T
 						{
-							$$ = 0;
+							$$ = create_node(NOTHING, DO_STATEMENT, $2, $4, NULL);
 						}
 						;
 						
 while_statement			: WHILE_T conditional DO_T statement_block END_WHILE_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, WHILE_STATEMENT, $2, $4, NULL);
 						}		
 						;
 						
-for_statement			: FOR_T ID IS_T expr BY_T expr TO_T expr DO_T statement_block END_FOR_T
+for_statement			: FOR_T for_body DO_T statement_block END_FOR_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, FOR_STATEMENT, $2, $4, NULL);
 						}			
 						;			
+						
+for_body				: ID IS_T expr BY_T expr TO_T expr 
+						{
+							$$ = create_node($1, FOR_BODY, $3, $5, $7);
+						}
+						;
 					
 output_block			: output_block COMMA_T term 
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, OUTPUT_BLOCK, $1, $3, NULL);
 						}
 						| term
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, OUTPUT_BLOCK, $1, NULL, NULL);
 						}
 						;
 						
@@ -266,41 +274,41 @@ output_block			: output_block COMMA_T term
 						
 constant				: number_constant
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, CONSTANT, NULL, NULL, NULL);
 						}
 						| character_constant
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, CONSTANT, NULL, NULL, NULL);
 						}
 						;
 						
-character_constant		: CHARACTER_CONSTANT
+character_constant		: CHARACTER_CONSTANT_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, CHARACTER_CONSTANT, NULL, NULL, NULL);
 						}
 						;
 						
-number_constant			: INTEGER_CONSTANT 
+number_constant			: INTEGER_CONSTANT_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, NUMBER_CONSTANT, NULL, NULL, NULL);
 						}
-						| REAL_CONSTANT
+						| REAL_CONSTANT_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, NUMBER_CONSTANT, NULL, NULL, NULL);
 						}
-						| MINUS_T INTEGER_CONSTANT
+						| MINUS_T INTEGER_CONSTANT_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, NUMBER_CONSTANT, NULL, NULL, NULL);
 						}
-						| MINUS_T REAL_CONSTANT
+						| MINUS_T REAL_CONSTANT_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, NUMBER_CONSTANT, NULL, NULL, NULL);
 						}
 						;
 						
 conditional				: expr comparator expr
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING  CONDITIONAL, $2, $1, $3);
 						}
 						| expr comparator expr OR_T conditional
 						{
@@ -316,6 +324,8 @@ conditional				: expr comparator expr
 						}
 						;
 
+						
+						
 comparator				: EQUAL_TO_T
 						{
 							$$ = $1;
