@@ -36,7 +36,11 @@ void yyerror (char *);
 
   enum ParseTreeNodeType { PROGRAM, BLOCK, STATEMENT_BLOCK, STATEMENT, DECLARTIONS, ASSIGNMENT_STATEMENT, WRITE_STATEMENT,
 							READ_STATEMENT, IF_STATEMENT, DO_STATEMENT, WHILE_STATEMENT, FOR_STATEMENT, FOR_BODY,
-							OUTPUT_BLOCK, NEWLINE, CONSTANT, CHARACTER_CONSTANT, NUMBER_CONSTANT
+							OUTPUT_BLOCK, NEWLINE, CONSTANT, CHARACTER_CONSTANT, NUMBER_CONSTANT, CONDITIONAL, CONDITIONAL_BODY,
+							COMPARATOR, OR, AND, EQUAL, NOT_EQUAL, GREATER_THAN, LESS_THAN, GREATER_THAN_EQUAL_TO, LESS_THAN_EQUAL_TO,
+							EXPR, EXPR_MINUS, EXPR_PLUS, TERM, TERM_DIVIDE, TERM_MULTIPLY, FACTOR, FACTOR_BRACKETS, 
+							FACTOR_CONSTANT, INTEGER_TYPE, REAL_TYPE, CHARACTER_TYPE, TYPE, INTEGER_CONSTANT, REAL_CONSTANT,
+							MINUS_INTEGER_CONSTANT, MINUS_REAL_CONSTANT
 							} ;  
                           /* Add more types here, as more nodes
                                            added to tree */
@@ -69,6 +73,7 @@ typedef  TREE_NODE        *TERNARY_TREE;
 /* ------------- forward declarations --------------------------- */
 
 TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
+void PrintTree(TERNARY_TREE t);
 
 /* ------------- symbol table definition --------------------------- */
 
@@ -115,7 +120,7 @@ int currentSymTabSize = 0;
 %type<tVal>  	program expr term factor statement_block statement 
 				for_statement for_body if_statement declarations 
 				assignment_statement  
-				write_statement conditional comparator output_block read_statement 
+				write_statement conditional conditional_body comparator output_block read_statement 
 				character_constant constant number_constant while_statement do_statement block type
 
 
@@ -126,6 +131,7 @@ program             	: ID COLON_T  block ENDP_T ID FULL_STOP_T
 						{
 							TERNARY_TREE parseTree;
 							parseTree = create_node($1, PROGRAM, $3, NULL, NULL);
+							PrintTree(parseTree);
 							
 							if($1 != $3)
 							{
@@ -176,31 +182,31 @@ statement_block			: statement_block SEMI_COLON_T statement
 	
 statement				: assignment_statement
 						{
-							$$ = create_node(NOTHING, STATEMENT, $1, NULL, NULL);
+							$$ = create_node(ASSIGNMENT_STATEMENT, STATEMENT, $1, NULL, NULL);
 						}
 						| write_statement
 						{
-							$$ = create_node(NOTHING, STATEMENT, $1, NULL, NULL);
+							$$ = create_node(WRITE_STATEMENT, STATEMENT, $1, NULL, NULL);
 						}
 						| read_statement
 						{
-							$$ = create_node(NOTHING, STATEMENT, $1, NULL, NULL);
+							$$ = create_node(READ_STATEMENT, STATEMENT, $1, NULL, NULL);
 						}
 						| if_statement
 						{
-							$$ =  create_node(NOTHING, STATEMENT, $1, NULL, NULL);
+							$$ =  create_node(IF_STATEMENT, STATEMENT, $1, NULL, NULL);
 						}
 						| do_statement
 						{
-							$$ =  create_node(NOTHING, STATEMENT, $1, NULL, NULL);
+							$$ =  create_node(DO_STATEMENT, STATEMENT, $1, NULL, NULL);
 						}
 						| while_statement
 						{
-							$$ =  create_node(NOTHING, STATEMENT, $1, NULL, NULL);
+							$$ =  create_node(WHILE_STATEMENT, STATEMENT, $1, NULL, NULL);
 						}
 						| for_statement
 						{
-							$$ =  create_node(NOTHING, STATEMENT, $1, NULL, NULL);
+							$$ =  create_node(FOR_STATEMENT, STATEMENT, $1, NULL, NULL);
 						}
 						;
 					
@@ -274,137 +280,143 @@ output_block			: output_block COMMA_T term
 						
 constant				: number_constant
 						{
-							$$ = create_node(NOTHING, CONSTANT, NULL, NULL, NULL);
+							$$ = create_node(NUMBER_CONSTANT, CONSTANT, NULL, NULL, NULL);
 						}
 						| character_constant
 						{
-							$$ = create_node(NOTHING, CONSTANT, NULL, NULL, NULL);
+							$$ = create_node(CHARACTER_CONSTANT, CONSTANT, NULL, NULL, NULL);
 						}
 						;
 						
 character_constant		: CHARACTER_CONSTANT_T
 						{
-							$$ = create_node(NOTHING, CHARACTER_CONSTANT, NULL, NULL, NULL);
+							$$ = create_node(CHARACTER_CONSTANT, CHARACTER_CONSTANT, NULL, NULL, NULL);
 						}
 						;
 						
 number_constant			: INTEGER_CONSTANT_T
 						{
-							$$ = create_node(NOTHING, NUMBER_CONSTANT, NULL, NULL, NULL);
+							$$ = create_node(INTEGER_CONSTANT, NUMBER_CONSTANT, NULL, NULL, NULL);
 						}
 						| REAL_CONSTANT_T
 						{
-							$$ = create_node(NOTHING, NUMBER_CONSTANT, NULL, NULL, NULL);
+							$$ = create_node(REAL_CONSTANT, NUMBER_CONSTANT, NULL, NULL, NULL);
 						}
 						| MINUS_T INTEGER_CONSTANT_T
 						{
-							$$ = create_node(NOTHING, NUMBER_CONSTANT, NULL, NULL, NULL);
+							$$ = create_node(MINUS_INTEGER_CONSTANT, NUMBER_CONSTANT, NULL, NULL, NULL);
 						}
 						| MINUS_T REAL_CONSTANT_T
 						{
-							$$ = create_node(NOTHING, NUMBER_CONSTANT, NULL, NULL, NULL);
+							$$ = create_node(MINUS_REAL_CONSTANT, NUMBER_CONSTANT, NULL, NULL, NULL);
 						}
 						;
 						
-conditional				: expr comparator expr
+conditional				: conditional_body
 						{
-							$$ = create_node(NOTHING  CONDITIONAL, $2, $1, $3);
+							$$ = create_node(NOTHING, CONDITIONAL, $1, NULL, NULL);
 						}
-						| expr comparator expr OR_T conditional
+						| conditional_body OR_T conditional
 						{
-							$$ = $1;
+							$$ = create_node(OR, CONDITIONAL, $1, $3, NULL);
 						}
-						| expr comparator expr AND_T conditional
+						| conditional_body AND_T conditional
 						{
-							$$ = $1;
-						}
-						| NOT_T conditional
-						{
-							$$ = $1;
+							$$ = create_node(AND, CONDITIONAL, $1, $3, NULL);
 						}
 						;
 
+conditional_body		: expr comparator expr
+						{
+							$$ = create_node(NOTHING, CONDITIONAL_BODY, $1, $2, $3);
+						}
+						| NOT_T conditional_body
+						{
+							$$ = create_node($1, CONDITIONAL_BODY, $2, NULL, NULL);
+						}
+						
 						
 						
 comparator				: EQUAL_TO_T
 						{
-							$$ = $1;
+							$$ = create_node(EQUAL, COMPARATOR, NULL, NULL, NULL);
 						}
 						| NOT_EQUAL_T
 						{
-							$$ = $1;
+							$$ = create_node(NOT_EQUAL, COMPARATOR, NULL, NULL, NULL);
 						}
 						| LESS_THAN_T
 						{
-							$$ = $1;
+							$$ = create_node(LESS_THAN, COMPARATOR, NULL, NULL, NULL);
 						}
 						| GREATER_THAN_T
 						{
-							$$ = $1;
+							$$ = create_node(GREATER_THAN, COMPARATOR, NULL, NULL, NULL);
 						}
 						| LESS_THAN_EQUAL_TO_T
 						{
-							$$ = $1;
+							$$ = create_node(LESS_THAN_EQUAL_TO, COMPARATOR, NULL, NULL, NULL);
 						}
 						| GREATER_THAN_EQUAL_TO_T
 						{
-							$$ = $1;
+							$$ = create_node(GREATER_THAN_EQUAL_TO, COMPARATOR, NULL, NULL, NULL);
 						}
 						;
 						
-expr					: expr ADD_T term
+expr					: term
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, EXPR, $1, NULL, NULL);
+						}
+						| expr ADD_T term
+						{
+							$$ = create_node(NOTHING, EXPR_PLUS, $1, $3, NULL);
 						}
 						| expr MINUS_T term
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, EXPR_MINUS, $1, $3, NULL);
 						}
-						| term
-						{
-							$$ = $1;
-						}
+						
 						;
 						
-term					: term MULTIPLY_T factor
+term					: factor
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, TERM, $1, NULL, NULL);
+						}
+						| term MULTIPLY_T factor
+						{
+							$$ = create_node(NOTHING, TERM_MULTIPLY, $1, $3, NULL);
 						}
 						| term DIVIDE_T factor
 						{
-							$$ = $1;
-						}
-						| factor
-						{
-							$$ = $1;
+							$$ = create_node(NOTHING, TERM_DIVIDE, $1, $3, NULL);
 						}
 						;
 						
 factor					: ID
 						{
-							$$ = $1;
+							$$ = create_node($1, FACTOR, NULL, NULL, NULL);
 						}
 						| constant
 						{
-							$$ = $1;
+							$$ = create_node($1, FACTOR_CONSTANT, NULL, NULL, NULL);
 						}
 						| BRA_T expr KET_T
 						{
-							$$ = $1;
+							$$ = create_node(NOTHING, FACTOR_BRACKETS, $2, NULL, NULL);
 						}
 						;
 						
 type					: INTEGER_T
 						{
-							$$ = $1;
+							$$ = create_node(INTEGER_TYPE, TYPE, NULL, NULL, NULL);
 						}
 						| REAL_T
 						{
-							$$ = $1;
+							$$ = create_node(REAL_TYPE, TYPE, NULL, NULL, NULL);
 						}
 						| CHARACTER_T
 						{
-							$$ = $1;
+							$$ = create_node(CHARACTER_TYPE, TYPE, NULL, NULL, NULL);
 						}
 %%
 
@@ -423,7 +435,21 @@ TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY
     return (t);
 }
 
-
+void PrintTree(TERNARY_TREE t)
+{
+	if(t == NULL)
+	{
+		return;
+	}
+	
+	printf("Item: %d", t->item);
+	printf(" nodeIdentifier: %d\n", t->nodeIdentifier);
+	PrintTree(t->first);
+	PrintTree(t->second);
+	PrintTree(t->third);
+	
+	
+}
 /* Put other auxiliary functions here */
 
 #include "lex.yy.c"
