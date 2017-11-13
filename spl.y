@@ -42,6 +42,16 @@ void yyerror (char *);
 							FACTOR_CONSTANT, INTEGER_TYPE, REAL_TYPE, CHARACTER_TYPE, TYPE, INTEGER_CONSTANT, REAL_CONSTANT,
 							MINUS_INTEGER_CONSTANT, MINUS_REAL_CONSTANT
 							} ;  
+							
+  char* NodeName[] = 		{ 
+							"PROGRAM", "BLOCK", "STATEMENT_BLOCK", "STATEMENT", "DECLARTIONS", "ASSIGNMENT_STATEMENT", "WRITE_STATEMENT",
+							"READ_STATEMENT", "IF_STATEMENT", "DO_STATEMENT", "WHILE_STATEMENT", "FOR_STATEMENT", "FOR_BODY", 
+							"OUTPUT_BLOCK", "NEWLINE", "CONSTANT", "CHARACTER_CONSTANT", "NUMBER_CONSTANT", "CONDITIONAL", "CONDITIONAL_BODY",
+							"COMPARATOR", "OR", "AND", "EQUAL", "NOT_EQUAL", "GREATER_THAN", "LESS_THAN", "GREATER_THAN_EQUAL_TO", "LESS_THAN_EQUAL_TO",
+							"EXPR", "EXPR_MINUS", "EXPR_PLUS", "TERM", "TERM_DIVIDE", "TERM_MULTIPLY", "FACTOR", "FACTOR_BRACKETS", 
+							"FACTOR_CONSTANT", "INTEGER_TYPE", "REAL_TYPE", "CHARACTER_TYPE", "TYPE", "INTEGER_CONSTANT", "REAL_CONSTANT",
+							"MINUS_INTEGER_CONSTANT", "MINUS_REAL_CONSTANT"
+							} ;  							
                           /* Add more types here, as more nodes
                                            added to tree */
 
@@ -73,7 +83,10 @@ typedef  TREE_NODE        *TERNARY_TREE;
 /* ------------- forward declarations --------------------------- */
 
 TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
-void PrintTree(TERNARY_TREE t);
+#ifdef DEBUG
+	void PrintTree(TERNARY_TREE t, int indent);
+#endif	
+void WriteCode(TERNARY_TREE t);
 
 /* ------------- symbol table definition --------------------------- */
 
@@ -101,7 +114,7 @@ int currentSymTabSize = 0;
 
 // These are lexical tokens
 
-%token<iVal>			ID BRA_T KET_T NUMBER_CONSTANT_T
+%token<iVal>	ID_T BRA_T KET_T NUMBER_CONSTANT_T
 
 %token<iVal>	IF_T THEN_T ELSE_T END_IF_T DECLARATIONS_T
 				FOR_T IS_T BY_T TO_T END_FOR_T WRITE_T READ_T NOT_T AND_T OR_T END_DO_T
@@ -112,11 +125,11 @@ int currentSymTabSize = 0;
 				CHARACTER_CONSTANT_T INTEGER_CONSTANT_T REAL_CONSTANT_T
 				CHARACTER_T INTEGER_T REAL_T CODE_T COMMA_T
     
-// These tokens don't return a value
+/* These tokens don't return a value */
 %token 		COLON_T FULL_STOP_T ENDP_T SEMI_COLON_T DO_T
     
 
-// These rules return a type of tVal    
+/* These rules return a type of tVal    */ 
 %type<tVal>  	program expr term factor statement_block statement 
 				for_statement for_body if_statement declarations 
 				assignment_statement  
@@ -127,12 +140,15 @@ int currentSymTabSize = 0;
 
 %%
 
-program             	: ID COLON_T  block ENDP_T ID FULL_STOP_T
+program             	: ID_T COLON_T  block ENDP_T ID_T FULL_STOP_T
 						{
 							TERNARY_TREE parseTree;
 							parseTree = create_node($1, PROGRAM, $3, NULL, NULL);
-							PrintTree(parseTree);
 							
+#ifdef DEBUG							
+							PrintTree(parseTree, 0);
+#endif							
+							void WriteCode(parseTree);
 							if($1 != $3)
 							{
 								/* IDs don't match work out how to handle this */
@@ -154,23 +170,20 @@ block					: DECLARATIONS_T declarations CODE_T statement_block
 						
 						
 						
-declarations			: ID OF_T TYPE_T type SEMI_COLON_T
-						{
-							$$ = create_node($1, DECLARTIONS, $4, NULL, NULL);
-						}
-						
-						| ID OF_T TYPE_T type SEMI_COLON_T declarations
-						{
-							$$ = create_node($1, DECLARTIONS, $4, $6 , NULL);
-						}
-						| ID COMMA_T declarations
+declarations			: ID_T OF_T TYPE_T type SEMI_COLON_T
 						{
 							$$ = create_node($1, DECLARTIONS, $3, NULL, NULL);
 						}
+						| ID_T OF_T TYPE_T type SEMI_COLON_T declarations
+						{
+							$$ = create_node(NOTHING, DECLARTIONS, $4, $6, NULL);							
+						}
 						;
+						
+					
 	
 						
-statement_block			: statement_block SEMI_COLON_T statement 
+statement_block			: statement SEMI_COLON_T statement_block
 						{
 							$$ = create_node(NOTHING, STATEMENT_BLOCK, $1, $3, NULL);
 						}
@@ -210,7 +223,7 @@ statement				: assignment_statement
 						}
 						;
 					
-assignment_statement	: expr ASSIGNMENT_T ID
+assignment_statement	: expr ASSIGNMENT_T ID_T
 						{
 							$$ = create_node($3, ASSIGNMENT_STATEMENT, $1, NULL, NULL);
 						}
@@ -226,7 +239,7 @@ write_statement			: WRITE_T BRA_T output_block KET_T
 						}
 						;
 						
-read_statement			: READ_T BRA_T ID KET_T
+read_statement			: READ_T BRA_T ID_T KET_T
 						{
 							$$ = create_node($3, READ_STATEMENT, NULL, NULL, NULL);
 						}
@@ -260,7 +273,7 @@ for_statement			: FOR_T for_body DO_T statement_block END_FOR_T
 						}			
 						;			
 						
-for_body				: ID IS_T expr BY_T expr TO_T expr 
+for_body				: ID_T IS_T expr BY_T expr TO_T expr 
 						{
 							$$ = create_node($1, FOR_BODY, $3, $5, $7);
 						}
@@ -392,13 +405,13 @@ term					: factor
 						}
 						;
 						
-factor					: ID
+factor					: ID_T
 						{
 							$$ = create_node($1, FACTOR, NULL, NULL, NULL);
 						}
 						| constant
 						{
-							$$ = create_node($1, FACTOR_CONSTANT, NULL, NULL, NULL);
+							$$ = create_node(NOTHING, FACTOR_CONSTANT, $1, NULL, NULL);
 						}
 						| BRA_T expr KET_T
 						{
@@ -435,21 +448,68 @@ TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY
     return (t);
 }
 
-void PrintTree(TERNARY_TREE t)
+#ifdef DEBUG
+void PrintTree(TERNARY_TREE t, int indent)
 {
 	if(t == NULL)
 	{
 		return;
 	}
+	int i;
+	for(i = indent; i; i--)
+	{
+		printf(" ");
+	}
 	
-	printf("Item: %d", t->item);
-	printf(" nodeIdentifier: %d\n", t->nodeIdentifier);
-	PrintTree(t->first);
-	PrintTree(t->second);
-	PrintTree(t->third);
+	
+	
+	if(t->item != NOTHING)
+	{
+		
+		switch(t->nodeIdentifier)
+		{
+			case INTEGER_TYPE:
+				printf("Number: %d", t->item);
+				break;
+			case ID_T:
+				printf("Identifier: %s\n", symTab[t->item]->identifier);
+				break;
+			case FACTOR:
+				printf("Identifier: %s\n", symTab[t->item]->identifier);
+				break;
+			
+				
+		}
+		
+	}
+	if(t->nodeIdentifier < 0 || t->nodeIdentifier > sizeof(NodeName))
+	{
+		
+		printf("Uknown node identifier %d\n", t->nodeIdentifier);
+	}
+	else
+	{
+		printf(" nodeIdentifier: %s\n", NodeName[t->nodeIdentifier]);
+	}
+	PrintTree(t->first, indent + 2);
+	PrintTree(t->second, indent + 2);
+	PrintTree(t->third, indent + 2);
 	
 	
 }
+#endif
+
+void WriteCode(TERNARY_TREE t)
+{
+	if(t == NULL)
+	{
+		return;
+	}
+	WriteCode(t->first);
+	WriteCode(t->second);
+	WriteCode(t->third);
+}
+
 /* Put other auxiliary functions here */
 
 #include "lex.yy.c"
