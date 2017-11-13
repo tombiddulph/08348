@@ -1918,3 +1918,64 @@ Error: popping token ID_T ()
 Stack now 0
 Cleanup: discarding lookahead token COMMA_T ()
 Stack now 0
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for a.spl 
+--13:43:45.63----------------------------------------------------- 
+ Item: 0  nodeIdentifier: PROGRAM
+   nodeIdentifier: BLOCK
+     nodeIdentifier: STATEMENT_BLOCK
+       Item: 6  nodeIdentifier: STATEMENT
+         nodeIdentifier: WRITE_STATEMENT
+           nodeIdentifier: OUTPUT_BLOCK
+             nodeIdentifier: OUTPUT_BLOCK
+               nodeIdentifier: OUTPUT_BLOCK
+                 nodeIdentifier: OUTPUT_BLOCK
+                   nodeIdentifier: OUTPUT_BLOCK
+                     nodeIdentifier: TERM
+                       nodeIdentifier: FACTOR_CONSTANT
+                         Item: 16  nodeIdentifier: CONSTANT
+                   nodeIdentifier: TERM
+                     nodeIdentifier: FACTOR_CONSTANT
+                       Item: 16  nodeIdentifier: CONSTANT
+                 nodeIdentifier: TERM
+                   nodeIdentifier: FACTOR_CONSTANT
+                     Item: 16  nodeIdentifier: CONSTANT
+               nodeIdentifier: TERM
+                 nodeIdentifier: FACTOR_CONSTANT
+                   Item: 16  nodeIdentifier: CONSTANT
+             nodeIdentifier: TERM
+               nodeIdentifier: FACTOR_CONSTANT
+                 Item: 16  nodeIdentifier: CONSTANT
+       nodeIdentifier: STATEMENT_BLOCK
+         Item: 6  nodeIdentifier: STATEMENT
+           nodeIdentifier: NEWLINE
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for b.spl 
+--13:43:46.34----------------------------------------------------- 
+Error : Exiting syntax error
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for c.spl 
+--13:43:47.00----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for d.spl 
+--13:43:50.01----------------------------------------------------- 
+Error : Exiting syntax error
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for e.spl 
+--13:43:50.74----------------------------------------------------- 
+Error : Exiting syntax error
+--13/11/2017----------------------------------------------------- 
+C Code output for a.spl 
+--13:43:54.70----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+C Code output for b.spl 
+--13:43:55.43----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+C Code output for c.spl 
+--13:44:02.88----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+C Code output for d.spl 
+--13:44:03.59----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+C Code output for e.spl 
+--13:44:04.29----------------------------------------------------- 

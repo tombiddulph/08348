@@ -1,3 +1,28 @@
+-- flex Errors -------------------------------- 
+-- gcc -ansi -DPRINT Errors -------------------------------- 
+-- bison -t Errors -------------------------------- 
+-- gcc -ansi -DYYDEBUG Errors -------------------------------- 
+spl.y: In function 'yyparse':
+spl.y:152:35: warning: comparison between pointer and integer
+spl.y:175:73: warning: passing argument 3 of 'create_node' makes pointer from integer without a cast [-Wint-conversion]
+spl.y:85:14: note: expected 'TERNARY_TREE {aka struct treeNode *}' but argument is of type 'int'
+ TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
+              ^
+-- gcc -ansi -DDEBUG Errors -------------------------------- 
+spl.y: In function 'yyparse':
+spl.y:152:35: warning: comparison between pointer and integer
+spl.y:175:73: warning: passing argument 3 of 'create_node' makes pointer from integer without a cast [-Wint-conversion]
+spl.y:85:14: note: expected 'TERNARY_TREE {aka struct treeNode *}' but argument is of type 'int'
+ TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
+              ^
+-- gcc -ansi Errors -------------------------------- 
+spl.y: In function 'yyparse':
+spl.y:152:35: warning: comparison between pointer and integer
+spl.y:175:73: warning: passing argument 3 of 'create_node' makes pointer from integer without a cast [-Wint-conversion]
+spl.y:85:14: note: expected 'TERNARY_TREE {aka struct treeNode *}' but argument is of type 'int'
+ TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
+              ^
+-- Output -------------------------------- 
 --13/11/2017----------------------------------------------------- 
 Lexical Tokens for a.spl 
 --13:43:24.69----------------------------------------------------- 
@@ -1918,3 +1943,95 @@ Error: popping token ID_T ()
 Stack now 0
 Cleanup: discarding lookahead token COMMA_T ()
 Stack now 0
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for a.spl 
+--13:43:45.63----------------------------------------------------- 
+ Item: 0  nodeIdentifier: PROGRAM
+   nodeIdentifier: BLOCK
+     nodeIdentifier: STATEMENT_BLOCK
+       Item: 6  nodeIdentifier: STATEMENT
+         nodeIdentifier: WRITE_STATEMENT
+           nodeIdentifier: OUTPUT_BLOCK
+             nodeIdentifier: OUTPUT_BLOCK
+               nodeIdentifier: OUTPUT_BLOCK
+                 nodeIdentifier: OUTPUT_BLOCK
+                   nodeIdentifier: OUTPUT_BLOCK
+                     nodeIdentifier: TERM
+                       nodeIdentifier: FACTOR_CONSTANT
+                         Item: 16  nodeIdentifier: CONSTANT
+                   nodeIdentifier: TERM
+                     nodeIdentifier: FACTOR_CONSTANT
+                       Item: 16  nodeIdentifier: CONSTANT
+                 nodeIdentifier: TERM
+                   nodeIdentifier: FACTOR_CONSTANT
+                     Item: 16  nodeIdentifier: CONSTANT
+               nodeIdentifier: TERM
+                 nodeIdentifier: FACTOR_CONSTANT
+                   Item: 16  nodeIdentifier: CONSTANT
+             nodeIdentifier: TERM
+               nodeIdentifier: FACTOR_CONSTANT
+                 Item: 16  nodeIdentifier: CONSTANT
+       nodeIdentifier: STATEMENT_BLOCK
+         Item: 6  nodeIdentifier: STATEMENT
+           nodeIdentifier: NEWLINE
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for b.spl 
+--13:43:46.34----------------------------------------------------- 
+Error : Exiting syntax error
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for c.spl 
+--13:43:47.00----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for d.spl 
+--13:43:50.01----------------------------------------------------- 
+Error : Exiting syntax error
+--13/11/2017----------------------------------------------------- 
+Parse Tree output for e.spl 
+--13:43:50.74----------------------------------------------------- 
+Error : Exiting syntax error
+--13/11/2017----------------------------------------------------- 
+C Code output for a.spl 
+--13:43:54.70----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+C Code output for b.spl 
+--13:43:55.43----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+C Code output for c.spl 
+--13:44:02.88----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+C Code output for d.spl 
+--13:44:03.59----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+C Code output for e.spl 
+--13:44:04.29----------------------------------------------------- 
+--13/11/2017----------------------------------------------------- 
+Program A output incorrect 
+--13:44:07.12----------------------------------------------------- 
+c:/mingw/bin/../lib/gcc/mingw32/5.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16'
+collect2.exe: error: ld returned 1 exit status
+'.\a.exe' is not recognized as an internal or external command,
+operable program or batch file.
+--13/11/2017----------------------------------------------------- 
+Program B output incorrect - 2 
+--13:44:09.61----------------------------------------------------- 
+c:/mingw/bin/../lib/gcc/mingw32/5.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16'
+collect2.exe: error: ld returned 1 exit status
+'.\b.exe' is not recognized as an internal or external command,
+operable program or batch file.
+--13/11/2017----------------------------------------------------- 
+Incorrect Execution output for c.spl - 2 
+--13:44:15.97----------------------------------------------------- 
+c:/mingw/bin/../lib/gcc/mingw32/5.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16'
+collect2.exe: error: ld returned 1 exit status
+'.\c.exe' is not recognized as an internal or external command,
+operable program or batch file.
+--13/11/2017----------------------------------------------------- 
+Program D output incorrect - 0 
+--13:44:18.51----------------------------------------------------- 
+c:/mingw/bin/../lib/gcc/mingw32/5.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16'
+collect2.exe: error: ld returned 1 exit status
+--13/11/2017----------------------------------------------------- 
+Program E output incorrect - 0 
+--13:44:21.77----------------------------------------------------- 
+c:/mingw/bin/../lib/gcc/mingw32/5.3.0/../../../libmingw32.a(main.o):(.text.startup+0xa0): undefined reference to `WinMain@16'
+collect2.exe: error: ld returned 1 exit status

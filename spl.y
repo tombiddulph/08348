@@ -40,7 +40,7 @@ void yyerror (char *);
 							COMPARATOR, OR, AND, EQUAL, NOT_EQUAL, GREATER_THAN, LESS_THAN, GREATER_THAN_EQUAL_TO, LESS_THAN_EQUAL_TO,
 							EXPR, EXPR_MINUS, EXPR_PLUS, TERM, TERM_DIVIDE, TERM_MULTIPLY, FACTOR, FACTOR_BRACKETS, 
 							FACTOR_CONSTANT, INTEGER_TYPE, REAL_TYPE, CHARACTER_TYPE, TYPE, INTEGER_CONSTANT, REAL_CONSTANT,
-							MINUS_INTEGER_CONSTANT, MINUS_REAL_CONSTANT
+							MINUS_INTEGER_CONSTANT, MINUS_REAL_CONSTANT, IDENTIFIER_BLOCK DECLARATIONS
 							} ;  
 							
   char* NodeName[] = 		{ 
@@ -50,7 +50,7 @@ void yyerror (char *);
 							"COMPARATOR", "OR", "AND", "EQUAL", "NOT_EQUAL", "GREATER_THAN", "LESS_THAN", "GREATER_THAN_EQUAL_TO", "LESS_THAN_EQUAL_TO",
 							"EXPR", "EXPR_MINUS", "EXPR_PLUS", "TERM", "TERM_DIVIDE", "TERM_MULTIPLY", "FACTOR", "FACTOR_BRACKETS", 
 							"FACTOR_CONSTANT", "INTEGER_TYPE", "REAL_TYPE", "CHARACTER_TYPE", "TYPE", "INTEGER_CONSTANT", "REAL_CONSTANT",
-							"MINUS_INTEGER_CONSTANT", "MINUS_REAL_CONSTANT"
+							"MINUS_INTEGER_CONSTANT", "MINUS_REAL_CONSTANT" , "IDENTIFIER_BLOCK"
 							} ;  							
                           /* Add more types here, as more nodes
                                            added to tree */
@@ -131,10 +131,11 @@ int currentSymTabSize = 0;
 
 /* These rules return a type of tVal    */ 
 %type<tVal>  	program expr term factor statement_block statement 
-				for_statement for_body if_statement declarations 
+				for_statement for_body if_statement 
 				assignment_statement  
 				write_statement conditional conditional_body comparator output_block read_statement 
 				character_constant constant number_constant while_statement do_statement block type
+				declaration_blocks declaration_block identifier_block
 
 
 
@@ -148,7 +149,7 @@ program             	: ID_T COLON_T  block ENDP_T ID_T FULL_STOP_T
 #ifdef DEBUG							
 							PrintTree(parseTree, 0);
 #endif							
-							void WriteCode(parseTree);
+							WriteCode(parseTree);
 							if($1 != $3)
 							{
 								/* IDs don't match work out how to handle this */
@@ -159,9 +160,9 @@ program             	: ID_T COLON_T  block ENDP_T ID_T FULL_STOP_T
 						;
 						
 						
-block					: DECLARATIONS_T declarations CODE_T statement_block
+block					: declaration_blocks CODE_T statement_block
 						{
-							$$ = create_node(NOTHING, BLOCK, $2, $4, NULL);
+							$$ = create_node(NOTHING, BLOCK, $1, $3, NULL);
 						}
 						| CODE_T statement_block
 						{
@@ -169,19 +170,42 @@ block					: DECLARATIONS_T declarations CODE_T statement_block
 						}
 						
 						
+ 
 						
-declarations			: ID_T OF_T TYPE_T type SEMI_COLON_T
+declaration_blocks		: declaration_blocks declaration_block
 						{
-							$$ = create_node($1, DECLARTIONS, $3, NULL, NULL);
+							$$ = create_node(NOTHING, DECLARTIONS, $1, $2, NULL);
 						}
-						| ID_T OF_T TYPE_T type SEMI_COLON_T declarations
+						| declaration_block
 						{
-							$$ = create_node(NOTHING, DECLARTIONS, $4, $6, NULL);							
+							$$ = create_node(NOTHING, DECLARTIONS,$1, NULL, NULL);							
 						}
 						;
 						
-					
-	
+declaration_block		: identifier_block OF_T INTEGER_T SEMI_COLON_T
+						{
+							$$ = create_node(NOTHING, INTEGER_T, $1, NULL, NULL);
+						}
+						| identifier_block OF_T REAL_T SEMI_COLON_T
+						{
+							$$ = create_node(NOTHING, REAL_T, $1, NULL, NULL);
+						}
+						| identifier_block OF_T CHARACTER_T SEMI_COLON_T		
+						{
+							$$ = create_node(NOTHING, CHARACTER_T, $1, NULL, NULL);
+						}
+						
+						
+identifier_block 		: identifier_block COMMA_T ID_T 
+						{
+							$$ = create_node($3, IDENTIFIER_BLOCK, $1, NULL, NULL);
+						}
+						| ID_T identifier_block					
+						{
+							$$ = create_node($1, IDENTIFIER_BLOCK, $2, NULL, NULL);
+						}
+						;
+
 						
 statement_block			: statement SEMI_COLON_T statement_block
 						{
@@ -462,30 +486,31 @@ void PrintTree(TERNARY_TREE t, int indent)
 	}
 	
 	
+	if(t->nodeIdentifier == NUMBER_CONSTANT)
+	{
+	
+	}
+	if(t->nodeIdentifier == ID_T)
+	{
+		if(t->item > 0 && t->item <SYMTABSIZE)
+		{
+			printf("Identifier: %s ", symTab[t->item]->identifier);
+		}
+		else
+		{
+			printf("Uknown identifier: %d ",t->item);
+		}
+		
+	}
 	
 	if(t->item != NOTHING)
 	{
-		
-		switch(t->nodeIdentifier)
-		{
-			case INTEGER_TYPE:
-				printf("Number: %d", t->item);
-				break;
-			case ID_T:
-				printf("Identifier: %s\n", symTab[t->item]->identifier);
-				break;
-			case FACTOR:
-				printf("Identifier: %s\n", symTab[t->item]->identifier);
-				break;
-			
-				
-		}
-		
+		printf(" Item: %d ", t->item);
 	}
 	if(t->nodeIdentifier < 0 || t->nodeIdentifier > sizeof(NodeName))
 	{
 		
-		printf("Uknown node identifier %d\n", t->nodeIdentifier);
+		printf("Uknown nodeIdentifier %d\n", t->nodeIdentifier);
 	}
 	else
 	{

@@ -10,7 +10,7 @@
 	#define _TOKEN_REAL_(t) 		printf("Real token: %f\n", atof(yytext));
 	#define _TOKEN_CHARACTER_(t) 	printf("Character constant token: %c\n", yytext[1]);
     #define _TOKEN_IDENTIFIER_(t) 	printf("Identifier token: %s\n",yytext); 
-	#define _TOKEN_UNKNOWN_(t)		printf("Unkown token: %s\n", yytext);
+	#define _TOKEN_UNKNOWN_(t)		printf("Unkown token in lexical analyser : %s (%d)\n", yytext, yytext[0]);
 
     #else
 
@@ -92,7 +92,7 @@ REAL				_TOKEN_(REAL);
 {identifier}        _TOKEN_IDENTIFIER_(ID);
 {integer}           _TOKEN_INTEGER_(INTEGER_CONSTANT_T); 
 {real}             	_TOKEN_REAL_(REAL_CONSTANT_T);
-.|\n				_TOKEN_UNKNOWN_(UNKOWN);
+.					_TOKEN_UNKNOWN_(UNKOWN);
 
 
 %%
@@ -103,6 +103,8 @@ REAL				_TOKEN_(REAL);
    structs, each of which contains an identifier.
 */
 
+
+#ifndef PRINT
 
 
 SYMTABNODEPTR newSymTabNode()
@@ -155,5 +157,7 @@ int installId(char *id)
        return(currentSymTabSize++);
     }
 }
+
+#endif
 
 
