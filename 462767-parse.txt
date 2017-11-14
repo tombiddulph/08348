@@ -1,6 +1,6 @@
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Lexical Tokens for a.spl 
--- 9:31:51.00----------------------------------------------------- 
+--10:00:00.70----------------------------------------------------- 
 Identifier token: ProgA
 Token: COLON
 Token: CODE
@@ -21,9 +21,9 @@ Token: NEWLINE
 Token: ENDP
 Identifier token: ProgA
 Token: FULL_STOP
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Lexical Tokens for b.spl 
--- 9:31:53.02----------------------------------------------------- 
+--10:00:03.32----------------------------------------------------- 
 Identifier token: ProgB
 Token: COLON
 Token: DECLARATIONS
@@ -107,9 +107,9 @@ Token: NEWLINE
 Token: ENDP
 Identifier token: ProgB
 Token: FULL_STOP
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Lexical Tokens for c.spl 
--- 9:31:55.01----------------------------------------------------- 
+--10:00:04.28----------------------------------------------------- 
 Identifier token: Prog3
 Token: COLON
 Token: DECLARATIONS
@@ -202,9 +202,9 @@ Token: NEWLINE
 Token: ENDP
 Identifier token: Prog3
 Token: FULL_STOP
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Lexical Tokens for d.spl 
--- 9:31:56.71----------------------------------------------------- 
+--10:00:11.16----------------------------------------------------- 
 Identifier token: Prog4D
 Token: COLON
 Token: DECLARATIONS
@@ -263,9 +263,9 @@ Token: NEWLINE
 Token: ENDP
 Identifier token: Prog4D
 Token: FULL_STOP
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Lexical Tokens for e.spl 
--- 9:31:58.17----------------------------------------------------- 
+--10:00:14.28----------------------------------------------------- 
 Identifier token: ProgV
 Token: COLON
 Token: DECLARATIONS
@@ -378,9 +378,9 @@ Token: END_FOR
 Token: ENDP
 Identifier token: ProgV
 Token: FULL_STOP
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Parse debug output for a.spl 
--- 9:53:56.98----------------------------------------------------- 
+--10:00:23.70----------------------------------------------------- 
 Starting parse
 Entering state 0
 Reading a token: Next token is token ID ()
@@ -401,28 +401,28 @@ Entering state 49
 Reading a token: Next token is token CHARACTER_CONSTANT_T ()
 Shifting token CHARACTER_CONSTANT_T ()
 Entering state 19
-Reducing stack by rule 30 (line 288):
+Reducing stack by rule 30 (line 291):
    $1 = token CHARACTER_CONSTANT_T ()
 -> $$ = nterm character_constant ()
 Stack now 0 1 3 6 14 49
 Entering state 33
-Reducing stack by rule 29 (line 282):
+Reducing stack by rule 29 (line 285):
    $1 = nterm character_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 6 14 49
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 6 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 6 14 49
 Entering state 80
 Reading a token: Next token is token COMMA_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 6 14 49
@@ -433,28 +433,28 @@ Entering state 102
 Reading a token: Next token is token CHARACTER_CONSTANT_T ()
 Shifting token CHARACTER_CONSTANT_T ()
 Entering state 19
-Reducing stack by rule 30 (line 288):
+Reducing stack by rule 30 (line 291):
    $1 = token CHARACTER_CONSTANT_T ()
 -> $$ = nterm character_constant ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 33
-Reducing stack by rule 29 (line 282):
+Reducing stack by rule 29 (line 285):
    $1 = nterm character_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 111
 Reading a token: Next token is token COMMA_T ()
-Reducing stack by rule 26 (line 266):
+Reducing stack by rule 26 (line 269):
    $1 = nterm output_block ()
    $2 = token COMMA_T ()
    $3 = nterm term ()
@@ -467,28 +467,28 @@ Entering state 102
 Reading a token: Next token is token CHARACTER_CONSTANT_T ()
 Shifting token CHARACTER_CONSTANT_T ()
 Entering state 19
-Reducing stack by rule 30 (line 288):
+Reducing stack by rule 30 (line 291):
    $1 = token CHARACTER_CONSTANT_T ()
 -> $$ = nterm character_constant ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 33
-Reducing stack by rule 29 (line 282):
+Reducing stack by rule 29 (line 285):
    $1 = nterm character_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 111
 Reading a token: Next token is token COMMA_T ()
-Reducing stack by rule 26 (line 266):
+Reducing stack by rule 26 (line 269):
    $1 = nterm output_block ()
    $2 = token COMMA_T ()
    $3 = nterm term ()
@@ -501,28 +501,51 @@ Entering state 102
 Reading a token: Next token is token CHARACTER_CONSTANT_T ()
 Shifting token CHARACTER_CONSTANT_T ()
 Entering state 19
-Reducing stack by rule 30 (line 288):
+Reducing stack by rule 30 (line 291):
    $1 = token CHARACTER_CONSTANT_T ()
 -> $$ = nterm character_constant ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 33
-Reducing stack by rule 29 (line 282):
+Reducing stack by rule 29 (line 285):
    $1 = nterm character_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
-Stack now 0 1 3 6 14 49 79 102
+Stack now 0 1 3 6 14 49 79 1Item: 0 nodeIdentifier: 0
+Item: -1 nodeIdentifier: 1
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 15015792 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 32
+Item: 15013856 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 32
+Item: 15014040 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 32
+Item: 15008928 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 32
+Item: 15014688 nodeIdentifier: 37
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+02
 Entering state 111
 Reading a token: Next token is token COMMA_T ()
-Reducing stack by rule 26 (line 266):
+Reducing stack by rule 26 (line 269):
    $1 = nterm output_block ()
    $2 = token COMMA_T ()
    $3 = nterm term ()
@@ -535,28 +558,28 @@ Entering state 102
 Reading a token: Next token is token CHARACTER_CONSTANT_T ()
 Shifting token CHARACTER_CONSTANT_T ()
 Entering state 19
-Reducing stack by rule 30 (line 288):
+Reducing stack by rule 30 (line 291):
    $1 = token CHARACTER_CONSTANT_T ()
 -> $$ = nterm character_constant ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 33
-Reducing stack by rule 29 (line 282):
+Reducing stack by rule 29 (line 285):
    $1 = nterm character_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 6 14 49 79 102
 Entering state 111
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 26 (line 266):
+Reducing stack by rule 26 (line 269):
    $1 = nterm output_block ()
    $2 = token COMMA_T ()
    $3 = nterm term ()
@@ -566,7 +589,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -574,12 +597,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 6
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 6
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 6
@@ -590,17 +613,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 6 23 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 6 23 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -608,7 +631,7 @@ Reducing stack by rule 7 (line 170):
 Stack now 0 1 3 6
 Entering state 23
 Reading a token: Next token is token ENDP_T ()
-Reducing stack by rule 3 (line 147):
+Reducing stack by rule 3 (line 150):
    $1 = token CODE_T ()
    $2 = nterm statement_block ()
 -> $$ = nterm block ()
@@ -623,7 +646,7 @@ Entering state 61
 Reading a token: Next token is token FULL_STOP_T ()
 Shifting token FULL_STOP_T ()
 Entering state 90
-Reducing stack by rule 1 (line 128):
+Reducing stack by rule 1 (line 130):
    $1 = token ID ()
    $2 = token COLON_T ()
    $3 = nterm block ()
@@ -639,9 +662,9 @@ Entering state 4
 Stack now 0 2 4
 Cleanup: popping token $end ()
 Cleanup: popping nterm program ()
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Parse debug output for b.spl 
--- 9:54:00.28----------------------------------------------------- 
+--10:01:25.13----------------------------------------------------- 
 Starting parse
 Entering state 0
 Reading a token: Next token is token ID ()
@@ -671,7 +694,7 @@ Entering state 62
 Reading a token: Next token is token INTEGER_T ()
 Shifting token INTEGER_T ()
 Entering state 92
-Reducing stack by rule 55 (line 406):
+Reducing stack by rule 55 (line 409):
    $1 = token INTEGER_T ()
 -> $$ = nterm type ()
 Stack now 0 1 3 5 8 40 8 39 62
@@ -691,7 +714,7 @@ Entering state 62
 Reading a token: Next token is token CHARACTER_T ()
 Shifting token CHARACTER_T ()
 Entering state 91
-Reducing stack by rule 57 (line 414):
+Reducing stack by rule 57 (line 417):
    $1 = token CHARACTER_T ()
 -> $$ = nterm type ()
 Stack now 0 1 3 5 8 40 8 39 62 94 106 8 39 62
@@ -717,7 +740,7 @@ Entering state 62
 Reading a token: Next token is token REAL_T ()
 Shifting token REAL_T ()
 Entering state 93
-Reducing stack by rule 56 (line 410):
+Reducing stack by rule 56 (line 413):
    $1 = token REAL_T ()
 -> $$ = nterm type ()
 Stack now 0 1 3 5 8 40 8 39 62 94 106 8 39 62 94 106 8 40 8 39 62
@@ -726,7 +749,7 @@ Reading a token: Next token is token SEMI_COLON_T ()
 Shifting token SEMI_COLON_T ()
 Entering state 106
 Reading a token: Next token is token CODE_T ()
-Reducing stack by rule 4 (line 154):
+Reducing stack by rule 4 (line 157):
    $1 = token ID ()
    $2 = token OF_T ()
    $3 = token TYPE_T ()
@@ -735,14 +758,14 @@ Reducing stack by rule 4 (line 154):
 -> $$ = nterm declarations ()
 Stack now 0 1 3 5 8 40 8 39 62 94 106 8 39 62 94 106 8 40
 Entering state 63
-Reducing stack by rule 6 (line 163):
+Reducing stack by rule 6 (line 166):
    $1 = token ID ()
    $2 = token COMMA_T ()
    $3 = nterm declarations ()
 -> $$ = nterm declarations ()
 Stack now 0 1 3 5 8 40 8 39 62 94 106 8 39 62 94 106
 Entering state 114
-Reducing stack by rule 5 (line 159):
+Reducing stack by rule 5 (line 162):
    $1 = token ID ()
    $2 = token OF_T ()
    $3 = token TYPE_T ()
@@ -752,7 +775,7 @@ Reducing stack by rule 5 (line 159):
 -> $$ = nterm declarations ()
 Stack now 0 1 3 5 8 40 8 39 62 94 106
 Entering state 114
-Reducing stack by rule 5 (line 159):
+Reducing stack by rule 5 (line 162):
    $1 = token ID ()
    $2 = token OF_T ()
    $3 = token TYPE_T ()
@@ -762,7 +785,7 @@ Reducing stack by rule 5 (line 159):
 -> $$ = nterm declarations ()
 Stack now 0 1 3 5 8 40
 Entering state 63
-Reducing stack by rule 6 (line 163):
+Reducing stack by rule 6 (line 166):
    $1 = token ID ()
    $2 = token COMMA_T ()
    $3 = nterm declarations ()
@@ -784,7 +807,7 @@ Entering state 81
 Reading a token: Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 103
-Reducing stack by rule 19 (line 226):
+Reducing stack by rule 19 (line 229):
    $1 = token READ_T ()
    $2 = token BRA_T ()
    $3 = token ID ()
@@ -792,12 +815,12 @@ Reducing stack by rule 19 (line 226):
 -> $$ = nterm read_statement ()
 Stack now 0 1 3 5 9 41
 Entering state 27
-Reducing stack by rule 11 (line 188):
+Reducing stack by rule 11 (line 191):
    $1 = nterm read_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41
@@ -817,7 +840,7 @@ Entering state 81
 Reading a token: Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 103
-Reducing stack by rule 19 (line 226):
+Reducing stack by rule 19 (line 229):
    $1 = token READ_T ()
    $2 = token BRA_T ()
    $3 = token ID ()
@@ -825,12 +848,12 @@ Reducing stack by rule 19 (line 226):
 -> $$ = nterm read_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 27
-Reducing stack by rule 11 (line 188):
+Reducing stack by rule 11 (line 191):
    $1 = nterm read_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -846,18 +869,18 @@ Entering state 12
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 12
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 12
 Entering state 36
 Reading a token: Next token is token GREATER_THAN_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 12
@@ -865,7 +888,7 @@ Entering state 46
 Next token is token GREATER_THAN_T ()
 Shifting token GREATER_THAN_T ()
 Entering state 73
-Reducing stack by rule 43 (line 349):
+Reducing stack by rule 43 (line 352):
    $1 = token GREATER_THAN_T ()
 -> $$ = nterm comparator ()
 Stack now 0 1 3 5 9 41 64 55 12 46
@@ -873,24 +896,24 @@ Entering state 76
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 12 46 76
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 12 46 76
 Entering state 36
 Reading a token: Next token is token THEN_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 12 46 76
 Entering state 98
 Next token is token THEN_T ()
-Reducing stack by rule 38 (line 326):
+Reducing stack by rule 38 (line 329):
    $1 = nterm expr ()
    $2 = nterm comparator ()
    $3 = nterm expr ()
@@ -898,7 +921,7 @@ Reducing stack by rule 38 (line 326):
 Stack now 0 1 3 5 9 41 64 55 12
 Entering state 45
 Next token is token THEN_T ()
-Reducing stack by rule 35 (line 312):
+Reducing stack by rule 35 (line 315):
    $1 = nterm conditional_body ()
 -> $$ = nterm conditional ()
 Stack now 0 1 3 5 9 41 64 55 12
@@ -915,28 +938,28 @@ Entering state 49
 Reading a token: Next token is token CHARACTER_CONSTANT_T ()
 Shifting token CHARACTER_CONSTANT_T ()
 Entering state 19
-Reducing stack by rule 30 (line 288):
+Reducing stack by rule 30 (line 291):
    $1 = token CHARACTER_CONSTANT_T ()
 -> $$ = nterm character_constant ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 14 49
 Entering state 33
-Reducing stack by rule 29 (line 282):
+Reducing stack by rule 29 (line 285):
    $1 = nterm character_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 14 49
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 14 49
@@ -944,7 +967,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -952,12 +975,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67
@@ -974,28 +997,28 @@ Entering state 49
 Reading a token: Next token is token CHARACTER_CONSTANT_T ()
 Shifting token CHARACTER_CONSTANT_T ()
 Entering state 19
-Reducing stack by rule 30 (line 288):
+Reducing stack by rule 30 (line 291):
    $1 = token CHARACTER_CONSTANT_T ()
 -> $$ = nterm character_constant ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 95 107 14 49
 Entering state 33
-Reducing stack by rule 29 (line 282):
+Reducing stack by rule 29 (line 285):
    $1 = nterm character_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 95 107 14 49
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 95 107 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 95 107 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 95 107 14 49
@@ -1003,7 +1026,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -1011,12 +1034,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 95 107
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 95 107
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 95 107
@@ -1024,7 +1047,7 @@ Entering state 115
 Reading a token: Next token is token END_IF_T ()
 Shifting token END_IF_T ()
 Entering state 117
-Reducing stack by rule 21 (line 236):
+Reducing stack by rule 21 (line 239):
    $1 = token IF_T ()
    $2 = nterm conditional ()
    $3 = token THEN_T ()
@@ -1035,12 +1058,12 @@ Reducing stack by rule 21 (line 236):
 -> $$ = nterm if_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 28
-Reducing stack by rule 12 (line 192):
+Reducing stack by rule 12 (line 195):
    $1 = nterm if_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1053,17 +1076,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1085,7 +1108,7 @@ Entering state 81
 Reading a token: Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 103
-Reducing stack by rule 19 (line 226):
+Reducing stack by rule 19 (line 229):
    $1 = token READ_T ()
    $2 = token BRA_T ()
    $3 = token ID ()
@@ -1093,12 +1116,12 @@ Reducing stack by rule 19 (line 226):
 -> $$ = nterm read_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 27
-Reducing stack by rule 11 (line 188):
+Reducing stack by rule 11 (line 191):
    $1 = nterm read_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1111,12 +1134,12 @@ Entering state 55
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55
@@ -1127,22 +1150,22 @@ Entering state 59
 Reading a token: Next token is token REAL_CONSTANT_T ()
 Shifting token REAL_CONSTANT_T ()
 Entering state 21
-Reducing stack by rule 32 (line 298):
+Reducing stack by rule 32 (line 301):
    $1 = token REAL_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 36 59
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 36 59
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -1150,7 +1173,7 @@ Reducing stack by rule 50 (line 382):
 Stack now 0 1 3 5 9 41 64 55
 Entering state 36
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55
@@ -1161,19 +1184,19 @@ Entering state 56
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1192,18 +1215,18 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 14 49
@@ -1211,7 +1234,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -1219,12 +1242,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1237,17 +1260,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1269,7 +1292,7 @@ Entering state 81
 Reading a token: Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 103
-Reducing stack by rule 19 (line 226):
+Reducing stack by rule 19 (line 229):
    $1 = token READ_T ()
    $2 = token BRA_T ()
    $3 = token ID ()
@@ -1277,12 +1300,12 @@ Reducing stack by rule 19 (line 226):
 -> $$ = nterm read_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 27
-Reducing stack by rule 11 (line 188):
+Reducing stack by rule 11 (line 191):
    $1 = nterm read_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1301,18 +1324,18 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 14 49
@@ -1320,7 +1343,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -1328,35 +1351,110 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41
 Entering state 64
-Reading a token: Next token is token SEMI_COLON_T ()
+Reading a token: Next token is token SEMI_COItem: 0 nodeIdentifier: 0
+Item: -1 nodeIdentifier: 1
+Item: 1 nodeIdentifier: 4
+Item: 2 nodeIdentifier: 4
+Item: 38 nodeIdentifier: 41
+Item: 3 nodeIdentifier: 4
+Item: 40 nodeIdentifier: 41
+Item: 4 nodeIdentifier: 4
+Item: 5 nodeIdentifier: 4
+Item: 39 nodeIdentifier: 41
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 7 nodeIdentifier: 3
+Item: 1 nodeIdentifier: 7
+Item: 7 nodeIdentifier: 3
+Item: 2 nodeIdentifier: 7
+Item: 8 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 8
+Item: -1 nodeIdentifier: 18
+Item: -1 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 25 nodeIdentifier: 20
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 2 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 2
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 14425336 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 2
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 14424856 nodeIdentifier: 37
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+Item: 7 nodeIdentifier: 3
+Item: 4 nodeIdentifier: 7
+Item: 5 nodeIdentifier: 3
+Item: 5 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 32
+Item: 4 nodeIdentifier: 35
+Item: 14466792 nodeIdentifier: 37
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 5 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+Item: 7 nodeIdentifier: 3
+Item: 3 nodeIdentifier: 7
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 3 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+LON_T ()
 Shifting token SEMI_COLON_T ()
 Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1364,7 +1462,7 @@ Reducing stack by rule 7 (line 170):
 Stack now 0 1 3 5 9 41
 Entering state 64
 Reading a token: Next token is token ENDP_T ()
-Reducing stack by rule 2 (line 143):
+Reducing stack by rule 2 (line 146):
    $1 = token DECLARATIONS_T ()
    $2 = nterm declarations ()
    $3 = token CODE_T ()
@@ -1381,7 +1479,7 @@ Entering state 61
 Reading a token: Next token is token FULL_STOP_T ()
 Shifting token FULL_STOP_T ()
 Entering state 90
-Reducing stack by rule 1 (line 128):
+Reducing stack by rule 1 (line 130):
    $1 = token ID ()
    $2 = token COLON_T ()
    $3 = nterm block ()
@@ -1397,9 +1495,9 @@ Entering state 4
 Stack now 0 2 4
 Cleanup: popping token $end ()
 Cleanup: popping nterm program ()
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Parse debug output for c.spl 
--- 9:54:01.52----------------------------------------------------- 
+--10:01:30.56----------------------------------------------------- 
 Starting parse
 Entering state 0
 Reading a token: Next token is token ID ()
@@ -1423,7 +1521,7 @@ Entering state 62
 Reading a token: Next token is token INTEGER_T ()
 Shifting token INTEGER_T ()
 Entering state 92
-Reducing stack by rule 55 (line 406):
+Reducing stack by rule 55 (line 409):
    $1 = token INTEGER_T ()
 -> $$ = nterm type ()
 Stack now 0 1 3 5 8 39 62
@@ -1432,7 +1530,7 @@ Reading a token: Next token is token SEMI_COLON_T ()
 Shifting token SEMI_COLON_T ()
 Entering state 106
 Reading a token: Next token is token CODE_T ()
-Reducing stack by rule 4 (line 154):
+Reducing stack by rule 4 (line 157):
    $1 = token ID ()
    $2 = token OF_T ()
    $3 = token TYPE_T ()
@@ -1456,28 +1554,28 @@ Entering state 77
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 13 47 77
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 13 47 77
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 13 47 77
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 13 47 77
 Entering state 36
 Reading a token: Next token is token BY_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 13 47 77
@@ -1488,28 +1586,28 @@ Entering state 109
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109
 Entering state 36
 Reading a token: Next token is token TO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109
@@ -1520,34 +1618,34 @@ Entering state 118
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109 116 118
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109 116 118
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109 116 118
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109 116 118
 Entering state 36
 Reading a token: Next token is token DO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 13 47 77 99 109 116 118
 Entering state 119
 Next token is token DO_T ()
-Reducing stack by rule 25 (line 260):
+Reducing stack by rule 25 (line 263):
    $1 = token ID ()
    $2 = token IS_T ()
    $3 = nterm expr ()
@@ -1570,18 +1668,18 @@ Entering state 43
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43
 Entering state 36
 Reading a token: Next token is token EQUAL_TO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43
@@ -1589,7 +1687,7 @@ Entering state 46
 Next token is token EQUAL_TO_T ()
 Shifting token EQUAL_TO_T ()
 Entering state 70
-Reducing stack by rule 40 (line 337):
+Reducing stack by rule 40 (line 340):
    $1 = token EQUAL_TO_T ()
 -> $$ = nterm comparator ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43 46
@@ -1597,48 +1695,48 @@ Entering state 76
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43 46 76
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43 46 76
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43 46 76
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43 46 76
 Entering state 36
 Reading a token: Next token is token THEN_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43 46 76
 Entering state 98
 Next token is token THEN_T ()
-Reducing stack by rule 38 (line 326):
+Reducing stack by rule 38 (line 329):
    $1 = nterm expr ()
    $2 = nterm comparator ()
    $3 = nterm expr ()
 -> $$ = nterm conditional_body ()
 Stack now 0 1 3 5 9 41 13 48 78 12 43
 Entering state 66
-Reducing stack by rule 39 (line 330):
+Reducing stack by rule 39 (line 333):
    $1 = token NOT_T ()
    $2 = nterm conditional_body ()
 -> $$ = nterm conditional_body ()
 Stack now 0 1 3 5 9 41 13 48 78 12
 Entering state 45
 Next token is token THEN_T ()
-Reducing stack by rule 35 (line 312):
+Reducing stack by rule 35 (line 315):
    $1 = nterm conditional_body ()
 -> $$ = nterm conditional ()
 Stack now 0 1 3 5 9 41 13 48 78 12
@@ -1655,18 +1753,18 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 13 48 78 12 44 67 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 13 48 78 12 44 67 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 13 48 78 12 44 67 14 49
@@ -1674,7 +1772,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -1682,12 +1780,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 13 48 78 12 44 67
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 13 48 78 12 44 67
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 13 48 78 12 44 67
@@ -1698,17 +1796,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 13 48 78 12 44 67 95 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 13 48 78 12 44 67 95 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1718,7 +1816,7 @@ Entering state 95
 Reading a token: Next token is token END_IF_T ()
 Shifting token END_IF_T ()
 Entering state 108
-Reducing stack by rule 20 (line 232):
+Reducing stack by rule 20 (line 235):
    $1 = token IF_T ()
    $2 = nterm conditional ()
    $3 = token THEN_T ()
@@ -1727,12 +1825,12 @@ Reducing stack by rule 20 (line 232):
 -> $$ = nterm if_statement ()
 Stack now 0 1 3 5 9 41 13 48 78
 Entering state 28
-Reducing stack by rule 12 (line 192):
+Reducing stack by rule 12 (line 195):
    $1 = nterm if_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 13 48 78
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 13 48 78
@@ -1740,7 +1838,7 @@ Entering state 100
 Reading a token: Next token is token END_FOR_T ()
 Shifting token END_FOR_T ()
 Entering state 110
-Reducing stack by rule 24 (line 254):
+Reducing stack by rule 24 (line 257):
    $1 = token FOR_T ()
    $2 = nterm for_body ()
    $3 = token DO_T ()
@@ -1749,12 +1847,12 @@ Reducing stack by rule 24 (line 254):
 -> $$ = nterm for_statement ()
 Stack now 0 1 3 5 9 41
 Entering state 31
-Reducing stack by rule 15 (line 204):
+Reducing stack by rule 15 (line 207):
    $1 = nterm for_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41
@@ -1765,28 +1863,28 @@ Entering state 55
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 36
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55
@@ -1797,19 +1895,19 @@ Entering state 56
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -1825,18 +1923,18 @@ Entering state 22
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 22
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 22
 Entering state 36
 Reading a token: Next token is token ADD_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 22
@@ -1847,28 +1945,28 @@ Entering state 57
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 22 35 57
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 22 35 57
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 22 35 57
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 22 35 57
 Entering state 86
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 47 (line 367):
+Reducing stack by rule 47 (line 370):
    $1 = nterm expr ()
    $2 = token ADD_T ()
    $3 = nterm term ()
@@ -1881,19 +1979,19 @@ Entering state 56
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41 64 55 22
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 22
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 64 55 22
@@ -1910,18 +2008,18 @@ Entering state 43
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43
 Entering state 36
 Reading a token: Next token is token EQUAL_TO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43
@@ -1929,7 +2027,7 @@ Entering state 46
 Next token is token EQUAL_TO_T ()
 Shifting token EQUAL_TO_T ()
 Entering state 70
-Reducing stack by rule 40 (line 337):
+Reducing stack by rule 40 (line 340):
    $1 = token EQUAL_TO_T ()
 -> $$ = nterm comparator ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43 46
@@ -1937,41 +2035,41 @@ Entering state 76
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43 46 76
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43 46 76
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43 46 76
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43 46 76
 Entering state 36
 Reading a token: Next token is token AND_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43 46 76
 Entering state 98
 Next token is token AND_T ()
-Reducing stack by rule 38 (line 326):
+Reducing stack by rule 38 (line 329):
    $1 = nterm expr ()
    $2 = nterm comparator ()
    $3 = nterm expr ()
 -> $$ = nterm conditional_body ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 43
 Entering state 66
-Reducing stack by rule 39 (line 330):
+Reducing stack by rule 39 (line 333):
    $1 = token NOT_T ()
    $2 = nterm conditional_body ()
 -> $$ = nterm conditional_body ()
@@ -1983,18 +2081,18 @@ Entering state 68
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68
 Entering state 36
 Reading a token: Next token is token NOT_EQUAL_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68
@@ -2002,7 +2100,7 @@ Entering state 46
 Next token is token NOT_EQUAL_T ()
 Shifting token NOT_EQUAL_T ()
 Entering state 71
-Reducing stack by rule 41 (line 341):
+Reducing stack by rule 41 (line 344):
    $1 = token NOT_EQUAL_T ()
 -> $$ = nterm comparator ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68 46
@@ -2010,34 +2108,34 @@ Entering state 76
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68 46 76
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68 46 76
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68 46 76
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68 46 76
 Entering state 36
 Reading a token: Next token is token THEN_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68 46 76
 Entering state 98
 Next token is token THEN_T ()
-Reducing stack by rule 38 (line 326):
+Reducing stack by rule 38 (line 329):
    $1 = nterm expr ()
    $2 = nterm comparator ()
    $3 = nterm expr ()
@@ -2045,12 +2143,12 @@ Reducing stack by rule 38 (line 326):
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68
 Entering state 45
 Next token is token THEN_T ()
-Reducing stack by rule 35 (line 312):
+Reducing stack by rule 35 (line 315):
    $1 = nterm conditional_body ()
 -> $$ = nterm conditional ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 45 68
 Entering state 96
-Reducing stack by rule 37 (line 320):
+Reducing stack by rule 37 (line 323):
    $1 = nterm conditional_body ()
    $2 = token AND_T ()
    $3 = nterm conditional ()
@@ -2069,18 +2167,18 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 44 67 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 44 67 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 44 67 14 49
@@ -2088,7 +2186,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -2096,12 +2194,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 44 67
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 44 67
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 44 67
@@ -2112,17 +2210,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 44 67 95 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55 12 44 67 95 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2132,7 +2230,7 @@ Entering state 95
 Reading a token: Next token is token END_IF_T ()
 Shifting token END_IF_T ()
 Entering state 108
-Reducing stack by rule 20 (line 232):
+Reducing stack by rule 20 (line 235):
    $1 = token IF_T ()
    $2 = nterm conditional ()
    $3 = token THEN_T ()
@@ -2141,12 +2239,12 @@ Reducing stack by rule 20 (line 232):
 -> $$ = nterm if_statement ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55
 Entering state 28
-Reducing stack by rule 12 (line 192):
+Reducing stack by rule 12 (line 195):
    $1 = nterm if_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 22 54 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2159,18 +2257,18 @@ Entering state 83
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83
 Entering state 36
 Reading a token: Next token is token LESS_THAN_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83
@@ -2178,7 +2276,7 @@ Entering state 46
 Next token is token LESS_THAN_T ()
 Shifting token LESS_THAN_T ()
 Entering state 72
-Reducing stack by rule 42 (line 345):
+Reducing stack by rule 42 (line 348):
    $1 = token LESS_THAN_T ()
 -> $$ = nterm comparator ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83 46
@@ -2186,34 +2284,34 @@ Entering state 76
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83 46 76
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83 46 76
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83 46 76
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83 46 76
 Entering state 36
 Reading a token: Next token is token END_DO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83 46 76
 Entering state 98
 Next token is token END_DO_T ()
-Reducing stack by rule 38 (line 326):
+Reducing stack by rule 38 (line 329):
    $1 = nterm expr ()
    $2 = nterm comparator ()
    $3 = nterm expr ()
@@ -2221,7 +2319,7 @@ Reducing stack by rule 38 (line 326):
 Stack now 0 1 3 5 9 41 64 55 22 54 83
 Entering state 45
 Next token is token END_DO_T ()
-Reducing stack by rule 35 (line 312):
+Reducing stack by rule 35 (line 315):
    $1 = nterm conditional_body ()
 -> $$ = nterm conditional ()
 Stack now 0 1 3 5 9 41 64 55 22 54 83
@@ -2229,7 +2327,7 @@ Entering state 105
 Next token is token END_DO_T ()
 Shifting token END_DO_T ()
 Entering state 113
-Reducing stack by rule 22 (line 242):
+Reducing stack by rule 22 (line 245):
    $1 = token DO_T ()
    $2 = nterm statement_block ()
    $3 = token WHILE_T ()
@@ -2238,12 +2336,12 @@ Reducing stack by rule 22 (line 242):
 -> $$ = nterm do_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 29
-Reducing stack by rule 13 (line 196):
+Reducing stack by rule 13 (line 199):
    $1 = nterm do_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2256,28 +2354,28 @@ Entering state 55
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 36
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55
@@ -2288,19 +2386,19 @@ Entering state 56
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2316,18 +2414,18 @@ Entering state 16
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 16
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 16
 Entering state 36
 Reading a token: Next token is token LESS_THAN_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 16
@@ -2335,7 +2433,7 @@ Entering state 46
 Next token is token LESS_THAN_T ()
 Shifting token LESS_THAN_T ()
 Entering state 72
-Reducing stack by rule 42 (line 345):
+Reducing stack by rule 42 (line 348):
    $1 = token LESS_THAN_T ()
 -> $$ = nterm comparator ()
 Stack now 0 1 3 5 9 41 64 55 16 46
@@ -2343,34 +2441,34 @@ Entering state 76
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 16 46 76
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 16 46 76
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 16 46 76
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 16 46 76
 Entering state 36
 Reading a token: Next token is token DO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 16 46 76
 Entering state 98
 Next token is token DO_T ()
-Reducing stack by rule 38 (line 326):
+Reducing stack by rule 38 (line 329):
    $1 = nterm expr ()
    $2 = nterm comparator ()
    $3 = nterm expr ()
@@ -2378,7 +2476,7 @@ Reducing stack by rule 38 (line 326):
 Stack now 0 1 3 5 9 41 64 55 16
 Entering state 45
 Next token is token DO_T ()
-Reducing stack by rule 35 (line 312):
+Reducing stack by rule 35 (line 315):
    $1 = nterm conditional_body ()
 -> $$ = nterm conditional ()
 Stack now 0 1 3 5 9 41 64 55 16
@@ -2395,18 +2493,18 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 14 49
@@ -2414,7 +2512,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -2422,12 +2520,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82
@@ -2438,18 +2536,18 @@ Entering state 55
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 104 55
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 104 55
 Entering state 36
 Reading a token: Next token is token ADD_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 104 55
@@ -2460,28 +2558,28 @@ Entering state 57
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 104 55 35 57
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 104 55 35 57
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 104 55 35 57
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 104 55 35 57
 Entering state 86
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 47 (line 367):
+Reducing stack by rule 47 (line 370):
    $1 = nterm expr ()
    $2 = token ADD_T ()
    $3 = nterm term ()
@@ -2492,21 +2590,154 @@ Next token is token ASSIGNMENT_T ()
 Shifting token ASSIGNMENT_T ()
 Entering state 56
 Reading a token: Next token is token ID ()
-Shifting token ID ()
+SItem: 0 nodeIdentifier: 0
+Item: -1 nodeIdentifier: 1
+Item: 1 nodeIdentifier: 4
+Item: 38 nodeIdentifier: 41
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 11 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 11
+Item: 1 nodeIdentifier: 12
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7214976 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7215136 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7215296 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 2
+Item: 8 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 8
+Item: -1 nodeIdentifier: 18
+Item: 13 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 23 nodeIdentifier: 20
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7215720 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+Item: 5 nodeIdentifier: 3
+Item: 1 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7215688 nodeIdentifier: 37
+Item: 9 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 9
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 5 nodeIdentifier: 3
+Item: 1 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 31
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 32
+Item: 7257512 nodeIdentifier: 37
+Item: 8 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 8
+Item: 22 nodeIdentifier: 18
+Item: 1 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 23 nodeIdentifier: 20
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7256904 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 18
+Item: -1 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 24 nodeIdentifier: 20
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7258440 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+Item: -1 nodeIdentifier: 18
+Item: -1 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 26 nodeIdentifier: 20
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7258152 nodeIdentifier: 37
+Item: 5 nodeIdentifier: 3
+Item: 1 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7259856 nodeIdentifier: 37
+Item: 10 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 10
+Item: -1 nodeIdentifier: 18
+Item: -1 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 26 nodeIdentifier: 20
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 7260048 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 5 nodeIdentifier: 3
+Item: 1 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 31
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 32
+Item: 7258960 nodeIdentifier: 37
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+hifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 104 55
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 16 51 82 104 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2516,7 +2747,7 @@ Entering state 104
 Reading a token: Next token is token END_WHILE_T ()
 Shifting token END_WHILE_T ()
 Entering state 112
-Reducing stack by rule 23 (line 248):
+Reducing stack by rule 23 (line 251):
    $1 = token WHILE_T ()
    $2 = nterm conditional ()
    $3 = token DO_T ()
@@ -2525,12 +2756,12 @@ Reducing stack by rule 23 (line 248):
 -> $$ = nterm while_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 30
-Reducing stack by rule 14 (line 200):
+Reducing stack by rule 14 (line 203):
    $1 = nterm while_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2543,17 +2774,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2561,7 +2792,7 @@ Reducing stack by rule 7 (line 170):
 Stack now 0 1 3 5 9 41
 Entering state 64
 Reading a token: Next token is token ENDP_T ()
-Reducing stack by rule 2 (line 143):
+Reducing stack by rule 2 (line 146):
    $1 = token DECLARATIONS_T ()
    $2 = nterm declarations ()
    $3 = token CODE_T ()
@@ -2578,7 +2809,7 @@ Entering state 61
 Reading a token: Next token is token FULL_STOP_T ()
 Shifting token FULL_STOP_T ()
 Entering state 90
-Reducing stack by rule 1 (line 128):
+Reducing stack by rule 1 (line 130):
    $1 = token ID ()
    $2 = token COLON_T ()
    $3 = nterm block ()
@@ -2594,9 +2825,9 @@ Entering state 4
 Stack now 0 2 4
 Cleanup: popping token $end ()
 Cleanup: popping nterm program ()
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Parse debug output for d.spl 
--- 9:54:03.07----------------------------------------------------- 
+--10:01:35.09----------------------------------------------------- 
 Starting parse
 Entering state 0
 Reading a token: Next token is token ID ()
@@ -2632,7 +2863,7 @@ Entering state 62
 Reading a token: Next token is token REAL_T ()
 Shifting token REAL_T ()
 Entering state 93
-Reducing stack by rule 56 (line 410):
+Reducing stack by rule 56 (line 413):
    $1 = token REAL_T ()
 -> $$ = nterm type ()
 Stack now 0 1 3 5 8 40 8 40 8 39 62
@@ -2641,7 +2872,7 @@ Reading a token: Next token is token SEMI_COLON_T ()
 Shifting token SEMI_COLON_T ()
 Entering state 106
 Reading a token: Next token is token CODE_T ()
-Reducing stack by rule 4 (line 154):
+Reducing stack by rule 4 (line 157):
    $1 = token ID ()
    $2 = token OF_T ()
    $3 = token TYPE_T ()
@@ -2650,14 +2881,14 @@ Reducing stack by rule 4 (line 154):
 -> $$ = nterm declarations ()
 Stack now 0 1 3 5 8 40 8 40
 Entering state 63
-Reducing stack by rule 6 (line 163):
+Reducing stack by rule 6 (line 166):
    $1 = token ID ()
    $2 = token COMMA_T ()
    $3 = nterm declarations ()
 -> $$ = nterm declarations ()
 Stack now 0 1 3 5 8 40
 Entering state 63
-Reducing stack by rule 6 (line 163):
+Reducing stack by rule 6 (line 166):
    $1 = token ID ()
    $2 = token COMMA_T ()
    $3 = nterm declarations ()
@@ -2673,29 +2904,29 @@ Entering state 18
 Reading a token: Next token is token REAL_CONSTANT_T ()
 Shifting token REAL_CONSTANT_T ()
 Entering state 53
-Reducing stack by rule 34 (line 306):
+Reducing stack by rule 34 (line 309):
    $1 = token MINUS_T ()
    $2 = token REAL_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41
 Entering state 36
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41
@@ -2706,19 +2937,19 @@ Entering state 56
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41
@@ -2732,29 +2963,29 @@ Entering state 18
 Reading a token: Next token is token REAL_CONSTANT_T ()
 Shifting token REAL_CONSTANT_T ()
 Entering state 53
-Reducing stack by rule 34 (line 306):
+Reducing stack by rule 34 (line 309):
    $1 = token MINUS_T ()
    $2 = token REAL_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 36
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55
@@ -2765,19 +2996,19 @@ Entering state 56
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2790,12 +3021,12 @@ Entering state 55
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55
@@ -2806,12 +3037,12 @@ Entering state 59
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -2824,22 +3055,22 @@ Entering state 60
 Reading a token: Next token is token REAL_CONSTANT_T ()
 Shifting token REAL_CONSTANT_T ()
 Entering state 21
-Reducing stack by rule 32 (line 298):
+Reducing stack by rule 32 (line 301):
    $1 = token REAL_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 36 60
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 36 60
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 36 60
 Entering state 89
-Reducing stack by rule 51 (line 386):
+Reducing stack by rule 51 (line 389):
    $1 = nterm term ()
    $2 = token DIVIDE_T ()
    $3 = nterm factor ()
@@ -2847,7 +3078,7 @@ Reducing stack by rule 51 (line 386):
 Stack now 0 1 3 5 9 41 64 55
 Entering state 36
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55
@@ -2858,19 +3089,19 @@ Entering state 56
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2889,18 +3120,18 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 14 49
@@ -2908,7 +3139,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -2916,12 +3147,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2934,17 +3165,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2966,7 +3197,7 @@ Entering state 81
 Reading a token: Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 103
-Reducing stack by rule 19 (line 226):
+Reducing stack by rule 19 (line 229):
    $1 = token READ_T ()
    $2 = token BRA_T ()
    $3 = token ID ()
@@ -2974,12 +3205,12 @@ Reducing stack by rule 19 (line 226):
 -> $$ = nterm read_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 27
-Reducing stack by rule 11 (line 188):
+Reducing stack by rule 11 (line 191):
    $1 = nterm read_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -2992,18 +3223,18 @@ Entering state 55
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 36
 Reading a token: Next token is token ADD_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55
@@ -3014,20 +3245,78 @@ Entering state 57
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 35 57
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 35 57
 Entering state 86
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 47 (line 367):
+Reducing stack by rule 47 (line 370):
    $1 = nterm expr ()
-   $2 = token ADD_T ()
+   Item: 0 nodeIdentifier: 0
+Item: -1 nodeIdentifier: 1
+Item: 1 nodeIdentifier: 4
+Item: 2 nodeIdentifier: 4
+Item: 3 nodeIdentifier: 4
+Item: 39 nodeIdentifier: 41
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 5 nodeIdentifier: 3
+Item: 1 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 8460256 nodeIdentifier: 37
+Item: 5 nodeIdentifier: 3
+Item: 2 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 8460512 nodeIdentifier: 37
+Item: 5 nodeIdentifier: 3
+Item: 3 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 33
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 2 nodeIdentifier: 35
+Item: 8461384 nodeIdentifier: 37
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 3 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+Item: 7 nodeIdentifier: 3
+Item: 1 nodeIdentifier: 7
+Item: 5 nodeIdentifier: 3
+Item: 3 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 31
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 32
+Item: 3 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 3 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+$2 = token ADD_T ()
    $3 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55
@@ -3038,19 +3327,19 @@ Entering state 56
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -3069,18 +3358,18 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 14 49
@@ -3088,7 +3377,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -3096,12 +3385,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -3114,17 +3403,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -3132,7 +3421,7 @@ Reducing stack by rule 7 (line 170):
 Stack now 0 1 3 5 9 41
 Entering state 64
 Reading a token: Next token is token ENDP_T ()
-Reducing stack by rule 2 (line 143):
+Reducing stack by rule 2 (line 146):
    $1 = token DECLARATIONS_T ()
    $2 = nterm declarations ()
    $3 = token CODE_T ()
@@ -3149,7 +3438,7 @@ Entering state 61
 Reading a token: Next token is token FULL_STOP_T ()
 Shifting token FULL_STOP_T ()
 Entering state 90
-Reducing stack by rule 1 (line 128):
+Reducing stack by rule 1 (line 130):
    $1 = token ID ()
    $2 = token COLON_T ()
    $3 = nterm block ()
@@ -3165,9 +3454,9 @@ Entering state 4
 Stack now 0 2 4
 Cleanup: popping token $end ()
 Cleanup: popping nterm program ()
---13/11/2017----------------------------------------------------- 
+--14/11/2017----------------------------------------------------- 
 Parse debug output for e.spl 
--- 9:54:04.48----------------------------------------------------- 
+--10:01:40.10----------------------------------------------------- 
 Starting parse
 Entering state 0
 Reading a token: Next token is token ID ()
@@ -3197,7 +3486,7 @@ Entering state 62
 Reading a token: Next token is token INTEGER_T ()
 Shifting token INTEGER_T ()
 Entering state 92
-Reducing stack by rule 55 (line 406):
+Reducing stack by rule 55 (line 409):
    $1 = token INTEGER_T ()
 -> $$ = nterm type ()
 Stack now 0 1 3 5 8 40 8 39 62
@@ -3206,7 +3495,7 @@ Reading a token: Next token is token SEMI_COLON_T ()
 Shifting token SEMI_COLON_T ()
 Entering state 106
 Reading a token: Next token is token CODE_T ()
-Reducing stack by rule 4 (line 154):
+Reducing stack by rule 4 (line 157):
    $1 = token ID ()
    $2 = token OF_T ()
    $3 = token TYPE_T ()
@@ -3215,7 +3504,7 @@ Reducing stack by rule 4 (line 154):
 -> $$ = nterm declarations ()
 Stack now 0 1 3 5 8 40
 Entering state 63
-Reducing stack by rule 6 (line 163):
+Reducing stack by rule 6 (line 166):
    $1 = token ID ()
    $2 = token COMMA_T ()
    $3 = nterm declarations ()
@@ -3237,7 +3526,7 @@ Entering state 81
 Reading a token: Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 103
-Reducing stack by rule 19 (line 226):
+Reducing stack by rule 19 (line 229):
    $1 = token READ_T ()
    $2 = token BRA_T ()
    $3 = token ID ()
@@ -3245,12 +3534,12 @@ Reducing stack by rule 19 (line 226):
 -> $$ = nterm read_statement ()
 Stack now 0 1 3 5 9 41
 Entering state 27
-Reducing stack by rule 11 (line 188):
+Reducing stack by rule 11 (line 191):
    $1 = nterm read_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41
@@ -3264,18 +3553,18 @@ Entering state 12
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 12
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 12
 Entering state 36
 Reading a token: Next token is token LESS_THAN_EQUAL_TO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 12
@@ -3283,7 +3572,7 @@ Entering state 46
 Next token is token LESS_THAN_EQUAL_TO_T ()
 Shifting token LESS_THAN_EQUAL_TO_T ()
 Entering state 74
-Reducing stack by rule 44 (line 353):
+Reducing stack by rule 44 (line 356):
    $1 = token LESS_THAN_EQUAL_TO_T ()
 -> $$ = nterm comparator ()
 Stack now 0 1 3 5 9 41 64 55 12 46
@@ -3291,34 +3580,34 @@ Entering state 76
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 12 46 76
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 12 46 76
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 12 46 76
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 12 46 76
 Entering state 36
 Reading a token: Next token is token OR_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 12 46 76
 Entering state 98
 Next token is token OR_T ()
-Reducing stack by rule 38 (line 326):
+Reducing stack by rule 38 (line 329):
    $1 = nterm expr ()
    $2 = nterm comparator ()
    $3 = nterm expr ()
@@ -3331,18 +3620,18 @@ Entering state 69
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69
 Entering state 36
 Reading a token: Next token is token GREATER_THAN_EQUAL_TO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69
@@ -3350,7 +3639,7 @@ Entering state 46
 Next token is token GREATER_THAN_EQUAL_TO_T ()
 Shifting token GREATER_THAN_EQUAL_TO_T ()
 Entering state 75
-Reducing stack by rule 45 (line 357):
+Reducing stack by rule 45 (line 360):
    $1 = token GREATER_THAN_EQUAL_TO_T ()
 -> $$ = nterm comparator ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69 46
@@ -3358,34 +3647,34 @@ Entering state 76
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69 46 76
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69 46 76
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69 46 76
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69 46 76
 Entering state 36
 Reading a token: Next token is token THEN_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69 46 76
 Entering state 98
 Next token is token THEN_T ()
-Reducing stack by rule 38 (line 326):
+Reducing stack by rule 38 (line 329):
    $1 = nterm expr ()
    $2 = nterm comparator ()
    $3 = nterm expr ()
@@ -3393,12 +3682,12 @@ Reducing stack by rule 38 (line 326):
 Stack now 0 1 3 5 9 41 64 55 12 45 69
 Entering state 45
 Next token is token THEN_T ()
-Reducing stack by rule 35 (line 312):
+Reducing stack by rule 35 (line 315):
    $1 = nterm conditional_body ()
 -> $$ = nterm conditional ()
 Stack now 0 1 3 5 9 41 64 55 12 45 69
 Entering state 97
-Reducing stack by rule 36 (line 316):
+Reducing stack by rule 36 (line 319):
    $1 = nterm conditional_body ()
    $2 = token OR_T ()
    $3 = nterm conditional ()
@@ -3417,18 +3706,18 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67 14 49
@@ -3436,7 +3725,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -3444,12 +3733,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 64 55 12 44 67
@@ -3457,7 +3746,7 @@ Entering state 95
 Reading a token: Next token is token END_IF_T ()
 Shifting token END_IF_T ()
 Entering state 108
-Reducing stack by rule 20 (line 232):
+Reducing stack by rule 20 (line 235):
    $1 = token IF_T ()
    $2 = nterm conditional ()
    $3 = token THEN_T ()
@@ -3466,12 +3755,12 @@ Reducing stack by rule 20 (line 232):
 -> $$ = nterm if_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 28
-Reducing stack by rule 12 (line 192):
+Reducing stack by rule 12 (line 195):
    $1 = nterm if_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -3493,28 +3782,28 @@ Entering state 11
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 14 49 11
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 14 49 11
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 14 49 11
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 14 49 11
 Entering state 36
 Reading a token: Next token is token MINUS_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 14 49 11
@@ -3525,28 +3814,28 @@ Entering state 58
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 20
-Reducing stack by rule 31 (line 294):
+Reducing stack by rule 31 (line 297):
    $1 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 14 49 11 42 58
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 14 49 11 42 58
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 14 49 11 42 58
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 14 49 11 42 58
 Entering state 87
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 48 (line 371):
+Reducing stack by rule 48 (line 374):
    $1 = nterm expr ()
    $2 = token MINUS_T ()
    $3 = nterm term ()
@@ -3556,20 +3845,20 @@ Entering state 42
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 65
-Reducing stack by rule 54 (line 400):
+Reducing stack by rule 54 (line 403):
    $1 = token BRA_T ()
    $2 = nterm expr ()
    $3 = token KET_T ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 14 49
@@ -3577,7 +3866,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -3585,12 +3874,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -3603,17 +3892,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -3638,29 +3927,29 @@ Entering state 18
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 52
-Reducing stack by rule 33 (line 302):
+Reducing stack by rule 33 (line 305):
    $1 = token MINUS_T ()
    $2 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77
 Entering state 36
 Reading a token: Next token is token BY_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77
@@ -3674,29 +3963,29 @@ Entering state 18
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 52
-Reducing stack by rule 33 (line 302):
+Reducing stack by rule 33 (line 305):
    $1 = token MINUS_T ()
    $2 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109
 Entering state 36
 Reading a token: Next token is token TO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109
@@ -3710,35 +3999,35 @@ Entering state 18
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 52
-Reducing stack by rule 33 (line 302):
+Reducing stack by rule 33 (line 305):
    $1 = token MINUS_T ()
    $2 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118
 Entering state 36
 Reading a token: Next token is token DO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118
 Entering state 119
 Next token is token DO_T ()
-Reducing stack by rule 25 (line 260):
+Reducing stack by rule 25 (line 263):
    $1 = token ID ()
    $2 = token IS_T ()
    $3 = nterm expr ()
@@ -3761,18 +4050,18 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78 14 49
@@ -3780,7 +4069,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -3788,12 +4077,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78
@@ -3804,17 +4093,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78 100 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78 100 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -3824,7 +4113,7 @@ Entering state 100
 Reading a token: Next token is token END_FOR_T ()
 Shifting token END_FOR_T ()
 Entering state 110
-Reducing stack by rule 24 (line 254):
+Reducing stack by rule 24 (line 257):
    $1 = token FOR_T ()
    $2 = nterm for_body ()
    $3 = token DO_T ()
@@ -3833,12 +4122,12 @@ Reducing stack by rule 24 (line 254):
 -> $$ = nterm for_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 31
-Reducing stack by rule 15 (line 204):
+Reducing stack by rule 15 (line 207):
    $1 = nterm for_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -3854,29 +4143,29 @@ Entering state 18
 Reading a token: Next token is token INTEGER_CONSTANT_T ()
 Shifting token INTEGER_CONSTANT_T ()
 Entering state 52
-Reducing stack by rule 33 (line 302):
+Reducing stack by rule 33 (line 305):
    $1 = token MINUS_T ()
    $2 = token INTEGER_CONSTANT_T ()
 -> $$ = nterm number_constant ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 34
-Reducing stack by rule 28 (line 278):
+Reducing stack by rule 28 (line 281):
    $1 = nterm number_constant ()
 -> $$ = nterm constant ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 32
-Reducing stack by rule 53 (line 396):
+Reducing stack by rule 53 (line 399):
    $1 = nterm constant ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 36
 Reading a token: Next token is token ASSIGNMENT_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55
@@ -3887,19 +4176,19 @@ Entering state 56
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 85
-Reducing stack by rule 16 (line 210):
+Reducing stack by rule 16 (line 213):
    $1 = nterm expr ()
    $2 = token ASSIGNMENT_T ()
    $3 = token ID ()
 -> $$ = nterm assignment_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 25
-Reducing stack by rule 9 (line 180):
+Reducing stack by rule 9 (line 183):
    $1 = nterm assignment_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -3921,12 +4210,12 @@ Entering state 77
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77
@@ -3937,12 +4226,12 @@ Entering state 59
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -3955,12 +4244,12 @@ Entering state 59
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -3968,7 +4257,7 @@ Reducing stack by rule 50 (line 382):
 Stack now 0 1 3 5 9 41 64 55 13 47 77
 Entering state 36
 Reading a token: Next token is token BY_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77
@@ -3979,12 +4268,12 @@ Entering state 109
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109
@@ -3995,12 +4284,12 @@ Entering state 59
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -4013,12 +4302,12 @@ Entering state 59
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -4031,12 +4320,12 @@ Entering state 59
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -4049,12 +4338,12 @@ Entering state 59
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -4062,7 +4351,7 @@ Reducing stack by rule 50 (line 382):
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109
 Entering state 36
 Reading a token: Next token is token TO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109
@@ -4073,12 +4362,12 @@ Entering state 118
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118
@@ -4089,12 +4378,12 @@ Entering state 59
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -4110,18 +4399,18 @@ Entering state 11
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11
 Entering state 36
 Reading a token: Next token is token ADD_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11
@@ -4132,18 +4421,18 @@ Entering state 57
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11 42 57
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11 42 57
 Entering state 86
 Reading a token: Next token is token ADD_T ()
-Reducing stack by rule 47 (line 367):
+Reducing stack by rule 47 (line 370):
    $1 = nterm expr ()
    $2 = token ADD_T ()
    $3 = nterm term ()
@@ -4156,18 +4445,18 @@ Entering state 57
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11 42 57
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11 42 57
 Entering state 86
 Reading a token: Next token is token ADD_T ()
-Reducing stack by rule 47 (line 367):
+Reducing stack by rule 47 (line 370):
    $1 = nterm expr ()
    $2 = token ADD_T ()
    $3 = nterm term ()
@@ -4180,18 +4469,18 @@ Entering state 57
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11 42 57
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11 42 57
 Entering state 86
 Reading a token: Next token is token ADD_T ()
-Reducing stack by rule 47 (line 367):
+Reducing stack by rule 47 (line 370):
    $1 = nterm expr ()
    $2 = token ADD_T ()
    $3 = nterm term ()
@@ -4204,18 +4493,18 @@ Entering state 57
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11 42 57
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59 11 42 57
 Entering state 86
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 47 (line 367):
+Reducing stack by rule 47 (line 370):
    $1 = nterm expr ()
    $2 = token ADD_T ()
    $3 = nterm term ()
@@ -4225,14 +4514,14 @@ Entering state 42
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 65
-Reducing stack by rule 54 (line 400):
+Reducing stack by rule 54 (line 403):
    $1 = token BRA_T ()
    $2 = nterm expr ()
    $3 = token KET_T ()
 -> $$ = nterm factor ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118 36 59
 Entering state 88
-Reducing stack by rule 50 (line 382):
+Reducing stack by rule 50 (line 385):
    $1 = nterm term ()
    $2 = token MULTIPLY_T ()
    $3 = nterm factor ()
@@ -4240,13 +4529,13 @@ Reducing stack by rule 50 (line 382):
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118
 Entering state 36
 Reading a token: Next token is token DO_T ()
-Reducing stack by rule 46 (line 363):
+Reducing stack by rule 46 (line 366):
    $1 = nterm term ()
 -> $$ = nterm expr ()
 Stack now 0 1 3 5 9 41 64 55 13 47 77 99 109 116 118
 Entering state 119
 Next token is token DO_T ()
-Reducing stack by rule 25 (line 260):
+Reducing stack by rule 25 (line 263):
    $1 = token ID ()
    $2 = token IS_T ()
    $3 = nterm expr ()
@@ -4269,18 +4558,149 @@ Entering state 49
 Reading a token: Next token is token ID ()
 Shifting token ID ()
 Entering state 10
-Reducing stack by rule 52 (line 392):
+Reducing stack by rule 52 (line 395):
    $1 = token ID ()
 -> $$ = nterm factor ()
-Stack now 0 1 3 5 9 41 64 55 13 48 78 14 49
+Stack now 0 1 Item: 0 nodeIdentifier: 0
+Item: -1 nodeIdentifier: 1
+Item: 1 nodeIdentifier: 4
+Item: 2 nodeIdentifier: 4
+Item: 38 nodeIdentifier: 41
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 7 nodeIdentifier: 3
+Item: 1 nodeIdentifier: 7
+Item: 8 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 8
+Item: 21 nodeIdentifier: 18
+Item: -1 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 28 nodeIdentifier: 20
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 137344 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 18
+Item: -1 nodeIdentifier: 19
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 27 nodeIdentifier: 20
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 137736 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 2
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: -1 nodeIdentifier: 36
+Item: -1 nodeIdentifier: 30
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 137608 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 32
+Item: 138216 nodeIdentifier: 37
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+Item: 11 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 11
+Item: 1 nodeIdentifier: 12
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 180552 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 180136 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 179944 nodeIdentifier: 37
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+Item: 5 nodeIdentifier: 3
+Item: 2 nodeIdentifier: 5
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 178760 nodeIdentifier: 37
+Item: 11 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 11
+Item: 1 nodeIdentifier: 12
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 32
+Item: 2 nodeIdentifier: 35
+Item: 2 nodeIdentifier: 35
+Item: 2 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 32
+Item: 2 nodeIdentifier: 35
+Item: 2 nodeIdentifier: 35
+Item: 2 nodeIdentifier: 35
+Item: 2 nodeIdentifier: 35
+Item: 2 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 34
+Item: -1 nodeIdentifier: 32
+Item: 2 nodeIdentifier: 35
+Item: 2 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 36
+Item: -1 nodeIdentifier: 31
+Item: -1 nodeIdentifier: 31
+Item: -1 nodeIdentifier: 31
+Item: -1 nodeIdentifier: 31
+Item: -1 nodeIdentifier: 29
+Item: -1 nodeIdentifier: 32
+Item: 2 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 32
+Item: 2 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 32
+Item: 2 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 32
+Item: 2 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 32
+Item: 2 nodeIdentifier: 35
+Item: -1 nodeIdentifier: 2
+Item: -1 nodeIdentifier: 2
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 6
+Item: -1 nodeIdentifier: 13
+Item: -1 nodeIdentifier: 32
+Item: 1 nodeIdentifier: 35
+Item: 6 nodeIdentifier: 3
+Item: -1 nodeIdentifier: 14
+3 5 9 41 64 55 13 48 78 14 49
 Entering state 37
-Reducing stack by rule 49 (line 378):
+Reducing stack by rule 49 (line 381):
    $1 = nterm factor ()
 -> $$ = nterm term ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78 14 49
 Entering state 80
 Reading a token: Next token is token KET_T ()
-Reducing stack by rule 27 (line 270):
+Reducing stack by rule 27 (line 273):
    $1 = nterm term ()
 -> $$ = nterm output_block ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78 14 49
@@ -4288,7 +4708,7 @@ Entering state 79
 Next token is token KET_T ()
 Shifting token KET_T ()
 Entering state 101
-Reducing stack by rule 17 (line 216):
+Reducing stack by rule 17 (line 219):
    $1 = token WRITE_T ()
    $2 = token BRA_T ()
    $3 = nterm output_block ()
@@ -4296,12 +4716,12 @@ Reducing stack by rule 17 (line 216):
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78
 Entering state 24
-Reducing stack by rule 8 (line 174):
+Reducing stack by rule 8 (line 177):
    $1 = nterm statement ()
 -> $$ = nterm statement_block ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78
@@ -4312,17 +4732,17 @@ Entering state 55
 Reading a token: Next token is token NEWLINE_T ()
 Shifting token NEWLINE_T ()
 Entering state 17
-Reducing stack by rule 18 (line 220):
+Reducing stack by rule 18 (line 223):
    $1 = token NEWLINE_T ()
 -> $$ = nterm write_statement ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78 100 55
 Entering state 26
-Reducing stack by rule 10 (line 184):
+Reducing stack by rule 10 (line 187):
    $1 = nterm write_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55 13 48 78 100 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -4332,7 +4752,7 @@ Entering state 100
 Reading a token: Next token is token END_FOR_T ()
 Shifting token END_FOR_T ()
 Entering state 110
-Reducing stack by rule 24 (line 254):
+Reducing stack by rule 24 (line 257):
    $1 = token FOR_T ()
    $2 = nterm for_body ()
    $3 = token DO_T ()
@@ -4341,12 +4761,12 @@ Reducing stack by rule 24 (line 254):
 -> $$ = nterm for_statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 31
-Reducing stack by rule 15 (line 204):
+Reducing stack by rule 15 (line 207):
    $1 = nterm for_statement ()
 -> $$ = nterm statement ()
 Stack now 0 1 3 5 9 41 64 55
 Entering state 84
-Reducing stack by rule 7 (line 170):
+Reducing stack by rule 7 (line 173):
    $1 = nterm statement_block ()
    $2 = token SEMI_COLON_T ()
    $3 = nterm statement ()
@@ -4354,7 +4774,7 @@ Reducing stack by rule 7 (line 170):
 Stack now 0 1 3 5 9 41
 Entering state 64
 Reading a token: Next token is token ENDP_T ()
-Reducing stack by rule 2 (line 143):
+Reducing stack by rule 2 (line 146):
    $1 = token DECLARATIONS_T ()
    $2 = nterm declarations ()
    $3 = token CODE_T ()
@@ -4371,7 +4791,7 @@ Entering state 61
 Reading a token: Next token is token FULL_STOP_T ()
 Shifting token FULL_STOP_T ()
 Entering state 90
-Reducing stack by rule 1 (line 128):
+Reducing stack by rule 1 (line 130):
    $1 = token ID ()
    $2 = token COLON_T ()
    $3 = nterm block ()
