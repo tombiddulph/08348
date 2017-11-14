@@ -14,14 +14,15 @@
 
     #else
 
-	extern SYMTABNODEPTR symTab[SYMTABSIZE];
+	extern SYMTABNODEPTR symbolTable[SYMTABSIZE];
 	extern int currentSymTabSize;
+    int installId(char *id);
 	
     #define _TOKEN_(t) 				return(t##_T);
 	#define _TOKEN_INTEGER_(t) 		yylval.iVal = atoi(yytext); return(t);
 	#define _TOKEN_REAL_(t) 		yylval.iVal = atof(yytext); return(t);
+    #define _TOKEN_CHARACTER_(t) 	yylval.iVal = installId(yytext); return(t);
 	#define _TOKEN_IDENTIFIER_(t) 	yylval.iVal = installId(yytext); return(t##_T);
-	#define _TOKEN_CHARACTER_(t) 	yylval.iVal = installId(yytext); return(t);
 	#define _TOKEN_UNKNOWN_(t)		printf("Unknown token:" #t  "\n");
 	    
     #endif
@@ -112,13 +113,13 @@ SYMTABNODEPTR newSymTabNode()
 
 int lookup(char *s)
 {
-    extern SYMTABNODEPTR symTab[SYMTABSIZE];
+    extern SYMTABNODEPTR symbolTable[SYMTABSIZE];
     extern int currentSymTabSize;
     int i;
 
     for(i=0; i<currentSymTabSize; i++)
     {
-        if(strncmp(s,symTab[i]->identifier,IDLENGTH) == 0)
+        if(strncmp(s,symbolTable[i]->identifier,IDLENGTH) == 0)
         {
             return (i);
         }
@@ -133,7 +134,7 @@ int lookup(char *s)
 
 int installId(char *id) 
 {
-    extern SYMTABNODEPTR symTab[SYMTABSIZE]; 
+    extern SYMTABNODEPTR symbolTable[SYMTABSIZE]; 
     extern int currentSymTabSize;
     int index;
 
@@ -144,14 +145,22 @@ int installId(char *id)
     }
     else 
        if (currentSymTabSize >= SYMTABSIZE) 
-          /* SYMTAB is full */
+          /* symbolTable is full */
           return (NOTHING) ;
     else
     {
-       symTab[currentSymTabSize] = newSymTabNode();
+       symbolTable[currentSymTabSize] = newSymTabNode();
+
        /* Recommended code for preventing buffer overrun on bounded strings */
-       strncpy(symTab[currentSymTabSize]->identifier,id,IDLENGTH);
-       symTab[currentSymTabSize]->identifier[IDLENGTH-1] = '\0';
+
+       strncpy(symbolTable[currentSymTabSize]->identifier,id,IDLENGTH);
+       symbolTable[currentSymTabSize]->identifier[IDLENGTH-1] = '\0';
+       
+       if(id == "INTEGER_CONSTANT_T" || id == "REAL_CONSTANT_T" || id == "CHARACTER_CONSTANT_T"){
+        symbolTable[currentSymTabSize]->type = id;
+       }
+      
+       
        return(currentSymTabSize++);
     }
 }
