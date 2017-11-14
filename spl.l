@@ -20,7 +20,7 @@
     #define _TOKEN_(t) 				return(t##_T);
 	#define _TOKEN_INTEGER_(t) 		yylval.iVal = atoi(yytext); return(t);
 	#define _TOKEN_REAL_(t) 		yylval.iVal = atof(yytext); return(t);
-	#define _TOKEN_IDENTIFIER_(t) 	yylval.iVal = installId(yytext); return(t);
+	#define _TOKEN_IDENTIFIER_(t) 	yylval.iVal = installId(yytext); return(t##_T);
 	#define _TOKEN_CHARACTER_(t) 	yylval.iVal = installId(yytext); return(t);
 	#define _TOKEN_UNKNOWN_(t)		printf("Unknown token:" #t  "\n");
 	    
@@ -155,5 +155,5 @@ int installId(char *id)
        return(currentSymTabSize++);
     }
 }
-
 #endif
+
