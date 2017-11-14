@@ -6,6 +6,7 @@
 	#ifdef PRINT
 
     #define _TOKEN_(t) 				printf("Token: " #t "\n");
+    # define _SYMBOL_(t)              printf("Sybol: " #t "\n");
 	#define _TOKEN_INTEGER_(t) 		printf("Integer token:  %i\n", atoi(yytext));
 	#define _TOKEN_REAL_(t) 		printf("Real token: %f\n", atof(yytext));
 	#define _TOKEN_CHARACTER_(t) 	printf("Character constant token: %c\n", yytext[1]);
@@ -16,13 +17,13 @@
 
 	extern SYMTABNODEPTR symTab[SYMTABSIZE];
 	extern int currentSymTabSize;
+    int installId(char *id, char *token);
 	
     #define _TOKEN_(t) 				return(t##_T);
-	#define _TOKEN_INTEGER_(t) 		yylval.iVal = atoi(yytext); return(t);
-	#define _TOKEN_REAL_(t) 		yylval.iVal = atof(yytext); return(t);
-	#define _TOKEN_IDENTIFIER_(t) 	yylval.iVal = installId(yytext); return(t##_T);
-	#define _TOKEN_CHARACTER_(t) 	yylval.iVal = installId(yytext); return(t);
+    #define _SYMBOL_(t)             yylval.iVal = installId(yytext, #t); _TOKEN_(t);
+
 	#define _TOKEN_UNKNOWN_(t)		printf("Unknown token:" #t  "\n");
+    
 	    
     #endif
 %}
@@ -88,10 +89,10 @@ CHARACTER			_TOKEN_(CHARACTER);
 REAL				_TOKEN_(REAL);
 
 
-{characterConstant} _TOKEN_CHARACTER_(CHARACTER_CONSTANT_T);
-{identifier}        _TOKEN_IDENTIFIER_(ID);
-{integer}           _TOKEN_INTEGER_(INTEGER_CONSTANT_T); 
-{real}             	_TOKEN_REAL_(REAL_CONSTANT_T);
+{characterConstant} _SYMBOL_(CHARACTER_CONSTANT);
+{identifier}        _SYMBOL_(ID);
+{integer}           _SYMBOL_(INTEGER_CONSTANT); 
+{real}             	_SYMBOL_(REAL_CONSTANT);
 .|\n				_TOKEN_UNKNOWN_(UNKOWN);
 
 
@@ -131,7 +132,7 @@ int lookup(char *s)
    as long as the table isn't full, and return its index.
 */
 
-int installId(char *id) 
+int installId(char *id, char *token) 
 {
     extern SYMTABNODEPTR symTab[SYMTABSIZE]; 
     extern int currentSymTabSize;
@@ -152,6 +153,12 @@ int installId(char *id)
        /* Recommended code for preventing buffer overrun on bounded strings */
        strncpy(symTab[currentSymTabSize]->identifier,id,IDLENGTH);
        symTab[currentSymTabSize]->identifier[IDLENGTH-1] = '\0';
+
+        if(strcmp(token, "CHARACTER_CONSTANT") == 0 || strcmp(token, "REAL_CONSTANT") == 0  || strcmp(token, "INTEGER_CONSTANT") == 0 ){
+           
+            symTab[currentSymTabSize]->nodeType = token;
+        }
+
        return(currentSymTabSize++);
     }
 }
