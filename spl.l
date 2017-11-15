@@ -105,7 +105,7 @@ REAL				_TOKEN_(REAL);
 */
 
 
-
+#ifndef PRINT
 SYMTABNODEPTR newSymTabNode()
 {
     return ((SYMTABNODEPTR)malloc(sizeof(SYMTABNODE)));
@@ -163,4 +163,4 @@ int installId(char *id, char *token)
     }
 }
 
-
+#endif
