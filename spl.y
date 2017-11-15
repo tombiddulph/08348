@@ -92,6 +92,8 @@ TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
 TERNARY_TREE create_node_characterArray(char*,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
 #ifdef DEBUG
 	void PrintTree(TERNARY_TREE t);
+	int sizeofString(char * str);
+	#define NEWLINE "\n"
 #endif	
 void WriteCode(TERNARY_TREE t);
 
@@ -258,13 +260,13 @@ conditional				: condition
 						{
 							$$ = create_node(NOTHING, CONDITIONAL, $1, NULL, NULL);
 						}
-						| NOT_T condition
+						| NOT_T conditional
 						{
 							$$ = create_node_characterArray("!", CONDITIONAL, $2, NULL, NULL);
 						}
 						|  condition AND_T conditional
 						{
-							$$ = create_node_characterArray("&", CONDITIONAL, $1, $3, NULL);
+							$$ = create_node_characterArray("&&", CONDITIONAL, $1, $3, NULL);
 						}
 						| condition OR_T conditional
 						{
@@ -278,13 +280,13 @@ condition				: expr comp expr
 						}
 						;
 
-expr					: val op expr
-						{
-							$$ = create_node(NOTHING, EXPR, $1, $2, $3);
-						}
-						| val
+expr					: val
 						{
 							$$ = create_node(NOTHING, EXPR, $1, NULL, NULL);
+						}
+						| val op expr
+						{
+							$$ = create_node(NOTHING, EXPR, $1, $2, $3);
 						}
 						;
 
@@ -306,13 +308,13 @@ val						:  ID_T
 						}
 
 
-comp				: EQUAL_TO_T
+comp					: EQUAL_TO_T
 						{
 							$$ = create_node_characterArray("==", COMPARATOR, NULL, NULL, NULL);
 						}
 						| NOT_EQUAL_T
 						{
-							$$ = create_node_characterArray("==", COMPARATOR, NULL, NULL, NULL);
+							$$ = create_node_characterArray("!=", COMPARATOR, NULL, NULL, NULL);
 						}
 						| LESS_THAN_T
 						{
@@ -406,46 +408,82 @@ TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY
 }
 
 #ifdef DEBUG
+
+int sizeofString(char *str){
+	return str == NULL ? 0 : sizeof(str) - 1;
+}
+
 void PrintTree(TERNARY_TREE t)
 {
-
-	
-   
-   
-
 	static unsigned depth;
     static unsigned previous;
     unsigned i;
     /* skip empty nodes */
     if (t == NULL) return;
     /* print depth and change */
-    fprintf(stderr, "%3d %3d\t", depth, depth - previous);
+    printf("%2d %2d\t", depth, depth - previous);
     previous = depth;
     /* indent tree and print current node */
-    for (i = depth; i--;) fprintf(stderr, "| ");
+    
+	
+	for (i = depth; i--;){
+		 printf("-");
+	}
     switch (t->nodeIdentifier) {
     case PROGRAM:
         /* PROGRAM : PROGRAM NAME */
-        fprintf(stderr, "PROGRAM : %s\n", symTab[t->item]->identifier);
+        printf("PROGRAM : %s\n", symTab[t->item]->identifier);
         break;
         
     case CONDITIONAL:
         /* CONDITIONAL : LOGICAL OPERATOR */
-        fprintf(stderr, "CONDITIONAL");
+       
+		; /* Emtpty statement to get rid of compiler error
+			 "a label can only be part of a statement and a declaration is not a statement"  */
+		char* caseId = "CONDITIONAL";
+
+
+		int size;
+		size = (sizeof(caseId));
+
+
         if (t->item != NOTHING) {
-            fprintf(stderr, " : %s", t->cItem);
+			char* formatSpecifier =  " : %s";
+			size += (sizeof(formatSpecifier)) +  (sizeof(t->item)) + (sizeof(NEWLINE)); 
+			char condBuf[size];
+			
+			snprintf(condBuf, size, "%s%s%s%s", caseId, formatSpecifier, t->item, NEWLINE);
+			//sprintf(caseId, " : %s", t->item);      
         }
-        fprintf(stderr, "\n");
+		else{
+			
+			int size = (sizeof(caseId)) + (sizeof(t->item)) + (sizeof(NEWLINE));
+			char condBuf[size];
+			snprintf(condBuf, size, "%s%s", caseId, NEWLINE);
+			//sprintf(caseId, NEWLINE);
+		}
+
+	
+        
         break;
     case TYPE:
-        /* TYPE : KEYWORD */
+       {
+		    /* TYPE : KEYWORD */
         fprintf(stderr, "TYPE : %s\n", t->cItem);
         return;
+	   }
     case CONST:
-        /* CONSTANT (TYPE) : VALUE */
-        fprintf(stderr, "CONSTANT (%s) : %s\n", symTab[t->item]->nodeType, symTab[t->item]->identifier);
+      {
+		    /* prints a string with the format 'CONSTANT' (type) -> 'val' */	
+		char output[100];
+		snprintf(output, sizeof output ,"CONSTANT (%s) -> %s\n", symTab[t->item]->nodeType ,symTab[t->item]->identifier);
+	    printf(output);
+	
+        
            
         return;
+	  }
+
     case COMPARATOR:
     case OP:
         /* COMPARATOR / OPERATOR : TOKEN */
@@ -463,7 +501,7 @@ void PrintTree(TERNARY_TREE t)
             if (symTab[t->item]->identifier) {
                 fprintf(stderr, "%3d   1\t", ++depth);
                 previous = depth;
-                for (i = depth--; i--;) fprintf(stderr, "| ");
+                for (i = depth--; i--;) fprintf(stderr, "-");
                 fprintf(stderr, "IDENTIFIER : %s\n", symTab[t->item]->identifier);
             }
         }
@@ -471,62 +509,7 @@ void PrintTree(TERNARY_TREE t)
     }
 
 	
-	// // switch(t->nodeIdentifier)
-	// 	{
-	// 		 case PROGRAM:
-	// 		{
-	// 			printf("PROGRAM : %s\n", symTab[t->item]->identifier);
-	// 			break;
-	// 		}
-
-	// 		case TYPE:
-	// 		{
-	// 			printf("TYPE of %s\n", t->cItem);
-	// 			return;
-	// 		}
-
-	// 		case CONST:
-	// 		{
-	// 			printf("CONST %s %s", symTab[t->item]->nodeType, t->cItem);
-	// 			return;
-	// 		}
-			
-	// 		case CONDITIONAL:
-	// 		{
-	// 			printf("CONDITIONAL %s", t->cItem);
-	// 			break;
-	// 		}
-
-	// 		case OP:
-	// 		case COMPARATOR:
-	// 		{
-	// 			printf(" %s : %s\n", NodeName[t->nodeIdentifier], t->cItem);
-	// 			return;
-	// 		}      
-
-	// 		default:
-	// 		{
-	// 			if(t->nodeIdentifier < 0 || t->nodeIdentifier > sizeof(NodeName))
-	// 			{
-	// 				printf("Uknown node identifier %d\n", t->nodeIdentifier);
-	// 			}
-	// 			else
-	// 			{
-	// 				printf(" nodeIdentifier: %s\n", NodeName[t->nodeIdentifier]);
-	// 			}
-
-	// 			if(t->item > 0 && t->item < SYMTABSIZE && symTab[t->item]->identifier){
-					
-						
-	// 						printf(" %3d    1\t", ++depth);
-	// 						previous = depth;
-	// 						for (i = depth--; i--;) fprintf(stderr, "| ");
-    //             			fprintf(stderr, "IDENTIFIER : %s\n", symTab[t->item]->identifier);
-						
-					
-	// 			}
-	// 			break;
-	// 		}			
+	
 
 
 	 ++depth;
