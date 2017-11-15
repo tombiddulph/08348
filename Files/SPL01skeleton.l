@@ -1,3 +1,4 @@
+%{
 /*    file:     SPL01skeleton.l */
 /*    author:   Peter Parsons   */
 /*    date:     February 1997   */
@@ -10,10 +11,11 @@
    of the material on the Symbol Table                      */
 
 /* Declare Symbol Table Type and Array as imported types */
-%{
-#include <strings.h>
+
+#include <string.h>
 extern SYMTABNODEPTR symTab[SYMTABSIZE];
 extern int currentSymTabSize;
+int installId(char *);
 %}
 
 /* Place your Regular expressions for lexemes here */
@@ -47,6 +49,7 @@ digit		[0-9]
                   /* This is an example of handling a number conversion
                      to preserve all the bits by storing as a negative */
                    yylval.iVal = 0l - atol(yytext);
+				   return (NUMBER);
                   }
 
 %%
@@ -63,6 +66,21 @@ SYMTABNODEPTR newSymTabNode()
     return ((SYMTABNODEPTR)malloc(sizeof(SYMTABNODE)));
 }
 
+int lookup(char *s)
+{
+    extern SYMTABNODEPTR symTab[SYMTABSIZE];
+    extern int currentSymTabSize;
+    int i;
+
+    for(i=0; i<currentSymTabSize; i++)
+    {
+        if(strncmp(s,symTab[i]->identifier,IDLENGTH) == 0)
+        {
+            return (i);
+        }
+    }
+    return (-1);    
+}
 
 /* Look up an identifier in the symbol table, if its there return
    its index.  If its not there, put it in the end position,
@@ -94,19 +112,4 @@ int installId(char *id)
     }
 }
 
-int lookup(char *s)
-{
-    extern SYMTABNODEPTR symTab[SYMTABSIZE];
-    extern int currentSymTabSize;
-    int i;
-
-    for(i=0; i<currentSymTabSize; i++)
-    {
-        if(strncmp(s,symTab[i]->identifier,IDLENGTH) == 0)
-        {
-            return (i);
-        }
-    }
-    return (-1);    
-}
 

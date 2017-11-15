@@ -1,3 +1,4 @@
+%{
 /* SPL01.y - SPL01 parser */
 /* Author: Peter Parsons */
 /* Revision: Oct 08 BCT */
@@ -10,10 +11,13 @@
 
 /* declare some standard headers to be used to import declarations
    and libraries into the parser. */
-%{
 
 #include <stdio.h>
 #include <stdlib.h>
+
+/* make forward declarations to avoid compiler warnings */
+int yylex (void);
+void yyerror (char *);
 
 /* 
    Some constants.
@@ -93,7 +97,7 @@ int currentSymTabSize = 0;
 /* These are the types of lexical tokens -> iVal */
 %token<iVal> IDENTIFIER 
 /* Some tokens do not return a value */
-%token COLON FINISH FULLSTOP
+%token COLON ENDP FULLSTOP
 
 /* Whereas Rules return a tVal type (Tree) */
 %type<tVal> program block
@@ -101,7 +105,7 @@ int currentSymTabSize = 0;
 %%
 /* ----------------------- grammar rules --------------------------- */
 
-program      : identifier COLON block FINISH identifier FULLSTOP
+program      : identifier COLON block ENDP identifier FULLSTOP
                { TERNARY_TREE ParseTree;
 	       /* This is an example, but the types are wrong 
 		  ParseTree = create_node(NOTHING,PROGRAM,$1,$3,$5); */
