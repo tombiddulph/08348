@@ -431,40 +431,21 @@ void PrintTree(TERNARY_TREE t)
 	}
     switch (t->nodeIdentifier) {
     case PROGRAM:
-        /* PROGRAM : PROGRAM NAME */
+        {
+			/* PROGRAM : PROGRAM NAME */
         printf("PROGRAM : %s\n", symTab[t->item]->identifier);
         break;
         
-    case CONDITIONAL:
-        /* CONDITIONAL : LOGICAL OPERATOR */
-       
-		; /* Emtpty statement to get rid of compiler error
-			 "a label can only be part of a statement and a declaration is not a statement"  */
-		char* caseId = "CONDITIONAL";
-
-
-		int size;
-		size = (sizeof(caseId));
-
-
-        if (t->item != NOTHING) {
-			char* formatSpecifier =  " : %s";
-			size += (sizeof(formatSpecifier)) +  (sizeof(t->item)) + (sizeof(NEWLINE)); 
-			char condBuf[size];
-			
-			snprintf(condBuf, size, "%s%s%s%s", caseId, formatSpecifier, t->item, NEWLINE);
-			//sprintf(caseId, " : %s", t->item);      
-        }
-		else{
-			
-			int size = (sizeof(caseId)) + (sizeof(t->item)) + (sizeof(NEWLINE));
-			char condBuf[size];
-			snprintf(condBuf, size, "%s%s", caseId, NEWLINE);
-			//sprintf(caseId, NEWLINE);
 		}
-
-	
-        
+    case CONDITIONAL:
+       {
+		if(t->item == NOTHING){
+			printf("CONDITIONAL \n");
+		}
+		else{
+			printf("CONDITIONAL -> %s\n", t->cItem);
+		}
+	   }
         break;
     case TYPE:
        {
@@ -484,10 +465,10 @@ void PrintTree(TERNARY_TREE t)
         return;
 	  }
 
-    case COMPARATOR:
-    case OP:
+    
+    case OP: case COMPARATOR:
         /* COMPARATOR / OPERATOR : TOKEN */
-        fprintf(stderr, "%s : %s\n", NodeName[t->nodeIdentifier], t->cItem);
+		printf("%s -> %s\n", NodeName[t->nodeIdentifier], t->cItem);
         return;
     default:
         /* print non-specific node name */
