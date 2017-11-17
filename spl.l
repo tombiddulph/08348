@@ -28,8 +28,8 @@
     #endif
 %}
 
-delim                   [ \t\n]
-ws                      {delim}+
+delim                   [ \r\t\n]
+ws                      {delim}*
 character               [A-Za-z]
 digit                   [0-9]
 integer                 {digit}+
