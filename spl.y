@@ -34,27 +34,55 @@ void yyerror (char *);
 #define NOTHING        -1
 #define INDENTOFFSET    2
 
-  enum ParseTreeNodeType { 
-	  						PROGRAM, BLOCK, STATEMENT_BLOCK, STATEMENT, NEWLINE_STATEMENT, DECLARTIONS, ASSIGNMENT_STATEMENT, WRITE_STATEMENT,
-							WRITE_BLOCK, DECLARATIONS, IF_STATEMENT_ELSE, CONDITION, VAL, OP,
-							READ_STATEMENT, IF_STATEMENT, DO_STATEMENT, WHILE_STATEMENT, FOR_STATEMENT, FOR_BODY,
-							OUTPUT_BLOCK, NEWLINE, CONST, CHARACTER_CONSTANT, NUMBER_CONSTANT, CONDITIONAL, CONDITIONAL_BODY,
-							COMPARATOR, OR, AND, EQUAL, NOT_EQUAL, GREATER_THAN, LESS_THAN, GREATER_THAN_EQUAL_TO, LESS_THAN_EQUAL_TO,
-							EXPR, EXPR_MINUS, EXPR_PLUS, TERM, TERM_DIVIDE, TERM_MULTIPLY, FACTOR_BRACKETS, 
-							FACTOR_CONSTANT, INTEGER_TYPE, REAL_TYPE, CHARACTER_TYPE, TYPE, INTEGER_CONSTANT, REAL_CONSTANT,
-							MINUS_INTEGER_CONSTANT, MINUS_REAL_CONSTANT
-							} ;  
+
+  enum ParseTreeNodeType
+						{
+							PROGRAM, DECLARATIONS, BLOCK_DECLARATIONS, BLOCK, STATEMENT_BLOCK,
+							ASSIGNMENT_STATEMENT, WRITE_STATEMENT, READ_STATEMENT, IF_STATEMENT,
+							IF_STATEMENT_ELSE, DO_STATEMENT, WHILE_STATEMENT, NEWLINE_STATEMENT,
+							FOR_STATEMENT, FOR_BODY, WRITE_BLOCK, CONDITIONAL,
+							CONDITIONAL_NOT, CONDITIONAL_AND, CONDITIONAL_OR, CONDITION, EXPR,
+							VAL_ID, VAL_BRACKETS, VAL_NEGATIVE, VAL, COMPARATOR_EQUAL_TO,
+							COMPARATOR_NOT_EQUAL_TO, COMPARATOR_LESS_THAN, COMPARATOR_GREATER_THAN,
+							COMPARATOR_LESS_THAN_EQUAL_TO, COMPARATOR_GREATER_THAN_EQUAL_TO,
+							OP_ADD, OP_MINUS, OP_MULTIPLY, OP_DIVIDE, TYPE_INT, TYPE_REAL, TYPE_CHARACTER,
+							CONST_INT, CONST_REAL,CONST_CHARACTER, CONST
+						};
+
+	char *NodeName[] =	{	
+							"PROGRAM", "DECLARATIONS", "BLOCK_DECLARATIONS", "BLOCK", "STATEMENT_BLOCK", 
+							"ASSIGNMENT_STATEMENT", "WRITE_STATEMENT", "READ_STATEMENT", "IF_STATEMENT", 
+							"IF_STATEMENT_ELSE", "DO_STATEMENT", "WHILE_STATEMENT", "NEWLINE_STATEMENT", 
+							"FOR_STATEMENT", "FOR_BODY", "WRITE_BLOCK", "CONDITIONAL", 
+							"CONDITIONAL_NOT", "CONDITIONAL_AND", "CONDITIONAL_OR", "CONDITION", "EXPR", 
+							"VAL_ID", "VAL_BRACKETS", "VAL_NEGATIVE", "VAL", "COMPARATOR_EQUAL_TO", 
+							"COMPARATOR_NOT_EQUAL_TO", "COMPARATOR_LESS_THAN", "COMPARATOR_GREATER_THAN", 
+							"COMPARATOR_LESS_THAN_EQUAL_TO", "COMPARATOR_GREATER_THAN_EQUAL_TO", 
+							"OP_ADD", "OP_MINUS", "OP_MULTIPLY", "OP_DIVIDE", "TYPE_INT", "TYPE_REAL", 
+							"TYPE_CHARACTER", "CONST_INT", "CONST_REAL", "CONST_CHARACTER", "CONST"
+						};						
+
+//   enum ParseTreeNodeType { 
+// 	  						PROGRAM, BLOCK, STATEMENT_BLOCK, STATEMENT, NEWLINE_STATEMENT, DECLARTIONS, ASSIGNMENT_STATEMENT, WRITE_STATEMENT,
+// 							WRITE_BLOCK, DECLARATIONS, IF_STATEMENT_ELSE, CONDITION, VAL, OP_ADD, OP_MINUS, OP_MULTIPLY, OP_DIVIDE,
+// 							READ_STATEMENT, IF_STATEMENT, DO_STATEMENT, WHILE_STATEMENT, FOR_STATEMENT, FOR_BODY,
+// 							OUTPUT_BLOCK, NEWLINE, CONST, CHARACTER_CONSTANT, NUMBER_CONSTANT, CONDITIONAL, CONDITIONAL_BODY,
+// 							COMPARATOR, OR, AND, EQUAL, NOT_EQUAL, GREATER_THAN, LESS_THAN, GREATER_THAN_EQUAL_TO, LESS_THAN_EQUAL_TO,
+// 							EXPR, EXPR_MINUS, EXPR_PLUS, TERM, TERM_DIVIDE, TERM_MULTIPLY, FACTOR_BRACKETS, 
+// 							FACTOR_CONSTANT, INTEGER_TYPE, REAL_TYPE, CHARACTER_TYPE, TYPE, INTEGER_CONSTANT, REAL_CONSTANT,
+// 							MINUS_INTEGER_CONSTANT, MINUS_REAL_CONSTANT, ID_VAL
+// 							} ;  
 							
-  char* NodeName[] = 		{ 
-							"PROGRAM"," BLOCK"," STATEMENT_BLOCK"," STATEMENT"," NEWLINE_STATEMENT"," DECLARTIONS"," ASSIGNMENT_STATEMENT"," WRITE_STATEMENT",
-							"WRITE_BLOCK"," DECLARATIONS"," IF_STATEMENT_ELSE"," CONDITION"," VAL"," OP", 
-							"READ_STATEMENT"," IF_STATEMENT"," DO_STATEMENT"," WHILE_STATEMENT"," FOR_STATEMENT","FOR_BODY", 
-							"OUTPUT_BLOCK"," NEWLINE"," CONST"," CHARACTER_CONSTANT"," NUMBER_CONSTANT"," CONDITIONAL"," CONDITIONAL_BODY",
-							"COMPARATOR"," OR"," AND"," EQUAL"," NOT_EQUAL"," GREATER_THAN"," LESS_THAN"," GREATER_THAN_EQUAL_TO"," LESS_THAN_EQUAL_TO", 
-							"EXPR"," EXPR_MINUS"," EXPR_PLUS"," TERM"," TERM_DIVIDE"," TERM_MULTIPLY"," FACTOR_BRACKETS",
-							"FACTOR_CONSTANT"," INTEGER_TYPE"," REAL_TYPE"," CHARACTER_TYPE"," TYPE"," INTEGER_CONSTANT"," REAL_CONSTANT", 
-							"MINUS_INTEGER_CONSTANT"," MINUS_REAL_CONSTANT"
-							} ;  							
+//   char* NodeName[] = 		{ 
+// 							"PROGRAM"," BLOCK"," STATEMENT_BLOCK"," STATEMENT"," NEWLINE_STATEMENT"," DECLARTIONS"," ASSIGNMENT_STATEMENT"," WRITE_STATEMENT",
+// 							"WRITE_BLOCK"," DECLARATIONS"," IF_STATEMENT_ELSE"," CONDITION"," VAL",  "OP_ADD", "OP_MINUS", "OP_MULTIPLY", "OP_DIVIDE",
+// 							"READ_STATEMENT"," IF_STATEMENT"," DO_STATEMENT"," WHILE_STATEMENT"," FOR_STATEMENT","FOR_BODY", 
+// 							"OUTPUT_BLOCK"," NEWLINE"," CONST"," CHARACTER_CONSTANT"," NUMBER_CONSTANT"," CONDITIONAL"," CONDITIONAL_BODY",
+// 							"COMPARATOR"," OR"," AND"," EQUAL"," NOT_EQUAL"," GREATER_THAN"," LESS_THAN"," GREATER_THAN_EQUAL_TO"," LESS_THAN_EQUAL_TO", 
+// 							"EXPR"," EXPR_MINUS"," EXPR_PLUS"," TERM"," TERM_DIVIDE"," TERM_MULTIPLY"," FACTOR_BRACKETS",
+// 							"FACTOR_CONSTANT"," INTEGER_TYPE"," REAL_TYPE"," CHARACTER_TYPE"," TYPE"," INTEGER_CONSTANT"," REAL_CONSTANT", 
+// 							"MINUS_INTEGER_CONSTANT"," MINUS_REAL_CONSTANT" ,"ID_VAL"
+// 							} ;  							
                           /* Add more types here, as more nodes
                                            added to tree */
 
@@ -167,7 +195,7 @@ program             	: ID_T COLON_T  block ENDP_T ID_T FULL_STOP_T
 						
 block					: DECLARATIONS_T declarations CODE_T statement_block
 						{
-							$$ = create_node(NOTHING, BLOCK, $2, $4, NULL);
+							$$ = create_node(NOTHING, BLOCK_DECLARATIONS, $2, $4, NULL);
 						}
 						| CODE_T statement_block
 						{
@@ -179,11 +207,11 @@ block					: DECLARATIONS_T declarations CODE_T statement_block
 						
 declarations			: ID_T OF_T TYPE_T type SEMI_COLON_T
 						{
-							$$ = create_node($1, DECLARTIONS, $4, NULL, NULL);
+							$$ = create_node($1, DECLARATIONS, $4, NULL, NULL);
 						}
 						| ID_T OF_T TYPE_T type SEMI_COLON_T declarations
 						{
-							$$ = create_node(NOTHING, DECLARTIONS, $4, $6, NULL);							
+							$$ = create_node(NOTHING, DECLARATIONS, $4, $6, NULL);							
 						}
 						| ID_T COMMA_T declarations
 						{
@@ -262,15 +290,15 @@ conditional				: condition
 						}
 						| NOT_T conditional
 						{
-							$$ = create_node_characterArray("!", CONDITIONAL, $2, NULL, NULL);
+							$$ = create_node_characterArray("!", CONDITIONAL_NOT, $2, NULL, NULL);
 						}
 						|  condition AND_T conditional
 						{
-							$$ = create_node_characterArray("&&", CONDITIONAL, $1, $3, NULL);
+							$$ = create_node_characterArray("&&", CONDITIONAL_AND, $1, $3, NULL);
 						}
 						| condition OR_T conditional
 						{
-							$$ = create_node_characterArray("||", CONDITIONAL, $1, $3, NULL);
+							$$ = create_node_characterArray("||", CONDITIONAL_OR, $1, $3, NULL);
 						}
 						;
 
@@ -292,15 +320,15 @@ expr					: val
 
 val						:  ID_T
 						{
-							$$ = create_node($1, VAL, NULL, NULL, NULL);
+							$$ = create_node($1, VAL_ID, NULL, NULL, NULL);
 						}
 						| BRA_T expr KET_T
 						{
-							$$ = create_node(NOTHING, VAL, $2, NULL, NULL);
+							$$ = create_node(NOTHING, VAL_BRACKETS, $2, NULL, NULL);
 						}
 						| MINUS_T const
 						{
-							$$ = create_node(NOTHING, VAL, $2, NULL, NULL);
+							$$ = create_node(NOTHING, VAL_NEGATIVE, $2, NULL, NULL);
 						}
 						|  const
 						{
@@ -310,61 +338,61 @@ val						:  ID_T
 
 comp					: EQUAL_TO_T
 						{
-							$$ = create_node_characterArray("==", COMPARATOR, NULL, NULL, NULL);
+							$$ = create_node_characterArray("==", COMPARATOR_EQUAL_TO, NULL, NULL, NULL);
 						}
 						| NOT_EQUAL_T
 						{
-							$$ = create_node_characterArray("!=", COMPARATOR, NULL, NULL, NULL);
+							$$ = create_node_characterArray("!=", COMPARATOR_NOT_EQUAL_TO, NULL, NULL, NULL);
 						}
 						| LESS_THAN_T
 						{
-							$$ = create_node_characterArray("<", COMPARATOR, NULL, NULL, NULL);
+							$$ = create_node_characterArray("<", COMPARATOR_LESS_THAN, NULL, NULL, NULL);
 						}
 						|  GREATER_THAN_T
 						{
-							$$ = create_node_characterArray(">", COMPARATOR, NULL, NULL, NULL);
+							$$ = create_node_characterArray(">", COMPARATOR_GREATER_THAN, NULL, NULL, NULL);
 						}
 						|  LESS_THAN_EQUAL_TO_T
 						{
-							$$ = create_node_characterArray("<=", COMPARATOR, NULL, NULL, NULL);
+							$$ = create_node_characterArray("<=", COMPARATOR_LESS_THAN_EQUAL_TO, NULL, NULL, NULL);
 						}
 						|  GREATER_THAN_EQUAL_TO_T
 						{
-							$$ = create_node_characterArray(">=", COMPARATOR, NULL, NULL, NULL);
+							$$ = create_node_characterArray(">=", COMPARATOR_GREATER_THAN_EQUAL_TO, NULL, NULL, NULL);
 						}
 						;
 						
 
 op						: ADD_T
 						{
-							$$ = create_node_characterArray("+", OP, NULL, NULL, NULL);
+							$$ = create_node_characterArray("+", OP_ADD, NULL, NULL, NULL);
 						}
 						| MINUS_T
 						{
-							$$ = create_node_characterArray("-", OP, NULL, NULL, NULL);
+							$$ = create_node_characterArray("-", OP_MINUS, NULL, NULL, NULL);
 						}
 						| MULTIPLY_T
 						{
-							$$ = create_node_characterArray("*", OP, NULL, NULL, NULL);
+							$$ = create_node_characterArray("*", OP_MULTIPLY, NULL, NULL, NULL);
 						}
 						| DIVIDE_T
 						{
-							$$ = create_node_characterArray("/", OP, NULL, NULL, NULL);
+							$$ = create_node_characterArray("/", OP_DIVIDE, NULL, NULL, NULL);
 						}
 						;
 					
 
 type					: INTEGER_T
 						{
-							$$ = create_node_characterArray("int", TYPE, NULL, NULL, NULL);
+							$$ = create_node_characterArray("int", TYPE_INT, NULL, NULL, NULL);
 						}
 						| REAL_T
 						{
-							$$ = create_node_characterArray("float", TYPE, NULL, NULL, NULL);
+							$$ = create_node_characterArray("float", TYPE_REAL, NULL, NULL, NULL);
 						}
 						| CHARACTER_T
 						{
-							$$ = create_node_characterArray("char", TYPE, NULL, NULL, NULL);
+							$$ = create_node_characterArray("char", TYPE_CHARACTER, NULL, NULL, NULL);
 						}
 						;
 
@@ -413,96 +441,83 @@ int sizeofString(char *str){
 	return str == NULL ? 0 : sizeof(str) - 1;
 }
 
+static int indent = 0;
+
 void PrintTree(TERNARY_TREE t)
 {
-	static unsigned depth;
-    static unsigned previous;
-    unsigned i;
-    /* skip empty nodes */
-    if (t == NULL) return;
-    /* print depth and change */
-    printf("%2d %2d\t", depth, depth - previous);
-    previous = depth;
-    /* indent tree and print current node */
-    
+
+	if(t == NULL) return;
+
 	
-	for (i = depth; i--;){
-		 printf("-");
-	}
-    switch (t->nodeIdentifier) {
-    case PROGRAM:
-        {
-			/* PROGRAM : PROGRAM NAME */
-        printf("PROGRAM : %s\n", symTab[t->item]->identifier);
-        break;
-        
+
+	int i;
+	for(i = indent; i; i--){ printf(" ");}
+
+	
+		
+
+		switch(t->nodeIdentifier)
+		{
+			for(i = indent; i; i--){ printf(" ");}
+			case PROGRAM:
+			{
+				 printf("PROGRAM -> %s\n", symTab[t->item]->identifier);
+				 break;
+			}
+
+			case BLOCK_DECLARATIONS:
+			{
+				printf(" TEST %s\n", symTab[t->item]->identifier);
+				break;
+			}
+			case DECLARATIONS:
+			{
+				printf(" TEST %s\n", symTab[t->item]->identifier);
+				break;
+			}
+			case STATEMENT_BLOCK:
+			{
+				//printf("STATEMENT_BLOCK\n");
+				break;
+			}
+			case CONST:
+			{
+				
+
+				printf(" Constant [%s] -> %s\n",symTab[t->item]->nodeType, symTab[t->item]->identifier);
+				break;
+			}
+
+			default:
+			{
+				if(t->nodeIdentifier > 0 && t->nodeIdentifier < sizeof NodeName)
+				{
+					printf(" Node identifier -> %s\n", NodeName[t->nodeIdentifier]);
+				}
+				else
+				{
+					printf(" Unkown node identifier -> %d\n", t->nodeIdentifier);
+				}
+
+				if(t->item > 0 && symTab[t->item]->identifier && t->item < SYMTABSIZE)
+				{
+					printf("%4d\tl\t", indent);
+					int j;
+					for(j = indent; j; j--)
+					{
+						printf(" ");
+					}
+					printf("Identifier -> %s\n", symTab[t->item]->identifier);
+				}
+			}
 		}
-    case CONDITIONAL:
-       {
-		if(t->item == NOTHING){
-			printf("CONDITIONAL \n");
-		}
-		else{
-			printf("CONDITIONAL -> %s\n", t->cItem);
-		}
-	   }
-        break;
-    case TYPE:
-       {
-		    /* TYPE : KEYWORD */
-        fprintf(stderr, "TYPE : %s\n", t->cItem);
-        return;
-	   }
-    case CONST:
-      {
-		    /* prints a string with the format 'CONSTANT' (type) -> 'val' */	
-		char output[100];
-		snprintf(output, sizeof output ,"CONSTANT (%s) -> %s\n", symTab[t->item]->nodeType ,symTab[t->item]->identifier);
-	    printf(output);
 	
-        
-           
-        return;
-	  }
-
-    
-    case OP: case COMPARATOR:
-        /* COMPARATOR / OPERATOR : TOKEN */
-		printf("%s -> %s\n", NodeName[t->nodeIdentifier], t->cItem);
-        return;
-    default:
-        /* print non-specific node name */
-        if (t->nodeIdentifier >= 0 && t->nodeIdentifier < sizeof(NodeName)) {
-            fprintf(stderr, "%s\n", NodeName[t->nodeIdentifier]);
-        } else {
-            fprintf(stderr, "UNKNOWN: %d\n", t->nodeIdentifier);
-        }
-        /* if an IDENTIFIER exists for the current node, print it */
-        if (t->item > 0 && t->item < SYMTABSIZE) {
-            if (symTab[t->item]->identifier) {
-                fprintf(stderr, "%3d   1\t", ++depth);
-                previous = depth;
-                for (i = depth--; i--;) fprintf(stderr, "-");
-                fprintf(stderr, "IDENTIFIER : %s\n", symTab[t->item]->identifier);
-            }
-        }
-        break;
-    }
-
-	
-	
-
-
-	 ++depth;
-    PrintTree(t->first);
-    PrintTree(t->second);
-    PrintTree(t->third);
-    --depth;
-	
-	
-	
-	
-	
+			indent +=2;
+			PrintTree(t->first);
+			indent +=2;
+			PrintTree(t->second);
+			indent +=2;
+			PrintTree(t->third);
 }
 #endif
 
