@@ -1,15 +1,15 @@
 <program> ::= <identifier>  ":" <block> ENDP <identifier>
 
-<block> ::= DECLARATIONS <declaration_block> CODE <statement_list>
+<block> ::= DECLARATIONS <declaration_block> CODE <statement_block>
 
-<declaration_block> ::= <identifiers>  OF TYPE <type> ";" 
-					  | <identifiers>  OF TYPE <type> ";" <declaration_block>
+<declaration_block> ::= <identifier_block>  OF TYPE <type> ";" 
+					  | <identifier_block>  OF TYPE <type> ";" <declaration_block>
 
-<identifiers> ::= <identifier> | <identifier> "," <identifiers>
+<identifier_block> ::= <identifier> | <identifier> "," <identifier_block>
 
 <type> ::= CHARACTER | INTEGER | REAL
 
-<statement_list> ::= <statement> ";" <statement_list> | <statement>
+<statement_block> ::= <statement> ";" <statement_block> | <statement>
 
 <statement> ::= <assignment_statement>
 			  | <if_statement>
@@ -21,22 +21,22 @@
 			  
 <assignment_statement> ::= <expression> "->" <identifier>
 
-<if_statement> ::= IF <conditional> THEN <statement_list> ENDIF
-			     | IF <conditional> THEN <statement_list> ELSE <statement_list> ENDIF
+<if_statement> ::= IF <conditional> THEN <statement_block> ENDIF
+			     | IF <conditional> THEN <statement_block> ELSE <statement_block> ENDIF
 			  
-<do_statement> ::= DO <statement_list> WHILE <conditional> ENDDO
+<do_statement> ::= DO <statement_block> WHILE <conditional> ENDDO
 
-<while_statement> ::= WHILE <conditional> DO <statement_list> ENDWHILE
+<while_statement> ::= WHILE <conditional> DO <statement_block> ENDWHILE
 
 <for_statement> ::= FOR <identifier> IS <expression> BY <expression> TO <expression>
-								     DO <statement_list> ENDFOR
+								     DO <statement_block> ENDFOR
 
-<write_statement> ::= WRITE "(" <output_list> ")" 
+<write_statement> ::= WRITE "(" <output_block> ")" 
 					| NEWLINE
 					
 <read_statement> ::= READ "(" <identifier> ")"
 
-<output_list> ::= <value> "," <output_list> 
+<output_block> ::= <value> "," <output_block> 
 				| <value>
 
 <conditional> ::= <expression> <comparator> <expression>
