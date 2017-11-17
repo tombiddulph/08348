@@ -46,7 +46,7 @@ void yyerror (char *);
 							COMPARATOR_NOT_EQUAL_TO, COMPARATOR_LESS_THAN, COMPARATOR_GREATER_THAN,
 							COMPARATOR_LESS_THAN_EQUAL_TO, COMPARATOR_GREATER_THAN_EQUAL_TO,
 							OP_ADD, OP_MINUS, OP_MULTIPLY, OP_DIVIDE, TYPE_INT, TYPE_REAL, TYPE_CHARACTER,
-							CONST_INT, CONST_REAL,CONST_CHARACTER, CONST
+							CONST_INT, CONST_REAL,CONST_CHARACTER, CONST, TYPE
 						};
 
 	char *NodeName[] =	{	
@@ -59,32 +59,8 @@ void yyerror (char *);
 							"COMPARATOR_NOT_EQUAL_TO", "COMPARATOR_LESS_THAN", "COMPARATOR_GREATER_THAN", 
 							"COMPARATOR_LESS_THAN_EQUAL_TO", "COMPARATOR_GREATER_THAN_EQUAL_TO", 
 							"OP_ADD", "OP_MINUS", "OP_MULTIPLY", "OP_DIVIDE", "TYPE_INT", "TYPE_REAL", 
-							"TYPE_CHARACTER", "CONST_INT", "CONST_REAL", "CONST_CHARACTER", "CONST"
+							"TYPE_CHARACTER", "CONST_INT", "CONST_REAL", "CONST_CHARACTER", "CONST", "TYPE"
 						};						
-
-//   enum ParseTreeNodeType { 
-// 	  						PROGRAM, BLOCK, STATEMENT_BLOCK, STATEMENT, NEWLINE_STATEMENT, DECLARTIONS, ASSIGNMENT_STATEMENT, WRITE_STATEMENT,
-// 							WRITE_BLOCK, DECLARATIONS, IF_STATEMENT_ELSE, CONDITION, VAL, OP_ADD, OP_MINUS, OP_MULTIPLY, OP_DIVIDE,
-// 							READ_STATEMENT, IF_STATEMENT, DO_STATEMENT, WHILE_STATEMENT, FOR_STATEMENT, FOR_BODY,
-// 							OUTPUT_BLOCK, NEWLINE, CONST, CHARACTER_CONSTANT, NUMBER_CONSTANT, CONDITIONAL, CONDITIONAL_BODY,
-// 							COMPARATOR, OR, AND, EQUAL, NOT_EQUAL, GREATER_THAN, LESS_THAN, GREATER_THAN_EQUAL_TO, LESS_THAN_EQUAL_TO,
-// 							EXPR, EXPR_MINUS, EXPR_PLUS, TERM, TERM_DIVIDE, TERM_MULTIPLY, FACTOR_BRACKETS, 
-// 							FACTOR_CONSTANT, INTEGER_TYPE, REAL_TYPE, CHARACTER_TYPE, TYPE, INTEGER_CONSTANT, REAL_CONSTANT,
-// 							MINUS_INTEGER_CONSTANT, MINUS_REAL_CONSTANT, ID_VAL
-// 							} ;  
-							
-//   char* NodeName[] = 		{ 
-// 							"PROGRAM"," BLOCK"," STATEMENT_BLOCK"," STATEMENT"," NEWLINE_STATEMENT"," DECLARTIONS"," ASSIGNMENT_STATEMENT"," WRITE_STATEMENT",
-// 							"WRITE_BLOCK"," DECLARATIONS"," IF_STATEMENT_ELSE"," CONDITION"," VAL",  "OP_ADD", "OP_MINUS", "OP_MULTIPLY", "OP_DIVIDE",
-// 							"READ_STATEMENT"," IF_STATEMENT"," DO_STATEMENT"," WHILE_STATEMENT"," FOR_STATEMENT","FOR_BODY", 
-// 							"OUTPUT_BLOCK"," NEWLINE"," CONST"," CHARACTER_CONSTANT"," NUMBER_CONSTANT"," CONDITIONAL"," CONDITIONAL_BODY",
-// 							"COMPARATOR"," OR"," AND"," EQUAL"," NOT_EQUAL"," GREATER_THAN"," LESS_THAN"," GREATER_THAN_EQUAL_TO"," LESS_THAN_EQUAL_TO", 
-// 							"EXPR"," EXPR_MINUS"," EXPR_PLUS"," TERM"," TERM_DIVIDE"," TERM_MULTIPLY"," FACTOR_BRACKETS",
-// 							"FACTOR_CONSTANT"," INTEGER_TYPE"," REAL_TYPE"," CHARACTER_TYPE"," TYPE"," INTEGER_CONSTANT"," REAL_CONSTANT", 
-// 							"MINUS_INTEGER_CONSTANT"," MINUS_REAL_CONSTANT" ,"ID_VAL"
-// 							} ;  							
-                          /* Add more types here, as more nodes
-                                           added to tree */
 
 #ifndef TRUE
 #define TRUE 1
@@ -384,15 +360,15 @@ op						: ADD_T
 
 type					: INTEGER_T
 						{
-							$$ = create_node_characterArray("int", TYPE_INT, NULL, NULL, NULL);
+							$$ = create_node_characterArray("int", TYPE, NULL, NULL, NULL);
 						}
 						| REAL_T
 						{
-							$$ = create_node_characterArray("float", TYPE_REAL, NULL, NULL, NULL);
+							$$ = create_node_characterArray("float", TYPE, NULL, NULL, NULL);
 						}
 						| CHARACTER_T
 						{
-							$$ = create_node_characterArray("char", TYPE_CHARACTER, NULL, NULL, NULL);
+							$$ = create_node_characterArray("char", TYPE, NULL, NULL, NULL);
 						}
 						;
 
@@ -451,14 +427,14 @@ void PrintTree(TERNARY_TREE t)
 	
 
 	int i;
-	for(i = indent; i; i--){ printf(" ");}
+	// for(i = indent; i; i--){ printf(" ");}
 
 	
 		
 
 		switch(t->nodeIdentifier)
 		{
-			for(i = indent; i; i--){ printf(" ");}
+			// for(i = indent; i; i--){ printf(" ");}
 			case PROGRAM:
 			{
 				 printf("PROGRAM -> %s\n", symTab[t->item]->identifier);
@@ -467,12 +443,12 @@ void PrintTree(TERNARY_TREE t)
 
 			case BLOCK_DECLARATIONS:
 			{
-				printf(" TEST %s\n", symTab[t->item]->identifier);
+				//printf(" TEST %s\n", symTab[t->item]->identifier);
 				break;
 			}
 			case DECLARATIONS:
 			{
-				printf(" TEST %s\n", symTab[t->item]->identifier);
+				//printf(" TEST %s\n", symTab[t->item]->identifier);
 				break;
 			}
 			case STATEMENT_BLOCK:
@@ -480,11 +456,44 @@ void PrintTree(TERNARY_TREE t)
 				//printf("STATEMENT_BLOCK\n");
 				break;
 			}
+			case OP_ADD:
+			case OP_DIVIDE:
+			case OP_MINUS:
+			case OP_MULTIPLY:
+			{
+				break;
+			}
+			case CONDITIONAL_AND:
+			case CONDITIONAL_NOT:
+			case CONDITIONAL_OR:
+			{
+				printf("Conditional -> %s\n", NodeName[t->nodeIdentifier]);
+				break;
+			}
+			case COMPARATOR_EQUAL_TO:
+			case COMPARATOR_NOT_EQUAL_TO:
+			case COMPARATOR_LESS_THAN:
+			case COMPARATOR_GREATER_THAN:
+			case COMPARATOR_LESS_THAN_EQUAL_TO:
+			case COMPARATOR_GREATER_THAN_EQUAL_TO:
+			{
+					printf("Comparator -> [%s] %s\n",t->cItem, NodeName[t->nodeIdentifier]);
+					break;
+			}
 			case CONST:
 			{
 				
-
 				printf(" Constant [%s] -> %s\n",symTab[t->item]->nodeType, symTab[t->item]->identifier);
+				break;
+			}
+			case VAL_ID:
+			{
+				printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType);
+				break;
+			}
+			case TYPE:
+			{
+				printf("Type -> %s\n ", t->cItem);
 				break;
 			}
 
@@ -493,20 +502,22 @@ void PrintTree(TERNARY_TREE t)
 				if(t->nodeIdentifier > 0 && t->nodeIdentifier < sizeof NodeName)
 				{
 					printf(" Node identifier -> %s\n", NodeName[t->nodeIdentifier]);
+					break;
 				}
 				else
 				{
 					printf(" Unkown node identifier -> %d\n", t->nodeIdentifier);
+					break;
 				}
 
 				if(t->item > 0 && symTab[t->item]->identifier && t->item < SYMTABSIZE)
 				{
-					printf("%4d\tl\t", indent);
-					int j;
-					for(j = indent; j; j--)
-					{
-						printf(" ");
-					}
+					//printf("%4d\tl\t", indent);
+					// int j;
+					// for(j = indent; j; j--)
+					// {
+					// 	printf(" ");
+					// }
 					printf("Identifier -> %s\n", symTab[t->item]->identifier);
 				}
 			}
