@@ -5,12 +5,9 @@
 
 	#ifdef PRINT
 
-    #define _TOKEN_(t) 				printf("Token: " #t "\n");
-    # define _SYMBOL_(t)              printf("Sybol: " #t "\n");
-	#define _TOKEN_INTEGER_(t) 		printf("Integer token:  %i\n", atoi(yytext));
-	#define _TOKEN_REAL_(t) 		printf("Real token: %f\n", atof(yytext));
-	#define _TOKEN_CHARACTER_(t) 	printf("Character constant token: %c\n", yytext[1]);
-    #define _TOKEN_IDENTIFIER_(t) 	printf("Identifier token: %s\n",yytext); 
+    #define _TOKEN_(t) 				printf("Token: (" #t ") -> %s\n", yytext);
+    #define _SYMBOL_(t)             printf("Sybol: (" #t ") -> %s\n", yytext);
+
 	#define _TOKEN_UNKNOWN_(t)		printf("Unkown token: %s\n", yytext);
 
     #else
