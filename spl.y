@@ -163,7 +163,7 @@ program             	: ID_T COLON_T  block ENDP_T ID_T FULL_STOP_T
 #ifdef DEBUG							
 							PrintTree(parseTree);
 #endif							
-
+						WriteCode(parseTree);
 							
 						}
 						;
@@ -411,6 +411,11 @@ TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY
     return (t);
 }
 
+#define PrintComment(comment)  printf("/* %s */\n",comment);
+#define NodeType(t) (symTab[t->item]->nodeType)
+#define Identifier(t)  (symTab[t->item]->identifier)
+#define NodeIdentifier(t)  (NodeName[t->nodeIdentifier])
+
 #ifdef DEBUG
 
 int sizeofString(char *str){
@@ -424,20 +429,18 @@ void PrintTree(TERNARY_TREE t)
 
 	if(t == NULL) return;
 
-	
+
 
 	int i;
-	// for(i = indent; i; i--){ printf(" ");}
+	//for(i = indent; i; i--){ printf(" ");}
 
-	
-		
-
+		for(i = indent; i; i--){ printf("| ");}
 		switch(t->nodeIdentifier)
 		{
-			// for(i = indent; i; i--){ printf(" ");}
+		
 			case PROGRAM:
 			{
-				 printf("PROGRAM -> %s\n", symTab[t->item]->identifier);
+				 printf("PROGRAM -> %s\n", Identifier(t));
 				 break;
 			}
 
@@ -467,7 +470,7 @@ void PrintTree(TERNARY_TREE t)
 			case CONDITIONAL_NOT:
 			case CONDITIONAL_OR:
 			{
-				printf("Conditional -> %s\n", NodeName[t->nodeIdentifier]);
+				printf("Conditional -> %s\n", NodeIdentifier(t));
 				break;
 			}
 			case COMPARATOR_EQUAL_TO:
@@ -477,20 +480,20 @@ void PrintTree(TERNARY_TREE t)
 			case COMPARATOR_LESS_THAN_EQUAL_TO:
 			case COMPARATOR_GREATER_THAN_EQUAL_TO:
 			{
-					printf("Comparator -> [%s] %s\n",t->cItem, NodeName[t->nodeIdentifier]);
+					printf("Comparator -> [%s] %s\n",t->cItem, NodeIdentifier(t));
 					break;
 			}
 			case CONST:
 			{
 				
-				printf(" Constant [%s] -> %s\n",symTab[t->item]->nodeType, symTab[t->item]->identifier);
+				printf(" Constant [%s] -> %s\n", NodeType(t), Identifier(t));
 				break;
 			}
-			case VAL_ID:
-			{
-				printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType);
-				break;
-			}
+			// case VAL_ID:
+			// {
+			// 	printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType);
+			// 	break;
+			// }
 			case TYPE:
 			{
 				printf("Type -> %s\n ", t->cItem);
@@ -499,45 +502,111 @@ void PrintTree(TERNARY_TREE t)
 
 			default:
 			{
-				if(t->nodeIdentifier > 0 && t->nodeIdentifier < sizeof NodeName)
+				if(t->nodeIdentifier >= 0 && t->nodeIdentifier < sizeof NodeName)
 				{
-					printf(" Node identifier -> %s\n", NodeName[t->nodeIdentifier]);
-					break;
+					printf(" Node identifier -> %s\n", NodeIdentifier(t));
+					
 				}
 				else
 				{
 					printf(" Unkown node identifier -> %d\n", t->nodeIdentifier);
-					break;
+					
 				}
 
-				if(t->item > 0 && symTab[t->item]->identifier && t->item < SYMTABSIZE)
+				if(t->item > 0 && t->item < SYMTABSIZE)
 				{
-					//printf("%4d\tl\t", indent);
-					// int j;
-					// for(j = indent; j; j--)
-					// {
-					// 	printf(" ");
-					// }
-					printf("Identifier -> %s\n", symTab[t->item]->identifier);
+					printf( "%3d   1\t", ++indent);
+					for(i = indent; i; i--){ printf("| ");}
+					printf("Identifier -> %s\n", Identifier(t));
 				}
 			}
 		}
 	
-			indent +=2;
+			++indent;
 			PrintTree(t->first);
-			indent +=2;
 			PrintTree(t->second);
-			indent +=2;
 			PrintTree(t->third);
-}
+			--indent;
+}			
 #endif
+
+
 
 void WriteCode(TERNARY_TREE t)
 {
+	
 	if(t == NULL)
 	{
 		return;
 	}
+
+	switch(t->nodeIdentifier)
+	{
+		case PROGRAM:
+		{
+			printf("/* Spl program name -> %s */\n", symTab[t->item]->identifier);
+			printf("#include <stdio.h>\n");
+			printf("int main(void) {\n\n");
+			break;
+		}
+
+		case BLOCK:
+		{
+			PrintComment("code");
+			WriteCode(t->first);
+			break;
+		}
+		case BLOCK_DECLARATIONS:
+		{
+			PrintComment("declarations");
+			WriteCode(t->first);
+			PrintComment("code");
+			WriteCode(t->second);
+			break;
+		}
+
+		case WRITE_STATEMENT:
+		{
+			WriteCode(t->first);
+			break;
+		}
+		case WRITE_BLOCK:
+		{
+
+			WriteCode(t->first);
+
+			if(t->second) /* val COMMA_T write_block */
+			{
+
+			}
+		}
+
+		case VAL_ID:
+		{
+			break;
+		}
+		case VAL_BRACKETS:
+		{
+			break;
+		}
+		case VAL_NEGATIVE:
+		{
+			break;
+		}
+		case VAL:
+		{
+			break;
+		}
+
+		case CONST:
+		{
+			// switch(symTab[t->item]->nodeType)
+			// {
+
+			// }
+		}
+	}
+
 	WriteCode(t->first);
 	WriteCode(t->second);
 	WriteCode(t->third);
