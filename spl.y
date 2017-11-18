@@ -85,22 +85,22 @@ struct treeNode {
     int  nodeIdentifier;
     struct treeNode *first;
     struct treeNode *second;
-    struct treeNode *third;
+
   };
 
 typedef  struct treeNode TREE_NODE;
-typedef  TREE_NODE        *TERNARY_TREE;
+typedef  TREE_NODE       *BINARY_TREE;
 
 /* ------------- forward declarations --------------------------- */
 
-TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
-TERNARY_TREE create_node_characterArray(char*,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
+BINARY_TREE create_node(int,int,BINARY_TREE,BINARY_TREE);
+BINARY_TREE create_node_characterArray(char*,int,BINARY_TREE,BINARY_TREE);
 #ifdef DEBUG
-	void PrintTree(TERNARY_TREE t);
+	void PrintTree(BINARY_TREE t);
 	int BufferSize(char *format, ...);
 	#define NEWLINE "\n"
 #endif	
-void WriteCode(TERNARY_TREE t);
+void WriteCode(BINARY_TREE t);
 
 /* ------------- symbol table definition --------------------------- */
 
@@ -124,7 +124,7 @@ int currentSymTabSize = 0;
 %union 
 {
     int iVal;
-    TERNARY_TREE  tVal;
+    BINARY_TREE  tVal;
 }
 
 // These are lexical tokens
@@ -156,10 +156,10 @@ int currentSymTabSize = 0;
 
 %%
 
-program             	: ID_T COLON_T  block ENDP_T ID_T FULL_STOP_T
+program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 						{
-							TERNARY_TREE parseTree;
-							parseTree = create_node($1, PROGRAM, $3, NULL, NULL);
+							BINARY_TREE parseTree;
+							parseTree = create_node($1, PROGRAM, $3, NULL);
 							
 #ifdef DEBUG							
 							PrintTree(parseTree);
@@ -172,11 +172,11 @@ program             	: ID_T COLON_T  block ENDP_T ID_T FULL_STOP_T
 						
 block					: DECLARATIONS_T declarations CODE_T statement_block
 						{
-							$$ = create_node(NOTHING, BLOCK_DECLARATIONS, $2, $4, NULL);
+							$$ = create_node(NOTHING, BLOCK_DECLARATIONS, $2, $4);
 						}
 						| CODE_T statement_block
 						{
-							$$ = create_node(NOTHING, BLOCK, $2, NULL, NULL);
+							$$ = create_node(NOTHING, BLOCK, $2,NULL);
 						}
 						;
 						
@@ -184,233 +184,257 @@ block					: DECLARATIONS_T declarations CODE_T statement_block
 						
 declarations			: ID_T OF_T TYPE_T type SEMI_COLON_T
 						{
-							$$ = create_node($1, DECLARATIONS, $4, NULL, NULL);
+							$$ = create_node($1, DECLARATIONS, $4, NULL);
 						}
 						| ID_T OF_T TYPE_T type SEMI_COLON_T declarations
 						{
-							$$ = create_node(NOTHING, DECLARATIONS, $4, $6, NULL);							
+							$$ = create_node(NOTHING, DECLARATIONS, $4, $6);							
 						}
 						| ID_T COMMA_T declarations
 						{
-							$$ = create_node($1, DECLARATIONS, $3, NULL, NULL);
+							$$ = create_node($1, DECLARATIONS, $3, NULL);
 						}
 						;
 											
 statement_block			: statement SEMI_COLON_T statement_block
 						{
-							$$ = create_node(NOTHING, STATEMENT_BLOCK, $1, $3, NULL);
+							$$ = create_node(NOTHING, STATEMENT_BLOCK, $1, $3);
 						}
 						| statement
 						{
-							$$ = create_node(NOTHING, STATEMENT_BLOCK, $1, NULL, NULL);
+							$$ = create_node(NOTHING, STATEMENT_BLOCK, $1, NULL);
 						}
 						;
 	
 statement				: expr ASSIGNMENT_T ID_T
 						{
-							$$ = create_node($3, ASSIGNMENT_STATEMENT, $1, NULL, NULL);
+							$$ = create_node($3, ASSIGNMENT_STATEMENT, $1, NULL);
 						}
 						|  WRITE_T BRA_T write_block KET_T
 						{
-							$$ = create_node(NOTHING, WRITE_STATEMENT, $3, NULL, NULL);
+							$$ = create_node(NOTHING, WRITE_STATEMENT, $3, NULL);
 						}
 						| READ_T BRA_T ID_T KET_T
 						{
-							$$ = create_node($3, READ_STATEMENT, NULL, NULL, NULL);
+							$$ = create_node($3, READ_STATEMENT, NULL, NULL);
 						}
 						| IF_T conditional THEN_T statement_block END_IF_T
 						{
-							$$ =  create_node(NOTHING, IF_STATEMENT, $2, $4, NULL);
+							$$ =  create_node(NOTHING, IF_STATEMENT, $2, $4);
 						}
 						| IF_T conditional THEN_T statement_block ELSE_T statement_block END_IF_T
 						{
-							$$ = create_node(NOTHING, IF_STATEMENT_ELSE, $2, $4, $6);
+						   $$ = create_node(NOTHING, IF_STATEMENT_ELSE, $2, create_node(NOTHING, IF_STATEMENT_ELSE, $4, $6));
 						}
 						| DO_T statement_block WHILE_T conditional END_DO_T
 						{
-							$$ = create_node(NOTHING, DO_STATEMENT, $2, $4, NULL);
+							$$ = create_node(NOTHING, DO_STATEMENT, $2, $4);
 						}
 						| WHILE_T conditional DO_T statement_block END_WHILE_T
 						{
-							$$ =  create_node(NOTHING, WHILE_STATEMENT, $2, $4, NULL);
+							$$ =  create_node(NOTHING, WHILE_STATEMENT, $2, $4);
 						}
 						| NEWLINE_T
 						{
-							$$ = create_node(NOTHING, NEWLINE_STATEMENT, NULL, NULL, NULL);
+							$$ = create_node(NOTHING, NEWLINE_STATEMENT, NULL, NULL);
 						}
 						| FOR_T for_block statement_block END_FOR_T
 						{
-							$$ = create_node(NOTHING, FOR_STATEMENT, $2, $3, NULL);
+							$$ = create_node(NOTHING, FOR_STATEMENT, $2, $3);
 						}
 						;
 
 for_block				: ID_T IS_T expr BY_T expr TO_T expr DO_T
 						{
-							$$ = create_node($1, FOR_BODY, $3, $5, $7);
+							$$ = create_node($1, FOR_BODY, $3, create_node(NOTHING, FOR_BODY, $5, $7));
 						}						
 						;
 
 					
 write_block				: val 
 						{
-							$$ = create_node(NOTHING, WRITE_BLOCK, $1, NULL, NULL);
+							$$ = create_node(NOTHING, WRITE_BLOCK, $1, NULL);
 						}
 						| val COMMA_T write_block
 						{
-							$$ = create_node(NOTHING, WRITE_BLOCK, $1, $3, NULL);
+							$$ = create_node(NOTHING, WRITE_BLOCK, $1, $3);
 						}
 						;
 
 conditional				: condition
 						{
-							$$ = create_node(NOTHING, CONDITIONAL, $1, NULL, NULL);
+							$$ = create_node(NOTHING, CONDITIONAL, $1, NULL);
 						}
 						| NOT_T conditional
 						{
-							$$ = create_node_characterArray("!", CONDITIONAL_NOT, $2, NULL, NULL);
+							$$ = create_node_characterArray("!", CONDITIONAL_NOT, $2, NULL);
 						}
 						|  condition AND_T conditional
 						{
-							$$ = create_node_characterArray("&&", CONDITIONAL_AND, $1, $3, NULL);
+							$$ = create_node_characterArray("&&", CONDITIONAL_AND, $1, $3);
 						}
 						| condition OR_T conditional
 						{
-							$$ = create_node_characterArray("||", CONDITIONAL_OR, $1, $3, NULL);
+							$$ = create_node_characterArray("||", CONDITIONAL_OR, $1, $3);
 						}
 						;
 
 condition				: expr comp expr
 						{
-							$$ = create_node(NOTHING, CONDITION, $1, $2 ,$3);
+							$$ = create_node(NOTHING, CONDITION, $1, create_node(NOTHING, CONDITION, $2 ,$3));
 						}
 						;
 
 expr					: val
 						{
-							$$ = create_node(NOTHING, EXPR, $1, NULL, NULL);
+							$$ = create_node(NOTHING, EXPR, $1, NULL);
 						}
 						| val op expr
 						{
-							$$ = create_node(NOTHING, EXPR, $1, $2, $3);
+					    	$$ = create_node(NOTHING, EXPR, $1, create_node(NOTHING, EXPR, $2, $3));
 						}
 						;
 
 val						:  ID_T
 						{
-							$$ = create_node($1, VAL_ID, NULL, NULL, NULL);
+							$$ = create_node($1, VAL_ID, NULL, NULL);
 						}
 						| BRA_T expr KET_T
 						{
-							$$ = create_node(NOTHING, VAL_BRACKETS, $2, NULL, NULL);
+							$$ = create_node(NOTHING, VAL_BRACKETS, $2, NULL);
 						}
 						| MINUS_T const
 						{
-							$$ = create_node(NOTHING, VAL_NEGATIVE, $2, NULL, NULL);
+							$$ = create_node(NOTHING, VAL_NEGATIVE, $2, NULL);
 						}
 						|  const
 						{
-							$$ = create_node(NOTHING, VAL, $1, NULL, NULL);
+							$$ = create_node(NOTHING, VAL, $1, NULL);
 						}
 
 
 comp					: EQUAL_TO_T
 						{
-							$$ = create_node_characterArray("==", COMPARATOR_EQUAL_TO, NULL, NULL, NULL);
+							$$ = create_node_characterArray("==", COMPARATOR_EQUAL_TO, NULL, NULL);
 						}
 						| NOT_EQUAL_T
 						{
-							$$ = create_node_characterArray("!=", COMPARATOR_NOT_EQUAL_TO, NULL, NULL, NULL);
+							$$ = create_node_characterArray("!=", COMPARATOR_NOT_EQUAL_TO, NULL, NULL);
 						}
 						| LESS_THAN_T
 						{
-							$$ = create_node_characterArray("<", COMPARATOR_LESS_THAN, NULL, NULL, NULL);
+							$$ = create_node_characterArray("<", COMPARATOR_LESS_THAN, NULL, NULL);
 						}
 						|  GREATER_THAN_T
 						{
-							$$ = create_node_characterArray(">", COMPARATOR_GREATER_THAN, NULL, NULL, NULL);
+							$$ = create_node_characterArray(">", COMPARATOR_GREATER_THAN, NULL, NULL);
 						}
 						|  LESS_THAN_EQUAL_TO_T
 						{
-							$$ = create_node_characterArray("<=", COMPARATOR_LESS_THAN_EQUAL_TO, NULL, NULL, NULL);
+							$$ = create_node_characterArray("<=", COMPARATOR_LESS_THAN_EQUAL_TO, NULL, NULL);
 						}
 						|  GREATER_THAN_EQUAL_TO_T
 						{
-							$$ = create_node_characterArray(">=", COMPARATOR_GREATER_THAN_EQUAL_TO, NULL, NULL, NULL);
+							$$ = create_node_characterArray(">=", COMPARATOR_GREATER_THAN_EQUAL_TO, NULL, NULL);
 						}
 						;
 						
 
 op						: ADD_T
 						{
-							$$ = create_node_characterArray("+", OP_ADD, NULL, NULL, NULL);
+							$$ = create_node_characterArray("+", OP_ADD, NULL, NULL);
 						}
 						| MINUS_T
 						{
-							$$ = create_node_characterArray("-", OP_MINUS, NULL, NULL, NULL);
+							$$ = create_node_characterArray("-", OP_MINUS, NULL, NULL);
 						}
 						| MULTIPLY_T
 						{
-							$$ = create_node_characterArray("*", OP_MULTIPLY, NULL, NULL, NULL);
+							$$ = create_node_characterArray("*", OP_MULTIPLY, NULL, NULL);
 						}
 						| DIVIDE_T
 						{
-							$$ = create_node_characterArray("/", OP_DIVIDE, NULL, NULL, NULL);
+							$$ = create_node_characterArray("/", OP_DIVIDE, NULL, NULL);
 						}
 						;
 					
 
 type					: INTEGER_T
 						{
-							$$ = create_node_characterArray("int", TYPE, NULL, NULL, NULL);
+							$$ = create_node_characterArray("int", TYPE, NULL, NULL);
 						}
 						| REAL_T
 						{
-							$$ = create_node_characterArray("float", TYPE, NULL, NULL, NULL);
+							$$ = create_node_characterArray("float", TYPE, NULL, NULL);
 						}
 						| CHARACTER_T
 						{
-							$$ = create_node_characterArray("char", TYPE, NULL, NULL, NULL);
+							$$ = create_node_characterArray("char", TYPE, NULL, NULL);
 						}
 						;
 
 const					: INTEGER_CONSTANT_T
 						{
-							$$ = create_node($1, CONST, NULL, NULL, NULL);
+							$$ = create_node($1, CONST, NULL, NULL);
 						}
 						| REAL_CONSTANT_T
 						{
-							$$ = create_node($1, CONST, NULL, NULL, NULL);
+							$$ = create_node($1, CONST, NULL, NULL);
 						}
 						| CHARACTER_CONSTANT_T
 						{
-							$$ = create_node($1, CONST, NULL, NULL, NULL);
+							$$ = create_node($1, CONST, NULL, NULL);
 						}
 						;
 %%
 
 /* Code for routines for managing the Parse Tree */
 
-TERNARY_TREE create_node_characterArray(char* ival,  int case_identifier, TERNARY_TREE p1, TERNARY_TREE  p2, TERNARY_TREE  p3){
-	TERNARY_TREE t;
-    t = (TERNARY_TREE)malloc(sizeof(TREE_NODE));
-    t->cItem = ival ;
-    t->nodeIdentifier = case_identifier;
-    t->first = p1;
-    t->second = p2;
-    t->third = p3;
-    return (t);
+
+BINARY_TREE create_node(int iVal, int case_identifier, BINARY_TREE b1, BINARY_TREE b2)
+{
+	BINARY_TREE b;
+	b = (BINARY_TREE)malloc(sizeof(TREE_NODE));
+	b->item = iVal;
+	b->nodeIdentifier = case_identifier;
+	b->first = b1;
+	b->second = b2;
+	return (b);
 }
 
-TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY_TREE  p2, TERNARY_TREE  p3){
-    TERNARY_TREE t;
-    t = (TERNARY_TREE)malloc(sizeof(TREE_NODE));
-    t->item = ival;
-    t->nodeIdentifier = case_identifier;
-    t->first = p1;
-    t->second = p2;
-    t->third = p3;
-    return (t);
+
+BINARY_TREE create_node_characterArray(char* iVal, int case_identifier, BINARY_TREE b1, BINARY_TREE b2)
+{
+	BINARY_TREE b;
+	b = (BINARY_TREE)malloc(sizeof(TREE_NODE));
+	b->cItem = iVal;
+	b->nodeIdentifier = case_identifier;
+	b->first = b1;
+	b->second = b2;
+	return (b);
 }
+
+// TERNARY_TREE create_node_characterArray(char* ival,  int case_identifier, TERNARY_TREE p1, TERNARY_TREE  p2, TERNARY_TREE  p3){
+// 	TERNARY_TREE t;
+//     t = (TERNARY_TREE)malloc(sizeof(TREE_NODE));
+//     t->cItem = ival ;
+//     t->nodeIdentifier = case_identifier;
+//     t->first = p1;
+//     t->second = p2;
+//     t->third = p3;
+//     return (t);
+// }
+
+// TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY_TREE  p2, TERNARY_TREE  p3){
+//     TERNARY_TREE t;
+//     t = (TERNARY_TREE)malloc(sizeof(TREE_NODE));
+//     t->item = ival;
+//     t->nodeIdentifier = case_identifier;
+//     t->first = p1;
+//     t->second = p2;
+//     t->third = p3;
+//     return (t);
+// }
 
 #define PrintComment(comment)  printf("/* %s */\n",comment);
 #define NodeType(t) (symTab[t->item]->nodeType)
@@ -431,7 +455,7 @@ int BufferSize(char *format, ...)
 
 static int indent = 0;
 
-void PrintTree(TERNARY_TREE t)
+void PrintTree(BINARY_TREE t)
 {
 
 	if(t == NULL) return;
@@ -537,14 +561,14 @@ void PrintTree(TERNARY_TREE t)
 			++indent;
 			PrintTree(t->first);
 			PrintTree(t->second);
-			PrintTree(t->third);
+			//PrintTree(t->third);
 			--indent;
 }			
 #endif
 
 
 
-void WriteCode(TERNARY_TREE t)
+void WriteCode(BINARY_TREE t)
 {
 	
 	if(t == NULL)
@@ -621,7 +645,7 @@ void WriteCode(TERNARY_TREE t)
 
 	WriteCode(t->first);
 	WriteCode(t->second);
-	WriteCode(t->third);
+	//WriteCode(t->third);
 }
 
 /* Put other auxiliary functions here */
