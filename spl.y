@@ -19,6 +19,7 @@ extern int yydebug;
    
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 /* make forward declarations to avoid compiler warnings */
 int yylex (void);
@@ -96,7 +97,7 @@ TERNARY_TREE create_node(int,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
 TERNARY_TREE create_node_characterArray(char*,int,TERNARY_TREE,TERNARY_TREE,TERNARY_TREE);
 #ifdef DEBUG
 	void PrintTree(TERNARY_TREE t);
-	int sizeofString(char * str);
+	int BufferSize(char *format, ...);
 	#define NEWLINE "\n"
 #endif	
 void WriteCode(TERNARY_TREE t);
@@ -413,8 +414,14 @@ TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY
 
 #ifdef DEBUG
 
-int sizeofString(char *str){
-	return str == NULL ? 0 : sizeof(str) - 1;
+/*  function found here - https://stackoverflow.com/questions/3919995/determining-sprintf-buffer-size-whats-the-standard*/
+int BufferSize(char *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	int result = vsnprintf(NULL, 0, format, args);
+    va_end(args);
+    return result + 1;
 }
 
 static int indent = 0;
@@ -430,7 +437,8 @@ void PrintTree(TERNARY_TREE t)
 	// for(i = indent; i; i--){ printf(" ");}
 
 	
-		
+		char *buffer;
+		char *output;
 
 		switch(t->nodeIdentifier)
 		{
@@ -438,6 +446,8 @@ void PrintTree(TERNARY_TREE t)
 			case PROGRAM:
 			{
 				 printf("PROGRAM -> %s\n", symTab[t->item]->identifier);
+				 output = "PROGRAM -> %s\n";
+				 int size = BufferSize(output, symTab[t->item]->identifier);
 				 break;
 			}
 
@@ -510,7 +520,7 @@ void PrintTree(TERNARY_TREE t)
 					break;
 				}
 
-				if(t->item > 0 && symTab[t->item]->identifier && t->item < SYMTABSIZE)
+				if(t->item > 0  && t->item < SYMTABSIZE)
 				{
 					//printf("%4d\tl\t", indent);
 					// int j;
