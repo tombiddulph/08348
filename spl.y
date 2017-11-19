@@ -95,6 +95,7 @@ typedef  TREE_NODE       *BINARY_TREE;
 
 BINARY_TREE create_node(int,int,BINARY_TREE,BINARY_TREE);
 BINARY_TREE create_node_characterArray(char*,int,BINARY_TREE,BINARY_TREE);
+void Print(BINARY_TREE t);
 #ifdef DEBUG
 	void PrintTree(BINARY_TREE t);
 	int BufferSize(char *format, ...);
@@ -162,9 +163,10 @@ program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 							parseTree = create_node($1, PROGRAM, $3, NULL);
 							
 #ifdef DEBUG							
-							PrintTree(parseTree);
+							//PrintTree(parseTree);
 #endif							
-						WriteCode(parseTree);
+						//WriteCode(parseTree);
+						Print(parseTree);
 							
 						}
 						;
@@ -565,6 +567,139 @@ void PrintTree(BINARY_TREE t)
 			--indent;
 }			
 #endif
+
+char depth[ 2056 ];
+int di;
+
+
+void Pop( )
+{
+    depth[ di -= 4 ] = 0;
+}
+
+void Push( char c )
+{
+   
+}
+
+void Print(BINARY_TREE t)
+{
+ 
+	if(t == NULL) return;
+
+	switch(t->nodeIdentifier)
+		{
+		
+			case PROGRAM:
+			{
+
+				 printf("PROGRAM -> %s\n", Identifier(t));
+
+
+				 break;
+			}
+
+			case BLOCK_DECLARATIONS:
+			{
+				//printf(" TEST %s\n", symTab[t->item]->identifier);
+				break;
+			}
+			case DECLARATIONS:
+			{
+				//printf(" TEST %s\n", symTab[t->item]->identifier);
+				break;
+			}
+			case STATEMENT_BLOCK:
+			{
+				//printf("STATEMENT_BLOCK\n");
+				break;
+			}
+			case OP_ADD:
+			case OP_DIVIDE:
+			case OP_MINUS:
+			case OP_MULTIPLY:
+			{
+				break;
+			}
+			case CONDITIONAL_AND:
+			case CONDITIONAL_NOT:
+			case CONDITIONAL_OR:
+			{
+				printf("Conditional -> %s\n", NodeIdentifier(t));
+				break;
+			}
+			case COMPARATOR_EQUAL_TO:
+			case COMPARATOR_NOT_EQUAL_TO:
+			case COMPARATOR_LESS_THAN:
+			case COMPARATOR_GREATER_THAN:
+			case COMPARATOR_LESS_THAN_EQUAL_TO:
+			case COMPARATOR_GREATER_THAN_EQUAL_TO:
+			{
+					printf("Comparator -> [%s] %s\n",t->cItem, NodeIdentifier(t));
+					break;
+			}
+			case CONST:
+			{
+				
+				printf(" Constant [%s] -> %s\n", NodeType(t), Identifier(t));
+				break;
+			}
+			// case VAL_ID:
+			// {
+			// 	printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType);
+			// 	break;
+			// }
+			case TYPE:
+			{
+				printf("Type -> %s\n ", t->cItem);
+				break;
+			}
+
+			default:
+			{
+				if(t->nodeIdentifier >= 0 && t->nodeIdentifier < sizeof NodeName)
+				{
+					printf(" Node identifier -> %s\n", NodeIdentifier(t));
+					
+				}
+				else
+				{
+					printf(" Unkown node identifier -> %d\n", t->nodeIdentifier);
+					
+				}
+
+
+				if(t->item > 0  && t->item < SYMTABSIZE)
+
+				{
+					//printf( "%3d   1\t", ++indent);
+					//for(i = indent; i; i--){ printf("| ");}
+					printf("Identifier -> %s\n", Identifier(t));
+				}
+			}
+		}
+
+	
+	if(t->first)
+	{
+		printf( "%s `--", depth );
+		Push( '|' );
+		Print(t->first);
+		depth[ di++ ] = ' ';
+    	depth[ di++ ] = c;
+    	depth[ di++ ] = ' ';
+    	depth[ di++ ] = ' ';
+    	depth[ di ] = 0;
+		printf( "%s `--", depth );
+		Push( ' ' );
+	 	Print(t->second);
+	 	depth[ di++ ] = ' ';
+     	depth[ di++ ] = c;
+     	depth[ di++ ] = ' ';
+    	depth[ di++ ] = ' ';
+    	depth[ di ] = 0;
+	}
+}
 
 
 
