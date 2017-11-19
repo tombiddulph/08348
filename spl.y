@@ -163,9 +163,9 @@ program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 							parseTree = create_node($1, PROGRAM, $3, NULL);
 							
 #ifdef DEBUG							
-							//PrintTree(parseTree);
+							/*PrintTree(parseTree); */
 #endif							
-						//WriteCode(parseTree);
+						/* WriteCode(parseTree); */
 						Print(parseTree);
 							
 						}
@@ -416,27 +416,7 @@ BINARY_TREE create_node_characterArray(char* iVal, int case_identifier, BINARY_T
 	return (b);
 }
 
-// TERNARY_TREE create_node_characterArray(char* ival,  int case_identifier, TERNARY_TREE p1, TERNARY_TREE  p2, TERNARY_TREE  p3){
-// 	TERNARY_TREE t;
-//     t = (TERNARY_TREE)malloc(sizeof(TREE_NODE));
-//     t->cItem = ival ;
-//     t->nodeIdentifier = case_identifier;
-//     t->first = p1;
-//     t->second = p2;
-//     t->third = p3;
-//     return (t);
-// }
 
-// TERNARY_TREE create_node(int ival, int case_identifier, TERNARY_TREE p1, TERNARY_TREE  p2, TERNARY_TREE  p3){
-//     TERNARY_TREE t;
-//     t = (TERNARY_TREE)malloc(sizeof(TREE_NODE));
-//     t->item = ival;
-//     t->nodeIdentifier = case_identifier;
-//     t->first = p1;
-//     t->second = p2;
-//     t->third = p3;
-//     return (t);
-// }
 
 #define PrintComment(comment)  printf("/* %s */\n",comment);
 #define NodeType(t) (symTab[t->item]->nodeType)
@@ -482,17 +462,17 @@ void PrintTree(BINARY_TREE t)
 
 			case BLOCK_DECLARATIONS:
 			{
-				//printf(" TEST %s\n", symTab[t->item]->identifier);
+				/* printf(" TEST %s\n", symTab[t->item]->identifier);*/
 				break;
 			}
 			case DECLARATIONS:
 			{
-				//printf(" TEST %s\n", symTab[t->item]->identifier);
+				/* printf(" TEST %s\n", symTab[t->item]->identifier);*/
 				break;
 			}
 			case STATEMENT_BLOCK:
 			{
-				//printf("STATEMENT_BLOCK\n");
+				/* printf("STATEMENT_BLOCK\n"); */
 				break;
 			}
 			case OP_ADD:
@@ -525,11 +505,11 @@ void PrintTree(BINARY_TREE t)
 				printf(" Constant [%s] -> %s\n", NodeType(t), Identifier(t));
 				break;
 			}
-			// case VAL_ID:
-			// {
-			// 	printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType);
-			// 	break;
-			// }
+			case VAL_ID:
+			{
+			  /*	printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType); */
+			 	break;
+			 }
 			case TYPE:
 			{
 				printf("Type -> %s\n ", t->cItem);
@@ -563,7 +543,7 @@ void PrintTree(BINARY_TREE t)
 			++indent;
 			PrintTree(t->first);
 			PrintTree(t->second);
-			//PrintTree(t->third);
+			/* PrintTree(t->third); */
 			--indent;
 }			
 #endif
@@ -587,6 +567,9 @@ void Print(BINARY_TREE t)
  
 	if(t == NULL) return;
 
+	
+	
+	
 	switch(t->nodeIdentifier)
 		{
 		
@@ -601,17 +584,17 @@ void Print(BINARY_TREE t)
 
 			case BLOCK_DECLARATIONS:
 			{
-				//printf(" TEST %s\n", symTab[t->item]->identifier);
+				/* printf(" TEST %s\n", symTab[t->item]->identifier); */
 				break;
 			}
 			case DECLARATIONS:
 			{
-				//printf(" TEST %s\n", symTab[t->item]->identifier);
+				/* printf(" TEST %s\n", symTab[t->item]->identifier); */
 				break;
 			}
 			case STATEMENT_BLOCK:
 			{
-				//printf("STATEMENT_BLOCK\n");
+				/* printf("STATEMENT_BLOCK\n"); */
 				break;
 			}
 			case OP_ADD:
@@ -644,11 +627,11 @@ void Print(BINARY_TREE t)
 				printf(" Constant [%s] -> %s\n", NodeType(t), Identifier(t));
 				break;
 			}
-			// case VAL_ID:
-			// {
-			// 	printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType);
-			// 	break;
-			// }
+			/* case VAL_ID: */
+			/* { */
+			/* 	printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType);*/
+			/* 	break;*/
+			/* }*/
 			case TYPE:
 			{
 				printf("Type -> %s\n ", t->cItem);
@@ -672,8 +655,8 @@ void Print(BINARY_TREE t)
 				if(t->item > 0  && t->item < SYMTABSIZE)
 
 				{
-					//printf( "%3d   1\t", ++indent);
-					//for(i = indent; i; i--){ printf("| ");}
+					/* printf( "%3d   1\t", ++indent);*/
+					/* for(i = indent; i; i--){ printf("| ");}*/
 					printf("Identifier -> %s\n", Identifier(t));
 				}
 			}
@@ -683,10 +666,10 @@ void Print(BINARY_TREE t)
 	if(t->first)
 	{
 		printf( "%s `--", depth );
-		Push( '|' );
+		
 		Print(t->first);
 		depth[ di++ ] = ' ';
-    	depth[ di++ ] = c;
+    	depth[ di++ ] = '|' ;
     	depth[ di++ ] = ' ';
     	depth[ di++ ] = ' ';
     	depth[ di ] = 0;
@@ -694,7 +677,7 @@ void Print(BINARY_TREE t)
 		Push( ' ' );
 	 	Print(t->second);
 	 	depth[ di++ ] = ' ';
-     	depth[ di++ ] = c;
+     	depth[ di++ ] = ' ';
      	depth[ di++ ] = ' ';
     	depth[ di++ ] = ' ';
     	depth[ di ] = 0;
@@ -771,16 +754,13 @@ void WriteCode(BINARY_TREE t)
 
 		case CONST:
 		{
-			// switch(symTab[t->item]->nodeType)
-			// {
-
-			// }
+			
 		}
 	}
 
 	WriteCode(t->first);
 	WriteCode(t->second);
-	//WriteCode(t->third);
+	/* WriteCode(t->third); */
 }
 
 /* Put other auxiliary functions here */
