@@ -41,26 +41,27 @@ void yyerror (char *);
 							PROGRAM, DECLARATIONS, BLOCK_DECLARATIONS, BLOCK, STATEMENT_BLOCK,
 							ASSIGNMENT_STATEMENT, WRITE_STATEMENT, READ_STATEMENT, IF_STATEMENT,
 							IF_STATEMENT_ELSE, DO_STATEMENT, WHILE_STATEMENT, NEWLINE_STATEMENT,
-							FOR_STATEMENT, FOR_BODY, WRITE_BLOCK, CONDITIONAL,
+							FOR_STATEMENT, FOR_BODY, WRITE_BLOCK, CONDITIONAL, OUTPUT_BLOCK,
 							CONDITIONAL_NOT, CONDITIONAL_AND, CONDITIONAL_OR, CONDITION, EXPR,
 							VAL_ID, VAL_BRACKETS, VAL_NEGATIVE, VAL, COMPARATOR_EQUAL_TO,
 							COMPARATOR_NOT_EQUAL_TO, COMPARATOR_LESS_THAN, COMPARATOR_GREATER_THAN,
 							COMPARATOR_LESS_THAN_EQUAL_TO, COMPARATOR_GREATER_THAN_EQUAL_TO,
 							OP_ADD, OP_MINUS, OP_MULTIPLY, OP_DIVIDE, TYPE_INT, TYPE_REAL, TYPE_CHARACTER,
-							CONST_INT, CONST_REAL,CONST_CHARACTER, CONST, TYPE
+							CONST_INT, CONST_REAL,CONST_CHARACTER, CONST, TYPE, STATEMENT
 						};
 
 	char *NodeName[] =	{	
 							"PROGRAM", "DECLARATIONS", "BLOCK_DECLARATIONS", "BLOCK", "STATEMENT_BLOCK", 
 							"ASSIGNMENT_STATEMENT", "WRITE_STATEMENT", "READ_STATEMENT", "IF_STATEMENT", 
 							"IF_STATEMENT_ELSE", "DO_STATEMENT", "WHILE_STATEMENT", "NEWLINE_STATEMENT", 
-							"FOR_STATEMENT", "FOR_BODY", "WRITE_BLOCK", "CONDITIONAL", 
+							"FOR_STATEMENT", "FOR_BODY", "WRITE_BLOCK", "CONDITIONAL", "OUTPUT_BLOCK",
 							"CONDITIONAL_NOT", "CONDITIONAL_AND", "CONDITIONAL_OR", "CONDITION", "EXPR", 
 							"VAL_ID", "VAL_BRACKETS", "VAL_NEGATIVE", "VAL", "COMPARATOR_EQUAL_TO", 
 							"COMPARATOR_NOT_EQUAL_TO", "COMPARATOR_LESS_THAN", "COMPARATOR_GREATER_THAN", 
 							"COMPARATOR_LESS_THAN_EQUAL_TO", "COMPARATOR_GREATER_THAN_EQUAL_TO", 
 							"OP_ADD", "OP_MINUS", "OP_MULTIPLY", "OP_DIVIDE", "TYPE_INT", "TYPE_REAL", 
 							"TYPE_CHARACTER", "CONST_INT", "CONST_REAL", "CONST_CHARACTER", "CONST", "TYPE"
+							,"STATEMENT"
 						};						
 
 #ifndef TRUE
@@ -150,7 +151,7 @@ int currentSymTabSize = 0;
 
 /* These rules return a type of tVal    */ 
  %type<tVal>  	program block declarations statement statement_block
-				write_block conditional condition for_block
+				write_block conditional condition for_block output_block
 				expr val comp op type const
 
 
@@ -159,14 +160,15 @@ int currentSymTabSize = 0;
 
 program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 						{
-							BINARY_TREE parseTree;
-							parseTree = create_node($1, PROGRAM, $3, NULL);
+						
+							BINARY_TREE parseTree = create_node($1, PROGRAM, $3, NULL);
 							
 #ifdef DEBUG							
-							/*PrintTree(parseTree); */
+						PrintTree(parseTree);
 #endif							
-						/* WriteCode(parseTree); */
-						Print(parseTree);
+						 
+						WriteCode(parseTree);
+						
 							
 						}
 						;
@@ -212,9 +214,9 @@ statement				: expr ASSIGNMENT_T ID_T
 						{
 							$$ = create_node($3, ASSIGNMENT_STATEMENT, $1, NULL);
 						}
-						|  WRITE_T BRA_T write_block KET_T
+						|  write_block
 						{
-							$$ = create_node(NOTHING, WRITE_STATEMENT, $3, NULL);
+							$$ = create_node(NOTHING, WRITE_STATEMENT, $1, NULL);
 						}
 						| READ_T BRA_T ID_T KET_T
 						{
@@ -236,10 +238,6 @@ statement				: expr ASSIGNMENT_T ID_T
 						{
 							$$ =  create_node(NOTHING, WHILE_STATEMENT, $2, $4);
 						}
-						| NEWLINE_T
-						{
-							$$ = create_node(NOTHING, NEWLINE_STATEMENT, NULL, NULL);
-						}
 						| FOR_T for_block statement_block END_FOR_T
 						{
 							$$ = create_node(NOTHING, FOR_STATEMENT, $2, $3);
@@ -253,16 +251,25 @@ for_block				: ID_T IS_T expr BY_T expr TO_T expr DO_T
 						;
 
 					
-write_block				: val 
+write_block				: NEWLINE_T
 						{
-							$$ = create_node(NOTHING, WRITE_BLOCK, $1, NULL);
+							$$ = create_node(NOTHING, WRITE_BLOCK, NULL, NULL);
 						}
-						| val COMMA_T write_block
+						| WRITE_T BRA_T output_block KET_T
 						{
-							$$ = create_node(NOTHING, WRITE_BLOCK, $1, $3);
+							$$ = create_node(NOTHING, WRITE_BLOCK, $3, NULL);
 						}
 						;
 
+output_block			: val
+						{
+							$$ = create_node(NOTHING, OUTPUT_BLOCK, $1, NULL);
+						}
+						| val COMMA_T output_block
+						{
+							$$ = create_node(NOTHING, OUTPUT_BLOCK, $1, $3);
+						}
+						
 conditional				: condition
 						{
 							$$ = create_node(NOTHING, CONDITIONAL, $1, NULL);
@@ -435,7 +442,7 @@ int BufferSize(char *format, ...)
     return result + 1;
 }
 
-static int indent = 0;
+
 
 void PrintTree(BINARY_TREE t)
 {
@@ -445,9 +452,8 @@ void PrintTree(BINARY_TREE t)
 
 
 
-	int i;
 
-		for(i = indent; i; i--){ printf("| ");}
+		
 		switch(t->nodeIdentifier)
 		{
 		
@@ -533,34 +539,22 @@ void PrintTree(BINARY_TREE t)
 				if(t->item > 0  && t->item < SYMTABSIZE)
 
 				{
-					printf( "%3d   1\t", ++indent);
-					for(i = indent; i; i--){ printf("| ");}
+				
+					
 					printf("Identifier -> %s\n", Identifier(t));
 				}
 			}
 		}
 	
-			++indent;
+		
 			PrintTree(t->first);
 			PrintTree(t->second);
-			/* PrintTree(t->third); */
-			--indent;
+		
+			
 }			
 #endif
 
-char depth[ 2056 ];
-int di;
 
-
-void Pop( )
-{
-    depth[ di -= 4 ] = 0;
-}
-
-void Push( char c )
-{
-   
-}
 
 void Print(BINARY_TREE t)
 {
@@ -655,33 +649,12 @@ void Print(BINARY_TREE t)
 				if(t->item > 0  && t->item < SYMTABSIZE)
 
 				{
-					/* printf( "%3d   1\t", ++indent);*/
-					/* for(i = indent; i; i--){ printf("| ");}*/
-					printf("Identifier -> %s\n", Identifier(t));
+						printf("Identifier -> %s\n", Identifier(t));
 				}
 			}
 		}
-
-	
-	if(t->first)
-	{
-		printf( "%s `--", depth );
-		
 		Print(t->first);
-		depth[ di++ ] = ' ';
-    	depth[ di++ ] = '|' ;
-    	depth[ di++ ] = ' ';
-    	depth[ di++ ] = ' ';
-    	depth[ di ] = 0;
-		printf( "%s `--", depth );
-		Push( ' ' );
-	 	Print(t->second);
-	 	depth[ di++ ] = ' ';
-     	depth[ di++ ] = ' ';
-     	depth[ di++ ] = ' ';
-    	depth[ di++ ] = ' ';
-    	depth[ di ] = 0;
-	}
+		Print(t->second);
 }
 
 
@@ -701,7 +674,9 @@ void WriteCode(BINARY_TREE t)
 			printf("/* Spl program name -> %s */\n", symTab[t->item]->identifier);
 			printf("#include <stdio.h>\n");
 			printf("int main(void) {\n\n");
-			break;
+			WriteCode(t->first);
+			printf("\nreturn 0;\n}\n /* End program -> %s */\n", symTab[t->item]);
+			return;
 		}
 
 		case BLOCK:
@@ -718,21 +693,69 @@ void WriteCode(BINARY_TREE t)
 			WriteCode(t->second);
 			break;
 		}
-
-		case WRITE_STATEMENT:
+		case STATEMENT_BLOCK:
 		{
 			WriteCode(t->first);
+			WriteCode(t->second);
 			break;
+		}
+		case WRITE_STATEMENT:
+		{
+			if(t->first == NULL) /* n*/
+			{
+				printf("printf(\"\\n\");\n");
+			}
+			else
+			{
+				WriteCode(t->first);
+			}
+			break;
+		}
+		
+		case OUTPUT_BLOCK:
+		{
+			printf("printf(\"");
+		
+		
+			if(t->first->item == EXPR)
+			{
+				
+			}
+			else if(t->first->first == NULL)
+			{
+				
+				
+			}
+			else if(t->first->first->item != NOTHING)
+			{
+				
+					printf("%%c\", ");
+					WriteCode(t->first);
+				
+			}
+		
+		
+			printf(");\n");
+			WriteCode(t->second);
+			break;
+			// if(t->second) 
+			// {
+
+			// }
+			
+			
 		}
 		case WRITE_BLOCK:
 		{
-
-			WriteCode(t->first);
-
-			if(t->second) /* val COMMA_T write_block */
+			if(t->first != NULL) /* val COMMA_T write_block */
 			{
-
+				WriteCode(t->first);
 			}
+			else /* NEWLINE_T */
+			{
+				printf("printf(\"\\n\");\n");
+			}
+			
 		}
 
 		case VAL_ID:
@@ -749,17 +772,44 @@ void WriteCode(BINARY_TREE t)
 		}
 		case VAL:
 		{
+		
+
+			if(t->item == NOTHING)
+			{
+				WriteCode(t->first);
+				break;
+				switch(t->first->item)
+				{
+					case CHARACTER_CONSTANT_T:
+					{
+						printf("WHOOHO");
+					}
+				}
+			}
+			//printf("%s",symTab[t->item]->identifier);
+			// if(t->item != CONST && t->item != EXPR)
+			// {
+				// if(t->item < 0 || t->item > currentSymTabSize)
+				// {
+					// printf("unknown identifier");
+				// }
+				// //printf("HERE %s", t->item);
+				// printf("WriteCode t ");
+			// }
+			// else
+			// {
+				// printf("WriteCode h ");
+				// WriteCode(t->first);
+			// }
 			break;
 		}
 
 		case CONST:
 		{
-			
+			printf("%s", symTab[t->item]->identifier);
 		}
 	}
 
-	WriteCode(t->first);
-	WriteCode(t->second);
 	/* WriteCode(t->third); */
 }
 

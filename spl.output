@@ -1,0 +1,1278 @@
+Terminals unused in grammar
+
+   APOSTROPHE_T
+
+
+Grammar
+
+    0 $accept: program $end
+
+    1 program: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
+
+    2 block: DECLARATIONS_T declarations CODE_T statement_block
+    3      | CODE_T statement_block
+
+    4 declarations: ID_T OF_T TYPE_T type SEMI_COLON_T
+    5             | ID_T OF_T TYPE_T type SEMI_COLON_T declarations
+    6             | ID_T COMMA_T declarations
+
+    7 statement_block: statement SEMI_COLON_T statement_block
+    8                | statement
+
+    9 statement: expr ASSIGNMENT_T ID_T
+   10          | write_block
+   11          | READ_T BRA_T ID_T KET_T
+   12          | IF_T conditional THEN_T statement_block END_IF_T
+   13          | IF_T conditional THEN_T statement_block ELSE_T statement_block END_IF_T
+   14          | DO_T statement_block WHILE_T conditional END_DO_T
+   15          | WHILE_T conditional DO_T statement_block END_WHILE_T
+   16          | FOR_T for_block statement_block END_FOR_T
+
+   17 for_block: ID_T IS_T expr BY_T expr TO_T expr DO_T
+
+   18 write_block: NEWLINE_T
+   19            | WRITE_T BRA_T output_block KET_T
+
+   20 output_block: val
+   21             | val COMMA_T output_block
+
+   22 conditional: condition
+   23            | NOT_T conditional
+   24            | condition AND_T conditional
+   25            | condition OR_T conditional
+
+   26 condition: expr comp expr
+
+   27 expr: val
+   28     | val op expr
+
+   29 val: ID_T
+   30    | BRA_T expr KET_T
+   31    | MINUS_T const
+   32    | const
+
+   33 comp: EQUAL_TO_T
+   34     | NOT_EQUAL_T
+   35     | LESS_THAN_T
+   36     | GREATER_THAN_T
+   37     | LESS_THAN_EQUAL_TO_T
+   38     | GREATER_THAN_EQUAL_TO_T
+
+   39 op: ADD_T
+   40   | MINUS_T
+   41   | MULTIPLY_T
+   42   | DIVIDE_T
+
+   43 type: INTEGER_T
+   44     | REAL_T
+   45     | CHARACTER_T
+
+   46 const: INTEGER_CONSTANT_T
+   47      | REAL_CONSTANT_T
+   48      | CHARACTER_CONSTANT_T
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+ID_T (258) 1 4 5 6 9 11 17 29
+BRA_T (259) 11 19 30
+INTEGER_CONSTANT_T (260) 46
+REAL_CONSTANT_T (261) 47
+CHARACTER_CONSTANT_T (262) 48
+COLON_T (263) 1
+FULL_STOP_T (264) 1
+ENDP_T (265) 1
+SEMI_COLON_T (266) 4 5 7
+ASSIGNMENT_T (267) 9
+EQUAL_TO_T (268) 33
+NOT_EQUAL_T (269) 34
+LESS_THAN_EQUAL_TO_T (270) 37
+LESS_THAN_T (271) 35
+GREATER_THAN_EQUAL_TO_T (272) 38
+GREATER_THAN_T (273) 36
+ADD_T (274) 39
+MINUS_T (275) 31 40
+MULTIPLY_T (276) 41
+DIVIDE_T (277) 42
+KET_T (278) 11 19 30
+DECLARATIONS_T (279) 2
+CODE_T (280) 2 3
+OF_T (281) 4 5
+TYPE_T (282) 4 5
+CHARACTER_T (283) 45
+INTEGER_T (284) 43
+REAL_T (285) 44
+IF_T (286) 12 13
+THEN_T (287) 12 13
+ELSE_T (288) 13
+END_IF_T (289) 12 13
+DO_T (290) 14 15 17
+END_DO_T (291) 14
+WHILE_T (292) 14 15
+END_WHILE_T (293) 15
+FOR_T (294) 16
+END_FOR_T (295) 16
+WRITE_T (296) 19
+READ_T (297) 11
+NEWLINE_T (298) 18
+NOT_T (299) 23
+COMMA_T (300) 6 21
+APOSTROPHE_T (301)
+BY_T (302) 17
+IS_T (303) 17
+TO_T (304) 17
+OR_T (305) 25
+AND_T (306) 24
+
+
+Nonterminals, with rules where they appear
+
+$accept (52)
+    on left: 0
+program (53)
+    on left: 1, on right: 0
+block (54)
+    on left: 2 3, on right: 1
+declarations (55)
+    on left: 4 5 6, on right: 2 5 6
+statement_block (56)
+    on left: 7 8, on right: 2 3 7 12 13 14 15 16
+statement (57)
+    on left: 9 10 11 12 13 14 15 16, on right: 7 8
+for_block (58)
+    on left: 17, on right: 16
+write_block (59)
+    on left: 18 19, on right: 10
+output_block (60)
+    on left: 20 21, on right: 19 21
+conditional (61)
+    on left: 22 23 24 25, on right: 12 13 14 15 23 24 25
+condition (62)
+    on left: 26, on right: 22 24 25
+expr (63)
+    on left: 27 28, on right: 9 17 26 28 30
+val (64)
+    on left: 29 30 31 32, on right: 20 21 27 28
+comp (65)
+    on left: 33 34 35 36 37 38, on right: 26
+op (66)
+    on left: 39 40 41 42, on right: 28
+type (67)
+    on left: 43 44 45, on right: 4 5
+const (68)
+    on left: 46 47 48, on right: 31 32
+
+
+state 0
+
+    0 $accept: . program $end
+
+    ID_T  shift, and go to state 1
+
+    program  go to state 2
+
+
+state 1
+
+    1 program: ID_T . COLON_T block ENDP_T ID_T FULL_STOP_T
+
+    COLON_T  shift, and go to state 3
+
+
+state 2
+
+    0 $accept: program . $end
+
+    $end  shift, and go to state 4
+
+
+state 3
+
+    1 program: ID_T COLON_T . block ENDP_T ID_T FULL_STOP_T
+
+    DECLARATIONS_T  shift, and go to state 5
+    CODE_T          shift, and go to state 6
+
+    block  go to state 7
+
+
+state 4
+
+    0 $accept: program $end .
+
+    $default  accept
+
+
+state 5
+
+    2 block: DECLARATIONS_T . declarations CODE_T statement_block
+
+    ID_T  shift, and go to state 8
+
+    declarations  go to state 9
+
+
+state 6
+
+    3 block: CODE_T . statement_block
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    IF_T                  shift, and go to state 16
+    DO_T                  shift, and go to state 17
+    WHILE_T               shift, and go to state 18
+    FOR_T                 shift, and go to state 19
+    WRITE_T               shift, and go to state 20
+    READ_T                shift, and go to state 21
+    NEWLINE_T             shift, and go to state 22
+
+    statement_block  go to state 23
+    statement        go to state 24
+    write_block      go to state 25
+    expr             go to state 26
+    val              go to state 27
+    const            go to state 28
+
+
+state 7
+
+    1 program: ID_T COLON_T block . ENDP_T ID_T FULL_STOP_T
+
+    ENDP_T  shift, and go to state 29
+
+
+state 8
+
+    4 declarations: ID_T . OF_T TYPE_T type SEMI_COLON_T
+    5             | ID_T . OF_T TYPE_T type SEMI_COLON_T declarations
+    6             | ID_T . COMMA_T declarations
+
+    OF_T     shift, and go to state 30
+    COMMA_T  shift, and go to state 31
+
+
+state 9
+
+    2 block: DECLARATIONS_T declarations . CODE_T statement_block
+
+    CODE_T  shift, and go to state 32
+
+
+state 10
+
+   29 val: ID_T .
+
+    $default  reduce using rule 29 (val)
+
+
+state 11
+
+   30 val: BRA_T . expr KET_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+
+    expr   go to state 33
+    val    go to state 27
+    const  go to state 28
+
+
+state 12
+
+   46 const: INTEGER_CONSTANT_T .
+
+    $default  reduce using rule 46 (const)
+
+
+state 13
+
+   47 const: REAL_CONSTANT_T .
+
+    $default  reduce using rule 47 (const)
+
+
+state 14
+
+   48 const: CHARACTER_CONSTANT_T .
+
+    $default  reduce using rule 48 (const)
+
+
+state 15
+
+   31 val: MINUS_T . const
+
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+
+    const  go to state 34
+
+
+state 16
+
+   12 statement: IF_T . conditional THEN_T statement_block END_IF_T
+   13          | IF_T . conditional THEN_T statement_block ELSE_T statement_block END_IF_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    NOT_T                 shift, and go to state 35
+
+    conditional  go to state 36
+    condition    go to state 37
+    expr         go to state 38
+    val          go to state 27
+    const        go to state 28
+
+
+state 17
+
+   14 statement: DO_T . statement_block WHILE_T conditional END_DO_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    IF_T                  shift, and go to state 16
+    DO_T                  shift, and go to state 17
+    WHILE_T               shift, and go to state 18
+    FOR_T                 shift, and go to state 19
+    WRITE_T               shift, and go to state 20
+    READ_T                shift, and go to state 21
+    NEWLINE_T             shift, and go to state 22
+
+    statement_block  go to state 39
+    statement        go to state 24
+    write_block      go to state 25
+    expr             go to state 26
+    val              go to state 27
+    const            go to state 28
+
+
+state 18
+
+   15 statement: WHILE_T . conditional DO_T statement_block END_WHILE_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    NOT_T                 shift, and go to state 35
+
+    conditional  go to state 40
+    condition    go to state 37
+    expr         go to state 38
+    val          go to state 27
+    const        go to state 28
+
+
+state 19
+
+   16 statement: FOR_T . for_block statement_block END_FOR_T
+
+    ID_T  shift, and go to state 41
+
+    for_block  go to state 42
+
+
+state 20
+
+   19 write_block: WRITE_T . BRA_T output_block KET_T
+
+    BRA_T  shift, and go to state 43
+
+
+state 21
+
+   11 statement: READ_T . BRA_T ID_T KET_T
+
+    BRA_T  shift, and go to state 44
+
+
+state 22
+
+   18 write_block: NEWLINE_T .
+
+    $default  reduce using rule 18 (write_block)
+
+
+state 23
+
+    3 block: CODE_T statement_block .
+
+    $default  reduce using rule 3 (block)
+
+
+state 24
+
+    7 statement_block: statement . SEMI_COLON_T statement_block
+    8                | statement .
+
+    SEMI_COLON_T  shift, and go to state 45
+
+    $default  reduce using rule 8 (statement_block)
+
+
+state 25
+
+   10 statement: write_block .
+
+    $default  reduce using rule 10 (statement)
+
+
+state 26
+
+    9 statement: expr . ASSIGNMENT_T ID_T
+
+    ASSIGNMENT_T  shift, and go to state 46
+
+
+state 27
+
+   27 expr: val .
+   28     | val . op expr
+
+    ADD_T       shift, and go to state 47
+    MINUS_T     shift, and go to state 48
+    MULTIPLY_T  shift, and go to state 49
+    DIVIDE_T    shift, and go to state 50
+
+    $default  reduce using rule 27 (expr)
+
+    op  go to state 51
+
+
+state 28
+
+   32 val: const .
+
+    $default  reduce using rule 32 (val)
+
+
+state 29
+
+    1 program: ID_T COLON_T block ENDP_T . ID_T FULL_STOP_T
+
+    ID_T  shift, and go to state 52
+
+
+state 30
+
+    4 declarations: ID_T OF_T . TYPE_T type SEMI_COLON_T
+    5             | ID_T OF_T . TYPE_T type SEMI_COLON_T declarations
+
+    TYPE_T  shift, and go to state 53
+
+
+state 31
+
+    6 declarations: ID_T COMMA_T . declarations
+
+    ID_T  shift, and go to state 8
+
+    declarations  go to state 54
+
+
+state 32
+
+    2 block: DECLARATIONS_T declarations CODE_T . statement_block
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    IF_T                  shift, and go to state 16
+    DO_T                  shift, and go to state 17
+    WHILE_T               shift, and go to state 18
+    FOR_T                 shift, and go to state 19
+    WRITE_T               shift, and go to state 20
+    READ_T                shift, and go to state 21
+    NEWLINE_T             shift, and go to state 22
+
+    statement_block  go to state 55
+    statement        go to state 24
+    write_block      go to state 25
+    expr             go to state 26
+    val              go to state 27
+    const            go to state 28
+
+
+state 33
+
+   30 val: BRA_T expr . KET_T
+
+    KET_T  shift, and go to state 56
+
+
+state 34
+
+   31 val: MINUS_T const .
+
+    $default  reduce using rule 31 (val)
+
+
+state 35
+
+   23 conditional: NOT_T . conditional
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    NOT_T                 shift, and go to state 35
+
+    conditional  go to state 57
+    condition    go to state 37
+    expr         go to state 38
+    val          go to state 27
+    const        go to state 28
+
+
+state 36
+
+   12 statement: IF_T conditional . THEN_T statement_block END_IF_T
+   13          | IF_T conditional . THEN_T statement_block ELSE_T statement_block END_IF_T
+
+    THEN_T  shift, and go to state 58
+
+
+state 37
+
+   22 conditional: condition .
+   24            | condition . AND_T conditional
+   25            | condition . OR_T conditional
+
+    OR_T   shift, and go to state 59
+    AND_T  shift, and go to state 60
+
+    $default  reduce using rule 22 (conditional)
+
+
+state 38
+
+   26 condition: expr . comp expr
+
+    EQUAL_TO_T               shift, and go to state 61
+    NOT_EQUAL_T              shift, and go to state 62
+    LESS_THAN_EQUAL_TO_T     shift, and go to state 63
+    LESS_THAN_T              shift, and go to state 64
+    GREATER_THAN_EQUAL_TO_T  shift, and go to state 65
+    GREATER_THAN_T           shift, and go to state 66
+
+    comp  go to state 67
+
+
+state 39
+
+   14 statement: DO_T statement_block . WHILE_T conditional END_DO_T
+
+    WHILE_T  shift, and go to state 68
+
+
+state 40
+
+   15 statement: WHILE_T conditional . DO_T statement_block END_WHILE_T
+
+    DO_T  shift, and go to state 69
+
+
+state 41
+
+   17 for_block: ID_T . IS_T expr BY_T expr TO_T expr DO_T
+
+    IS_T  shift, and go to state 70
+
+
+state 42
+
+   16 statement: FOR_T for_block . statement_block END_FOR_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    IF_T                  shift, and go to state 16
+    DO_T                  shift, and go to state 17
+    WHILE_T               shift, and go to state 18
+    FOR_T                 shift, and go to state 19
+    WRITE_T               shift, and go to state 20
+    READ_T                shift, and go to state 21
+    NEWLINE_T             shift, and go to state 22
+
+    statement_block  go to state 71
+    statement        go to state 24
+    write_block      go to state 25
+    expr             go to state 26
+    val              go to state 27
+    const            go to state 28
+
+
+state 43
+
+   19 write_block: WRITE_T BRA_T . output_block KET_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+
+    output_block  go to state 72
+    val           go to state 73
+    const         go to state 28
+
+
+state 44
+
+   11 statement: READ_T BRA_T . ID_T KET_T
+
+    ID_T  shift, and go to state 74
+
+
+state 45
+
+    7 statement_block: statement SEMI_COLON_T . statement_block
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    IF_T                  shift, and go to state 16
+    DO_T                  shift, and go to state 17
+    WHILE_T               shift, and go to state 18
+    FOR_T                 shift, and go to state 19
+    WRITE_T               shift, and go to state 20
+    READ_T                shift, and go to state 21
+    NEWLINE_T             shift, and go to state 22
+
+    statement_block  go to state 75
+    statement        go to state 24
+    write_block      go to state 25
+    expr             go to state 26
+    val              go to state 27
+    const            go to state 28
+
+
+state 46
+
+    9 statement: expr ASSIGNMENT_T . ID_T
+
+    ID_T  shift, and go to state 76
+
+
+state 47
+
+   39 op: ADD_T .
+
+    $default  reduce using rule 39 (op)
+
+
+state 48
+
+   40 op: MINUS_T .
+
+    $default  reduce using rule 40 (op)
+
+
+state 49
+
+   41 op: MULTIPLY_T .
+
+    $default  reduce using rule 41 (op)
+
+
+state 50
+
+   42 op: DIVIDE_T .
+
+    $default  reduce using rule 42 (op)
+
+
+state 51
+
+   28 expr: val op . expr
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+
+    expr   go to state 77
+    val    go to state 27
+    const  go to state 28
+
+
+state 52
+
+    1 program: ID_T COLON_T block ENDP_T ID_T . FULL_STOP_T
+
+    FULL_STOP_T  shift, and go to state 78
+
+
+state 53
+
+    4 declarations: ID_T OF_T TYPE_T . type SEMI_COLON_T
+    5             | ID_T OF_T TYPE_T . type SEMI_COLON_T declarations
+
+    CHARACTER_T  shift, and go to state 79
+    INTEGER_T    shift, and go to state 80
+    REAL_T       shift, and go to state 81
+
+    type  go to state 82
+
+
+state 54
+
+    6 declarations: ID_T COMMA_T declarations .
+
+    $default  reduce using rule 6 (declarations)
+
+
+state 55
+
+    2 block: DECLARATIONS_T declarations CODE_T statement_block .
+
+    $default  reduce using rule 2 (block)
+
+
+state 56
+
+   30 val: BRA_T expr KET_T .
+
+    $default  reduce using rule 30 (val)
+
+
+state 57
+
+   23 conditional: NOT_T conditional .
+
+    $default  reduce using rule 23 (conditional)
+
+
+state 58
+
+   12 statement: IF_T conditional THEN_T . statement_block END_IF_T
+   13          | IF_T conditional THEN_T . statement_block ELSE_T statement_block END_IF_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    IF_T                  shift, and go to state 16
+    DO_T                  shift, and go to state 17
+    WHILE_T               shift, and go to state 18
+    FOR_T                 shift, and go to state 19
+    WRITE_T               shift, and go to state 20
+    READ_T                shift, and go to state 21
+    NEWLINE_T             shift, and go to state 22
+
+    statement_block  go to state 83
+    statement        go to state 24
+    write_block      go to state 25
+    expr             go to state 26
+    val              go to state 27
+    const            go to state 28
+
+
+state 59
+
+   25 conditional: condition OR_T . conditional
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    NOT_T                 shift, and go to state 35
+
+    conditional  go to state 84
+    condition    go to state 37
+    expr         go to state 38
+    val          go to state 27
+    const        go to state 28
+
+
+state 60
+
+   24 conditional: condition AND_T . conditional
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    NOT_T                 shift, and go to state 35
+
+    conditional  go to state 85
+    condition    go to state 37
+    expr         go to state 38
+    val          go to state 27
+    const        go to state 28
+
+
+state 61
+
+   33 comp: EQUAL_TO_T .
+
+    $default  reduce using rule 33 (comp)
+
+
+state 62
+
+   34 comp: NOT_EQUAL_T .
+
+    $default  reduce using rule 34 (comp)
+
+
+state 63
+
+   37 comp: LESS_THAN_EQUAL_TO_T .
+
+    $default  reduce using rule 37 (comp)
+
+
+state 64
+
+   35 comp: LESS_THAN_T .
+
+    $default  reduce using rule 35 (comp)
+
+
+state 65
+
+   38 comp: GREATER_THAN_EQUAL_TO_T .
+
+    $default  reduce using rule 38 (comp)
+
+
+state 66
+
+   36 comp: GREATER_THAN_T .
+
+    $default  reduce using rule 36 (comp)
+
+
+state 67
+
+   26 condition: expr comp . expr
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+
+    expr   go to state 86
+    val    go to state 27
+    const  go to state 28
+
+
+state 68
+
+   14 statement: DO_T statement_block WHILE_T . conditional END_DO_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    NOT_T                 shift, and go to state 35
+
+    conditional  go to state 87
+    condition    go to state 37
+    expr         go to state 38
+    val          go to state 27
+    const        go to state 28
+
+
+state 69
+
+   15 statement: WHILE_T conditional DO_T . statement_block END_WHILE_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    IF_T                  shift, and go to state 16
+    DO_T                  shift, and go to state 17
+    WHILE_T               shift, and go to state 18
+    FOR_T                 shift, and go to state 19
+    WRITE_T               shift, and go to state 20
+    READ_T                shift, and go to state 21
+    NEWLINE_T             shift, and go to state 22
+
+    statement_block  go to state 88
+    statement        go to state 24
+    write_block      go to state 25
+    expr             go to state 26
+    val              go to state 27
+    const            go to state 28
+
+
+state 70
+
+   17 for_block: ID_T IS_T . expr BY_T expr TO_T expr DO_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+
+    expr   go to state 89
+    val    go to state 27
+    const  go to state 28
+
+
+state 71
+
+   16 statement: FOR_T for_block statement_block . END_FOR_T
+
+    END_FOR_T  shift, and go to state 90
+
+
+state 72
+
+   19 write_block: WRITE_T BRA_T output_block . KET_T
+
+    KET_T  shift, and go to state 91
+
+
+state 73
+
+   20 output_block: val .
+   21             | val . COMMA_T output_block
+
+    COMMA_T  shift, and go to state 92
+
+    $default  reduce using rule 20 (output_block)
+
+
+state 74
+
+   11 statement: READ_T BRA_T ID_T . KET_T
+
+    KET_T  shift, and go to state 93
+
+
+state 75
+
+    7 statement_block: statement SEMI_COLON_T statement_block .
+
+    $default  reduce using rule 7 (statement_block)
+
+
+state 76
+
+    9 statement: expr ASSIGNMENT_T ID_T .
+
+    $default  reduce using rule 9 (statement)
+
+
+state 77
+
+   28 expr: val op expr .
+
+    $default  reduce using rule 28 (expr)
+
+
+state 78
+
+    1 program: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T .
+
+    $default  reduce using rule 1 (program)
+
+
+state 79
+
+   45 type: CHARACTER_T .
+
+    $default  reduce using rule 45 (type)
+
+
+state 80
+
+   43 type: INTEGER_T .
+
+    $default  reduce using rule 43 (type)
+
+
+state 81
+
+   44 type: REAL_T .
+
+    $default  reduce using rule 44 (type)
+
+
+state 82
+
+    4 declarations: ID_T OF_T TYPE_T type . SEMI_COLON_T
+    5             | ID_T OF_T TYPE_T type . SEMI_COLON_T declarations
+
+    SEMI_COLON_T  shift, and go to state 94
+
+
+state 83
+
+   12 statement: IF_T conditional THEN_T statement_block . END_IF_T
+   13          | IF_T conditional THEN_T statement_block . ELSE_T statement_block END_IF_T
+
+    ELSE_T    shift, and go to state 95
+    END_IF_T  shift, and go to state 96
+
+
+state 84
+
+   25 conditional: condition OR_T conditional .
+
+    $default  reduce using rule 25 (conditional)
+
+
+state 85
+
+   24 conditional: condition AND_T conditional .
+
+    $default  reduce using rule 24 (conditional)
+
+
+state 86
+
+   26 condition: expr comp expr .
+
+    $default  reduce using rule 26 (condition)
+
+
+state 87
+
+   14 statement: DO_T statement_block WHILE_T conditional . END_DO_T
+
+    END_DO_T  shift, and go to state 97
+
+
+state 88
+
+   15 statement: WHILE_T conditional DO_T statement_block . END_WHILE_T
+
+    END_WHILE_T  shift, and go to state 98
+
+
+state 89
+
+   17 for_block: ID_T IS_T expr . BY_T expr TO_T expr DO_T
+
+    BY_T  shift, and go to state 99
+
+
+state 90
+
+   16 statement: FOR_T for_block statement_block END_FOR_T .
+
+    $default  reduce using rule 16 (statement)
+
+
+state 91
+
+   19 write_block: WRITE_T BRA_T output_block KET_T .
+
+    $default  reduce using rule 19 (write_block)
+
+
+state 92
+
+   21 output_block: val COMMA_T . output_block
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+
+    output_block  go to state 100
+    val           go to state 73
+    const         go to state 28
+
+
+state 93
+
+   11 statement: READ_T BRA_T ID_T KET_T .
+
+    $default  reduce using rule 11 (statement)
+
+
+state 94
+
+    4 declarations: ID_T OF_T TYPE_T type SEMI_COLON_T .
+    5             | ID_T OF_T TYPE_T type SEMI_COLON_T . declarations
+
+    ID_T  shift, and go to state 8
+
+    $default  reduce using rule 4 (declarations)
+
+    declarations  go to state 101
+
+
+state 95
+
+   13 statement: IF_T conditional THEN_T statement_block ELSE_T . statement_block END_IF_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+    IF_T                  shift, and go to state 16
+    DO_T                  shift, and go to state 17
+    WHILE_T               shift, and go to state 18
+    FOR_T                 shift, and go to state 19
+    WRITE_T               shift, and go to state 20
+    READ_T                shift, and go to state 21
+    NEWLINE_T             shift, and go to state 22
+
+    statement_block  go to state 102
+    statement        go to state 24
+    write_block      go to state 25
+    expr             go to state 26
+    val              go to state 27
+    const            go to state 28
+
+
+state 96
+
+   12 statement: IF_T conditional THEN_T statement_block END_IF_T .
+
+    $default  reduce using rule 12 (statement)
+
+
+state 97
+
+   14 statement: DO_T statement_block WHILE_T conditional END_DO_T .
+
+    $default  reduce using rule 14 (statement)
+
+
+state 98
+
+   15 statement: WHILE_T conditional DO_T statement_block END_WHILE_T .
+
+    $default  reduce using rule 15 (statement)
+
+
+state 99
+
+   17 for_block: ID_T IS_T expr BY_T . expr TO_T expr DO_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+
+    expr   go to state 103
+    val    go to state 27
+    const  go to state 28
+
+
+state 100
+
+   21 output_block: val COMMA_T output_block .
+
+    $default  reduce using rule 21 (output_block)
+
+
+state 101
+
+    5 declarations: ID_T OF_T TYPE_T type SEMI_COLON_T declarations .
+
+    $default  reduce using rule 5 (declarations)
+
+
+state 102
+
+   13 statement: IF_T conditional THEN_T statement_block ELSE_T statement_block . END_IF_T
+
+    END_IF_T  shift, and go to state 104
+
+
+state 103
+
+   17 for_block: ID_T IS_T expr BY_T expr . TO_T expr DO_T
+
+    TO_T  shift, and go to state 105
+
+
+state 104
+
+   13 statement: IF_T conditional THEN_T statement_block ELSE_T statement_block END_IF_T .
+
+    $default  reduce using rule 13 (statement)
+
+
+state 105
+
+   17 for_block: ID_T IS_T expr BY_T expr TO_T . expr DO_T
+
+    ID_T                  shift, and go to state 10
+    BRA_T                 shift, and go to state 11
+    INTEGER_CONSTANT_T    shift, and go to state 12
+    REAL_CONSTANT_T       shift, and go to state 13
+    CHARACTER_CONSTANT_T  shift, and go to state 14
+    MINUS_T               shift, and go to state 15
+
+    expr   go to state 106
+    val    go to state 27
+    const  go to state 28
+
+
+state 106
+
+   17 for_block: ID_T IS_T expr BY_T expr TO_T expr . DO_T
+
+    DO_T  shift, and go to state 107
+
+
+state 107
+
+   17 for_block: ID_T IS_T expr BY_T expr TO_T expr DO_T .
+
+    $default  reduce using rule 17 (for_block)
