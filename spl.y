@@ -20,6 +20,7 @@ extern int yydebug;
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
+#include <string.h>
 
 /* make forward declarations to avoid compiler warnings */
 int yylex (void);
@@ -726,25 +727,61 @@ void WriteCode(BINARY_TREE t)
 				
 				
 			}
-			else if(t->first->first->item != NOTHING)
+			else if(t->first->first->item)
 			{
+				//printf("%s", );
 				
+				
+				const char *nType = symTab[t->first->first->item]->nodeType;
+				
+				
+				if(strcmp(nType, "CHARACTER_CONSTANT") == 0)
+				{
 					printf("%%c\", ");
+				}
+				else if(strcmp(nType, "INTEGER_CONSTANT") == 0)
+				{
+					printf("%%d\", ");
+				}
+				else if(strcmp(nType, "REAL_CONSTANT") == 0)
+				{
+					printf("%%f\", ");
+				}
+				else
+				{
+					printf("BAD TIMES");
+				}
+				// switch(symTab[t->first->first->item]->nodeType)
+				// {
+					// case "CHARACTER_CONSTANT":
+					// {
+						// 
+						// break;
+					// }
+					// case REAL_CONSTANT_T:
+					// {
+						// printf("%%f\", ");
+						// break;
+					// }
+					// case INTEGER_CONSTANT_T:
+					// {
+						// printf("%%d\", ");
+						// break;
+					// }
+					// default:
+					// printf("%d", t->first->first->item);
+				// }
 					WriteCode(t->first);
-				
-			}
-		
-		
-			printf(");\n");
+			}				
+					printf(");\n");
 			WriteCode(t->second);
 			break;
-			// if(t->second) 
-			// {
-
-			// }
-			
-			
 		}
+		
+		
+			
+			
+		
 		case WRITE_BLOCK:
 		{
 			if(t->first != NULL) /* val COMMA_T write_block */
