@@ -743,7 +743,7 @@ void WriteCode(BINARY_TREE t)
 			declarationWritten = 0;
 			printf("\n/* Spl program name -> %s */\n", symTab[t->item]->identifier);
 			printf("#include <stdio.h>\n");
-			printf("int main(void) {\n\n");
+			printf("int main(void) \n{\n\n");
 			WriteCode(t->first);
 			printf("\nreturn 0;\n}\n /* End program -> %s */\n", symTab[t->item]);
 			return;
@@ -826,17 +826,35 @@ void WriteCode(BINARY_TREE t)
 			
 			if(t->first != NULL)
 			{
+				
 				if(t->first->first != NULL)
 				{
-					printf("%s", GetCTypeFlag(symTab[t->first->first->item]->nodeType));
-					
+					int item = t->first->first->item;
+
+					if(item > 0 && item < SYMTABSIZE)
+					{
+						printf("%s", GetCTypeFlag(symTab[item]->nodeType));
+					}
+
+					printf("%d",t->first->first->second->second->item);
+				}
+				else if(t->first != NULL)
+				{
+					int item = t->first->item;
+					if(item > 0 && item < SYMTABSIZE)
+					{
+						printf("%s", GetCTypeFlag(symTab[t->first->item]->nodeType));
+					}
+				
+			
 				}
 				else
 				{
-					printf("%s", GetCTypeFlag(symTab[t->first->item]->nodeType));
-				
+					printf("1");
+					printf("__%s__", t->item);
 				}
 			}
+			
 			WriteCode(t->first);
 			printf(");\n");
 			WriteCode(t->second);
@@ -872,7 +890,6 @@ void WriteCode(BINARY_TREE t)
 					printf("%s", symTab[t->item]->identifier);
 					if(t->first != NULL)
 					{
-						
 						printf(", ");
 						WriteCode(t->first);
 					}
@@ -993,11 +1010,15 @@ void WriteCode(BINARY_TREE t)
 		}
 		case VAL_BRACKETS:
 		{
-			printf("1234%s" ,symTab[t->item]->identifier);
+			printf("(");
+			WriteCode(t->first);
+			printf(")");
 			break;
 		}
 		case VAL_NEGATIVE:
 		{
+			printf("-");
+			WriteCode(t->first);
 			break;
 		}
 		case EXPR:
@@ -1015,13 +1036,14 @@ void WriteCode(BINARY_TREE t)
 		{
 			WriteCode(t->first);
 			WriteCode(t->second);
-			//printf(";\n");
+			
 			break;
 		}
 		case OP:
 		case COMPARATOR:
 		{
 			printf(" %s ", t->cItem);
+			break;
 		}
 		
 		case VAL:
