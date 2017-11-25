@@ -49,7 +49,7 @@ void yyerror (char *);
 							COMPARATOR_LESS_THAN_EQUAL_TO, COMPARATOR_GREATER_THAN_EQUAL_TO,
 							OP_ADD, OP_MINUS, OP_MULTIPLY, OP_DIVIDE, TYPE_INT, TYPE_REAL, TYPE_CHARACTER,
 							CONST_INT, CONST_REAL,CONST_CHARACTER, CONST, TYPE, STATEMENT, IDENTIFIER_BLOCK,
-							DECLARATION, OP, COMPARATOR, IF_STATEMENT_ELSE_INNER, EXPR_INNER
+							DECLARATION, OP, COMPARATOR, IF_STATEMENT_ELSE_INNER, EXPR_INNER, FOR_BODY_INNER
 						};
 
 	char *NodeName[] =	{	
@@ -64,7 +64,7 @@ void yyerror (char *);
 							"OP_ADD", "OP_MINUS", "OP_MULTIPLY", "OP_DIVIDE", "TYPE_INT", "TYPE_REAL", 
 							"TYPE_CHARACTER", "CONST_INT", "CONST_REAL", "CONST_CHARACTER", "CONST", "TYPE"
 							,"STATEMENT", "IDENTIFIER_BLOCK", "OP", "COMPARATOR", "DECLARATION", "IF_STATEMENT_ELSE_INNER"
-							,"EXPR_INNER"
+							,"EXPR_INNER" , "FOR_BODY_INNER"
 						};
 
 						//enum Types { CHARATER, int}		
@@ -123,6 +123,8 @@ typedef  SYMTABNODE        *SYMTABNODEPTR;
 SYMTABNODEPTR  symTab[SYMTABSIZE]; 
 
 int currentSymTabSize = 0;
+
+int forLoopCount = 0;
 %}
 
 %start  program
@@ -137,7 +139,7 @@ int currentSymTabSize = 0;
 
 // These are lexical tokens
 
-%token<iVal> ID_T BRA_T INTEGER_CONSTANT_T REAL_CONSTANT_T CHARACTER_CONSTANT_T 
+%token<iVal> ID_T BRA_T INTEGER_CONSTANT_T REAL_CONSTANT_T CHARACTER_CONSTANT_T  NOT_T
 
 
     
@@ -149,7 +151,7 @@ int currentSymTabSize = 0;
 			DECLARATIONS_T CODE_T OF_T TYPE_T CHARACTER_T INTEGER_T REAL_T
 			IF_T THEN_T ELSE_T END_IF_T DO_T END_DO_T WHILE_T END_WHILE_T 
 			 FOR_T END_FOR_T WRITE_T READ_T NEWLINE_T 
-			NOT_T COMMA_T APOSTROPHE_T BY_T IS_T TO_T  OR_T AND_T
+			 COMMA_T APOSTROPHE_T BY_T IS_T TO_T  OR_T AND_T
 
 
 
@@ -255,13 +257,13 @@ statement				: expr ASSIGNMENT_T ID_T
 						{
 							$$ =  create_node(NOTHING, WHILE_STATEMENT, $2, $4);
 						}
-						| FOR_T for_block statement_block END_FOR_T
+						| FOR_T for_block DO_T statement_block END_FOR_T
 						{
-							$$ = create_node(NOTHING, FOR_STATEMENT, $2, $3);
+							$$ = create_node(NOTHING, FOR_STATEMENT, $2, $4);
 						}
 						;
 
-for_block				: ID_T IS_T expr BY_T expr TO_T expr DO_T
+for_block				: ID_T IS_T expr BY_T expr TO_T expr 
 						{
 							$$ = create_node($1, FOR_BODY, $3, create_node(NOTHING, FOR_BODY, $5, $7));
 						}						
@@ -291,21 +293,21 @@ conditional				: condition
 						{
 							$$ = create_node(NOTHING, CONDITIONAL, $1, NULL);
 						}
-						| NOT_T conditional
-						{
-							$$ = create_node_characterArray("!", CONDITIONAL_NOT, $2, NULL);
-						}
 						|  condition AND_T conditional
 						{
-							$$ = create_node_characterArray("&&", CONDITIONAL_AND, $1, $3);
+							$$ = create_node_characterArray("&&", CONDITIONAL, $1, $3);
 						}
 						| condition OR_T conditional
 						{
-							$$ = create_node_characterArray("||", CONDITIONAL_OR, $1, $3);
+							$$ = create_node_characterArray("||", CONDITIONAL, $1, $3);
 						}
 						;
 
-condition				: expr comp expr
+condition				: NOT_T condition
+						{
+							$$ = create_node($1, CONDITION, $2, NULL);
+						}
+						| expr comp expr
 						{
 							$$ = create_node(NOTHING, CONDITION, $1, create_node(NOTHING, CONDITION, $2 ,$3));
 						}
@@ -813,8 +815,9 @@ void WriteCode(BINARY_TREE t)
 		}
 		case ASSIGNMENT_STATEMENT:
 		{
-			printf("%s = ", symTab[t->item]->identifier);
+			printf("\n%s = ", symTab[t->item]->identifier);
 			WriteCode(t->first);
+			printf(";\n");
 			break;
 		}
 		case OUTPUT_BLOCK:
@@ -881,7 +884,9 @@ void WriteCode(BINARY_TREE t)
 		{
 			printf("if(");
 			WriteCode(t->first);
-			printf(")\n{\n");
+			printf(")\n{\n  ");
+			WriteCode(t->second);
+			printf("\n}\n");
 
 			break;
 		}
@@ -889,7 +894,7 @@ void WriteCode(BINARY_TREE t)
 		{
 			printf("if(");
 			WriteCode(t->first);
-			printf(")\n{\n   ");		
+			printf(")\n{\n");		
 			WriteCode(t->second);
 			break;
 		}
@@ -901,14 +906,60 @@ void WriteCode(BINARY_TREE t)
 			printf("}\n");
 			break;
 		}
-
+		case FOR_STATEMENT:
+		{
+			printf("register int by%d;\nfor(", ++forLoopCount);
+			WriteCode(t->first);
+			printf(")\n{\n");
+			WriteCode(t->second);
+			printf("}\n");
+			break;
+		}
+		case FOR_BODY:
+		{
+			printf("%s = ", symTab[t->item]->identifier);
+			WriteCode(t->first);
+			printf("; by%d = ", forLoopCount);
+			WriteCode(t->second->first);
+			printf(",((%s-(",symTab[t->item]->identifier);
+			WriteCode(t->second->second);
+			printf(")) * (( by%d > 0 ) - ( by%d < 0 ))) <=0; %s += by%d", forLoopCount, forLoopCount, symTab[t->item]->identifier, forLoopCount);
+			
+			
+			break;
+		}
+		case DO_STATEMENT:
+		{
+			printf("do\n{\n");
+			WriteCode(t->first);
+			printf("} while (");
+			WriteCode(t->second);
+			printf(");\n");
+			break;
+		}
+		case WHILE_STATEMENT:
+		{
+			printf("while(");
+			WriteCode(t->first);
+			printf(")\n{\n");
+			WriteCode(t->second);
+			printf("}\n");
+			break;
+		}
+      	
 		case CONDITIONAL:
 		{
 			WriteCode(t->first);
+			if(t->second != NULL)
+			{
+				printf(" %s ", t->cItem);
+				WriteCode(t->second);
+			}
 			break;
 		}
 		case CONDITIONAL_NOT:
 		{
+			WriteCode(t->first);
 			break;
 		}
 		case CONDITIONAL_AND:
@@ -921,8 +972,18 @@ void WriteCode(BINARY_TREE t)
 		}
 		case CONDITION:
 		{
-			WriteCode(t->first);
-			WriteCode(t->second);
+			if(t->item != NOTHING)
+			{
+				printf("!(");
+				WriteCode(t->first);
+				printf(")");
+			}
+			else
+			{
+				WriteCode(t->first);
+				WriteCode(t->second->first);
+				WriteCode(t->second->second);
+			}
 			break;
 		}
 		case VAL_ID:
@@ -948,15 +1009,13 @@ void WriteCode(BINARY_TREE t)
 				WriteCode(t->second);	
 				
 			}
-			
-			
-			return;
+			break;
 		}
 		case EXPR_INNER:
 		{
 			WriteCode(t->first);
 			WriteCode(t->second);
-			printf(";\n");
+			//printf(";\n");
 			break;
 		}
 		case OP:
@@ -980,7 +1039,7 @@ void WriteCode(BINARY_TREE t)
 		{
 			printf("%s", symTab[t->item]->identifier);
 			
-			return;
+			break;
 		}
 	}
 
