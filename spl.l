@@ -155,6 +155,10 @@ int installId(char *id, char *token)
            
             symTab[currentSymTabSize]->nodeType = token;
         }
+        else
+        {
+             symTab[currentSymTabSize]->nodeType = "NOTHING";
+        }
 
        return(currentSymTabSize++);
     }

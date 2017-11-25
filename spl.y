@@ -16,11 +16,11 @@
    
 extern int yydebug;
 
-   
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
+
 
 /* make forward declarations to avoid compiler warnings */
 int yylex (void);
@@ -48,7 +48,8 @@ void yyerror (char *);
 							COMPARATOR_NOT_EQUAL_TO, COMPARATOR_LESS_THAN, COMPARATOR_GREATER_THAN,
 							COMPARATOR_LESS_THAN_EQUAL_TO, COMPARATOR_GREATER_THAN_EQUAL_TO,
 							OP_ADD, OP_MINUS, OP_MULTIPLY, OP_DIVIDE, TYPE_INT, TYPE_REAL, TYPE_CHARACTER,
-							CONST_INT, CONST_REAL,CONST_CHARACTER, CONST, TYPE, STATEMENT
+							CONST_INT, CONST_REAL,CONST_CHARACTER, CONST, TYPE, STATEMENT, IDENTIFIER_BLOCK,
+							DECLARATION
 						};
 
 	char *NodeName[] =	{	
@@ -62,8 +63,10 @@ void yyerror (char *);
 							"COMPARATOR_LESS_THAN_EQUAL_TO", "COMPARATOR_GREATER_THAN_EQUAL_TO", 
 							"OP_ADD", "OP_MINUS", "OP_MULTIPLY", "OP_DIVIDE", "TYPE_INT", "TYPE_REAL", 
 							"TYPE_CHARACTER", "CONST_INT", "CONST_REAL", "CONST_CHARACTER", "CONST", "TYPE"
-							,"STATEMENT"
-						};						
+							,"STATEMENT", "IDENTIFIER_BLOCK"
+						};
+
+						//enum Types { CHARATER, int}		
 
 #ifndef TRUE
 #define TRUE 1
@@ -84,6 +87,7 @@ struct treeNode {
 		int item;
 		char *cItem;
 	};
+	char unionType;
     int  nodeIdentifier;
     struct treeNode *first;
     struct treeNode *second;
@@ -153,7 +157,7 @@ int currentSymTabSize = 0;
 /* These rules return a type of tVal    */ 
  %type<tVal>  	program block declarations statement statement_block
 				write_block conditional condition for_block output_block
-				expr val comp op type const
+				expr val comp op type const declaration identifier_block
 
 
 
@@ -177,7 +181,7 @@ program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 						
 block					: DECLARATIONS_T declarations CODE_T statement_block
 						{
-							$$ = create_node(NOTHING, BLOCK_DECLARATIONS, $2, $4);
+							$$ = create_node(NOTHING, BLOCK, $2, $4);
 						}
 						| CODE_T statement_block
 						{
@@ -187,20 +191,31 @@ block					: DECLARATIONS_T declarations CODE_T statement_block
 						
 						
 						
-declarations			: ID_T OF_T TYPE_T type SEMI_COLON_T
+declarations			: declaration
 						{
-							$$ = create_node($1, DECLARATIONS, $4, NULL);
+							$$ = create_node(NOTHING, DECLARATIONS, $1, NULL);
 						}
-						| ID_T OF_T TYPE_T type SEMI_COLON_T declarations
+						| declaration declarations
 						{
-							$$ = create_node(NOTHING, DECLARATIONS, $4, $6);							
-						}
-						| ID_T COMMA_T declarations
-						{
-							$$ = create_node($1, DECLARATIONS, $3, NULL);
+							$$ = create_node(NOTHING, DECLARATIONS, $1, $2);							
 						}
 						;
-											
+
+declaration				: identifier_block OF_T TYPE_T type SEMI_COLON_T
+						{
+							$$ = create_node_characterArray($4->cItem, DECLARATION, $1, $4);
+						}
+						;
+
+identifier_block 		: identifier_block COMMA_T ID_T
+						{
+							$$ = create_node($3, IDENTIFIER_BLOCK, $1, NULL);
+						}	
+						| ID_T
+						{
+							$$ = create_node($1, IDENTIFIER_BLOCK, NULL, NULL);
+						}			
+						;
 statement_block			: statement SEMI_COLON_T statement_block
 						{
 							$$ = create_node(NOTHING, STATEMENT_BLOCK, $1, $3);
@@ -409,6 +424,7 @@ BINARY_TREE create_node(int iVal, int case_identifier, BINARY_TREE b1, BINARY_TR
 	b->nodeIdentifier = case_identifier;
 	b->first = b1;
 	b->second = b2;
+	b->unionType = 'i';
 	return (b);
 }
 
@@ -421,12 +437,13 @@ BINARY_TREE create_node_characterArray(char* iVal, int case_identifier, BINARY_T
 	b->nodeIdentifier = case_identifier;
 	b->first = b1;
 	b->second = b2;
+	b->unionType = 'c';
 	return (b);
 }
 
 
 
-#define PrintComment(comment)  printf("/* %s */\n",comment);
+
 #define NodeType(t) (symTab[t->item]->nodeType)
 #define Identifier(t)  (symTab[t->item]->identifier)
 #define NodeIdentifier(t)  (NodeName[t->nodeIdentifier])
@@ -442,6 +459,8 @@ int BufferSize(char *format, ...)
     va_end(args);
     return result + 1;
 }
+
+
 
 
 
@@ -659,7 +678,50 @@ void Print(BINARY_TREE t)
 }
 
 
+void PrintComment(char *comment)  
+{ 
+	printf("/* %s */\n",comment);
+}
 
+int CheckItem(BINARY_TREE t)
+{
+	if(t->item > currentSymTabSize || t->item < 0)
+	{
+		yyerror("Unkown item %s");
+		return FALSE;
+	}
+	
+	return TRUE;
+}
+
+const char *GetCTypeFlag(char *typeToken)
+{
+				if(strcmp(typeToken, "CHARACTER_CONSTANT") == 0  || strcmp(typeToken, "char") == 0)
+				{
+					return "%%c\", ";
+				}
+				else if(strcmp(typeToken, "INTEGER_CONSTANT") == 0  || strcmp(typeToken, "int") == 0)
+				{
+					return "%%d\", ";
+				}
+				else if(strcmp(typeToken, "REAL_CONSTANT") == 0  || strcmp(typeToken, "float") == 0)
+				{
+					return "%%f\", ";
+					
+				}
+				else
+				{
+					yyerror("Unexpected type");
+				}
+}
+
+#define debug_print(a, args...) printf("\t\t%s(%s:%d) " a,  __func__,__FILE__, __LINE__, ##args)
+#define debug_println(a, args...) debug_print(a "\n", ##args)
+
+
+//#define CODEGENDEBUG
+char *currentType;
+int declarationWritten;
 void WriteCode(BINARY_TREE t)
 {
 	
@@ -672,6 +734,10 @@ void WriteCode(BINARY_TREE t)
 	{
 		case PROGRAM:
 		{
+			#ifdef CODEGENDEBUG
+				debug_println("in Program");
+			#endif
+			declarationWritten = 0;
 			printf("/* Spl program name -> %s */\n", symTab[t->item]->identifier);
 			printf("#include <stdio.h>\n");
 			printf("int main(void) {\n\n");
@@ -682,26 +748,77 @@ void WriteCode(BINARY_TREE t)
 
 		case BLOCK:
 		{
-			PrintComment("code");
+			#ifdef CODEGENDEBUG
+			 debug_println("Block first");
+			#endif
 			WriteCode(t->first);
+			#ifdef CODEGENDEBUG
+			 debug_println("Block second");
+			#endif
+			WriteCode(t->second);
 			break;
 		}
-		case BLOCK_DECLARATIONS:
+		case DECLARATIONS:
 		{
-			PrintComment("declarations");
+			if(declarationWritten == 0)
+			{
+				PrintComment("declarations");
+				declarationWritten = 1;
+			}
+			#ifdef CODEGENDEBUG
+			 debug_println("Declarations first");
+			#endif
 			WriteCode(t->first);
-			PrintComment("code");
+			
+			printf("\n");
+			#ifdef CODEGENDEBUG
+			 debug_println("Declarations second");
+			#endif
 			WriteCode(t->second);
+			break;
+		}
+		case DECLARATION:
+		{
+			//printf("testItem %s", t->cItem);
+
+			if(t->second != NULL){
+				if(t->second->item != 0)
+				{
+
+				}
+					
+			}
+			WriteCode(t->second);
+
+			printf(" ");
+			
+			WriteCode(t->first);
+		
+			printf(";");
 			break;
 		}
 		case STATEMENT_BLOCK:
 		{
+			
 			WriteCode(t->first);
+			#ifdef CODEGENDEBUG
+			 debug_println("STATEMENT_BLOCK first");
+			#endif
 			WriteCode(t->second);
+				#ifdef CODEGENDEBUG
+			 debug_println("STATEMENT_BLOCK second");
+			#endif
 			break;
+		}
+		case READ_STATEMENT:
+		{
+			printf("scanf(\" %s\", &%s);\n", GetCTypeFlag(symTab[t->item]->nodeType), symTab[t->item]->identifier);
 		}
 		case WRITE_STATEMENT:
 		{
+			#ifdef CODEGENDEBUG
+				debug_println("Write Statement");
+			#endif
 			if(t->first == NULL) /* n*/
 			{
 				printf("printf(\"\\n\");\n");
@@ -718,83 +835,79 @@ void WriteCode(BINARY_TREE t)
 			printf("printf(\"");
 		
 		
-			if(t->first->item == EXPR)
-			{
-				
-			}
-			else if(t->first->first == NULL)
-			{
-				
-				
-			}
-			else if(t->first->first->item)
-			{
-				//printf("%s", );
-				
+			
+			if(t->first->first->item)
+			{		
 				
 				const char *nType = symTab[t->first->first->item]->nodeType;
+				printf(GetCTypeFlag(symTab[t->first->first->item]->nodeType));
 				
-				
-				if(strcmp(nType, "CHARACTER_CONSTANT") == 0)
-				{
-					printf("%%c\", ");
-				}
-				else if(strcmp(nType, "INTEGER_CONSTANT") == 0)
-				{
-					printf("%%d\", ");
-				}
-				else if(strcmp(nType, "REAL_CONSTANT") == 0)
-				{
-					printf("%%f\", ");
-				}
-				else
-				{
-					printf("BAD TIMES");
-				}
-				// switch(symTab[t->first->first->item]->nodeType)
+				// if(strcmp(nType, "CHARACTER_CONSTANT") == 0)
 				// {
-					// case "CHARACTER_CONSTANT":
-					// {
-						// 
-						// break;
-					// }
-					// case REAL_CONSTANT_T:
-					// {
-						// printf("%%f\", ");
-						// break;
-					// }
-					// case INTEGER_CONSTANT_T:
-					// {
-						// printf("%%d\", ");
-						// break;
-					// }
-					// default:
-					// printf("%d", t->first->first->item);
+				// 	printf("%%c\", ");
+				// }
+				// else if(strcmp(nType, "INTEGER_CONSTANT") == 0)
+				// {
+				// 	printf("%%d\", ");
+				// }
+				// else if(strcmp(nType, "REAL_CONSTANT") == 0)
+				// {
+				// 	printf("%%f\", ");
+				// }
+				// else
+				// {
+				// 	yyerror("Unexpected type");
 				// }
 					WriteCode(t->first);
+					
 			}				
 					printf(");\n");
-			WriteCode(t->second);
-			break;
+				
+				WriteCode(t->second);
+				break;
 		}
-		
-		
-			
-			
-		
 		case WRITE_BLOCK:
 		{
 			if(t->first != NULL) /* val COMMA_T write_block */
 			{
+
 				WriteCode(t->first);
 			}
 			else /* NEWLINE_T */
 			{
 				printf("printf(\"\\n\");\n");
 			}
+			break;
 			
 		}
+		case IDENTIFIER_BLOCK:
+		{
 
+			
+
+			if(t->unionType == 'i')
+			{
+					if(symTab[t->item]->nodeType == "NOTHING")
+					{
+						if(strcmp(currentType, "r") == 0)
+						{
+							*currentType = 'f';
+						}
+						
+
+						// symTab[t->item]->nodeType = currentType;
+						symTab[t->item]->nodeType = strcmp(currentType, "r") == 0  ?  "f" : currentType ;
+					}
+					printf("%s", symTab[t->item]->identifier);
+					if(t->first != NULL)
+					{
+						
+						printf(", ");
+						WriteCode(t->first);
+					}
+			}
+				break;
+		}
 		case VAL_ID:
 		{
 			break;
@@ -809,19 +922,19 @@ void WriteCode(BINARY_TREE t)
 		}
 		case VAL:
 		{
-		
+
+	
 
 			if(t->item == NOTHING)
 			{
 				WriteCode(t->first);
 				break;
-				switch(t->first->item)
-				{
-					case CHARACTER_CONSTANT_T:
-					{
-						printf("WHOOHO");
-					}
-				}
+			}
+			else
+			{
+#ifdef CODEGENDEBUG
+	printf("t->item %f at line", t->item, __LINE__);
+#endif	
 			}
 			//printf("%s",symTab[t->item]->identifier);
 			// if(t->item != CONST && t->item != EXPR)
@@ -840,7 +953,13 @@ void WriteCode(BINARY_TREE t)
 			// }
 			break;
 		}
-
+		case TYPE:
+		{
+			printf("%s ", t->cItem);
+			currentType = &(t->cItem[0]);
+			//currentType = t->cItem[0];
+			break;
+		}
 		case CONST:
 		{
 			printf("%s", symTab[t->item]->identifier);
