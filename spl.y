@@ -49,7 +49,7 @@ void yyerror (char *);
 							COMPARATOR_LESS_THAN_EQUAL_TO, COMPARATOR_GREATER_THAN_EQUAL_TO,
 							OP_ADD, OP_MINUS, OP_MULTIPLY, OP_DIVIDE, TYPE_INT, TYPE_REAL, TYPE_CHARACTER,
 							CONST_INT, CONST_REAL,CONST_CHARACTER, CONST, TYPE, STATEMENT, IDENTIFIER_BLOCK,
-							DECLARATION
+							DECLARATION, OP, COMPARATOR, IF_STATEMENT_ELSE_INNER, EXPR_INNER
 						};
 
 	char *NodeName[] =	{	
@@ -63,7 +63,8 @@ void yyerror (char *);
 							"COMPARATOR_LESS_THAN_EQUAL_TO", "COMPARATOR_GREATER_THAN_EQUAL_TO", 
 							"OP_ADD", "OP_MINUS", "OP_MULTIPLY", "OP_DIVIDE", "TYPE_INT", "TYPE_REAL", 
 							"TYPE_CHARACTER", "CONST_INT", "CONST_REAL", "CONST_CHARACTER", "CONST", "TYPE"
-							,"STATEMENT", "IDENTIFIER_BLOCK"
+							,"STATEMENT", "IDENTIFIER_BLOCK", "OP", "COMPARATOR", "DECLARATION", "IF_STATEMENT_ELSE_INNER"
+							,"EXPR_INNER"
 						};
 
 						//enum Types { CHARATER, int}		
@@ -244,7 +245,7 @@ statement				: expr ASSIGNMENT_T ID_T
 						}
 						| IF_T conditional THEN_T statement_block ELSE_T statement_block END_IF_T
 						{
-						   $$ = create_node(NOTHING, IF_STATEMENT_ELSE, $2, create_node(NOTHING, IF_STATEMENT_ELSE, $4, $6));
+						   $$ = create_node(NOTHING, IF_STATEMENT_ELSE, $2, create_node(NOTHING, IF_STATEMENT_ELSE_INNER, $4, $6));
 						}
 						| DO_T statement_block WHILE_T conditional END_DO_T
 						{
@@ -316,7 +317,7 @@ expr					: val
 						}
 						| val op expr
 						{
-					    	$$ = create_node(NOTHING, EXPR, $1, create_node(NOTHING, EXPR, $2, $3));
+					    	$$ = create_node(NOTHING, EXPR, $1, create_node(NOTHING, EXPR_INNER, $2, $3));
 						}
 						;
 
@@ -340,46 +341,46 @@ val						:  ID_T
 
 comp					: EQUAL_TO_T
 						{
-							$$ = create_node_characterArray("==", COMPARATOR_EQUAL_TO, NULL, NULL);
+							$$ = create_node_characterArray("==", COMPARATOR, NULL, NULL);
 						}
 						| NOT_EQUAL_T
 						{
-							$$ = create_node_characterArray("!=", COMPARATOR_NOT_EQUAL_TO, NULL, NULL);
+							$$ = create_node_characterArray("!=", COMPARATOR, NULL, NULL);
 						}
 						| LESS_THAN_T
 						{
-							$$ = create_node_characterArray("<", COMPARATOR_LESS_THAN, NULL, NULL);
+							$$ = create_node_characterArray("<", COMPARATOR, NULL, NULL);
 						}
 						|  GREATER_THAN_T
 						{
-							$$ = create_node_characterArray(">", COMPARATOR_GREATER_THAN, NULL, NULL);
+							$$ = create_node_characterArray(">", COMPARATOR, NULL, NULL);
 						}
 						|  LESS_THAN_EQUAL_TO_T
 						{
-							$$ = create_node_characterArray("<=", COMPARATOR_LESS_THAN_EQUAL_TO, NULL, NULL);
+							$$ = create_node_characterArray("<=", COMPARATOR, NULL, NULL);
 						}
 						|  GREATER_THAN_EQUAL_TO_T
 						{
-							$$ = create_node_characterArray(">=", COMPARATOR_GREATER_THAN_EQUAL_TO, NULL, NULL);
+							$$ = create_node_characterArray(">=", COMPARATOR, NULL, NULL);
 						}
 						;
 						
 
 op						: ADD_T
 						{
-							$$ = create_node_characterArray("+", OP_ADD, NULL, NULL);
+							$$ = create_node_characterArray("+", OP, NULL, NULL);
 						}
 						| MINUS_T
 						{
-							$$ = create_node_characterArray("-", OP_MINUS, NULL, NULL);
+							$$ = create_node_characterArray("-", OP, NULL, NULL);
 						}
 						| MULTIPLY_T
 						{
-							$$ = create_node_characterArray("*", OP_MULTIPLY, NULL, NULL);
+							$$ = create_node_characterArray("*", OP, NULL, NULL);
 						}
 						| DIVIDE_T
 						{
-							$$ = create_node_characterArray("/", OP_DIVIDE, NULL, NULL);
+							$$ = create_node_characterArray("/", OP, NULL, NULL);
 						}
 						;
 					
@@ -698,15 +699,15 @@ const char *GetCTypeFlag(char *typeToken)
 {
 				if(strcmp(typeToken, "CHARACTER_CONSTANT") == 0  || strcmp(typeToken, "char") == 0)
 				{
-					return "%%c\", ";
+					return "%c\", ";
 				}
 				else if(strcmp(typeToken, "INTEGER_CONSTANT") == 0  || strcmp(typeToken, "int") == 0)
 				{
-					return "%%d\", ";
+					return "%d\", ";
 				}
 				else if(strcmp(typeToken, "REAL_CONSTANT") == 0  || strcmp(typeToken, "float") == 0)
 				{
-					return "%%f\", ";
+					return "%f\", ";
 					
 				}
 				else
@@ -738,7 +739,7 @@ void WriteCode(BINARY_TREE t)
 				debug_println("in Program");
 			#endif
 			declarationWritten = 0;
-			printf("/* Spl program name -> %s */\n", symTab[t->item]->identifier);
+			printf("\n/* Spl program name -> %s */\n", symTab[t->item]->identifier);
 			printf("#include <stdio.h>\n");
 			printf("int main(void) {\n\n");
 			WriteCode(t->first);
@@ -779,15 +780,6 @@ void WriteCode(BINARY_TREE t)
 		}
 		case DECLARATION:
 		{
-			//printf("testItem %s", t->cItem);
-
-			if(t->second != NULL){
-				if(t->second->item != 0)
-				{
-
-				}
-					
-			}
 			WriteCode(t->second);
 
 			printf(" ");
@@ -812,79 +804,57 @@ void WriteCode(BINARY_TREE t)
 		}
 		case READ_STATEMENT:
 		{
-			printf("scanf(\" %s\", &%s);\n", GetCTypeFlag(symTab[t->item]->nodeType), symTab[t->item]->identifier);
+			printf("scanf(\"%s &%s);\n", GetCTypeFlag(symTab[t->item]->nodeType), symTab[t->item]->identifier);
 		}
 		case WRITE_STATEMENT:
 		{
-			#ifdef CODEGENDEBUG
-				debug_println("Write Statement");
-			#endif
-			if(t->first == NULL) /* n*/
-			{
-				printf("printf(\"\\n\");\n");
-			}
-			else
-			{
-				WriteCode(t->first);
-			}
+			WriteCode(t->first);
 			break;
 		}
-		
+		case ASSIGNMENT_STATEMENT:
+		{
+			printf("%s = ", symTab[t->item]->identifier);
+			WriteCode(t->first);
+			break;
+		}
 		case OUTPUT_BLOCK:
 		{
 			printf("printf(\"");
-		
-		
 			
-			if(t->first->first->item)
-			{		
-				
-				const char *nType = symTab[t->first->first->item]->nodeType;
-				printf(GetCTypeFlag(symTab[t->first->first->item]->nodeType));
-				
-				// if(strcmp(nType, "CHARACTER_CONSTANT") == 0)
-				// {
-				// 	printf("%%c\", ");
-				// }
-				// else if(strcmp(nType, "INTEGER_CONSTANT") == 0)
-				// {
-				// 	printf("%%d\", ");
-				// }
-				// else if(strcmp(nType, "REAL_CONSTANT") == 0)
-				// {
-				// 	printf("%%f\", ");
-				// }
-				// else
-				// {
-				// 	yyerror("Unexpected type");
-				// }
-					WriteCode(t->first);
+			if(t->first != NULL)
+			{
+				if(t->first->first != NULL)
+				{
+					printf("%s", GetCTypeFlag(symTab[t->first->first->item]->nodeType));
 					
-			}				
-					printf(");\n");
+				}
+				else
+				{
+					printf("%s", GetCTypeFlag(symTab[t->first->item]->nodeType));
 				
-				WriteCode(t->second);
-				break;
+				}
+			}
+			WriteCode(t->first);
+			printf(");\n");
+			WriteCode(t->second);
+			break;
 		}
 		case WRITE_BLOCK:
 		{
-			if(t->first != NULL) /* val COMMA_T write_block */
-			{
-
-				WriteCode(t->first);
-			}
-			else /* NEWLINE_T */
+			if(t->first == NULL)  /* NEWLINE_T */
 			{
 				printf("printf(\"\\n\");\n");
+			}
+			else /* val COMMA_T write_block */ 
+			{
+				WriteCode(t->first);
+				
 			}
 			break;
 			
 		}
 		case IDENTIFIER_BLOCK:
-		{
-
-			
-
+		{	
 			if(t->unionType == 'i')
 			{
 					if(symTab[t->item]->nodeType == "NOTHING")
@@ -893,9 +863,7 @@ void WriteCode(BINARY_TREE t)
 						{
 							*currentType = 'f';
 						}
-						
-
-						// symTab[t->item]->nodeType = currentType;
+	
 						symTab[t->item]->nodeType = strcmp(currentType, "r") == 0  ?  "f" : currentType ;
 					}
 					printf("%s", symTab[t->item]->identifier);
@@ -908,61 +876,111 @@ void WriteCode(BINARY_TREE t)
 			}
 				break;
 		}
+
+		case IF_STATEMENT:
+		{
+			printf("if(");
+			WriteCode(t->first);
+			printf(")\n{\n");
+
+			break;
+		}
+		case IF_STATEMENT_ELSE:
+		{
+			printf("if(");
+			WriteCode(t->first);
+			printf(")\n{\n   ");		
+			WriteCode(t->second);
+			break;
+		}
+		case IF_STATEMENT_ELSE_INNER:
+		{
+			WriteCode(t->first);
+			printf("{\nelse \n{\n  ");
+			WriteCode(t->second);
+			printf("}\n");
+			break;
+		}
+
+		case CONDITIONAL:
+		{
+			WriteCode(t->first);
+			break;
+		}
+		case CONDITIONAL_NOT:
+		{
+			break;
+		}
+		case CONDITIONAL_AND:
+		{
+			break;
+		}
+		case CONDITIONAL_OR:
+		{
+			break;
+		}
+		case CONDITION:
+		{
+			WriteCode(t->first);
+			WriteCode(t->second);
+			break;
+		}
 		case VAL_ID:
 		{
+			printf("%s" ,symTab[t->item]->identifier);
 			break;
 		}
 		case VAL_BRACKETS:
 		{
+			printf("1234%s" ,symTab[t->item]->identifier);
 			break;
 		}
 		case VAL_NEGATIVE:
 		{
 			break;
 		}
+		case EXPR:
+		{
+			
+			WriteCode(t->first);
+			if(t->second != NULL)
+			{
+				WriteCode(t->second);	
+				
+			}
+			
+			
+			return;
+		}
+		case EXPR_INNER:
+		{
+			WriteCode(t->first);
+			WriteCode(t->second);
+			printf(";\n");
+			break;
+		}
+		case OP:
+		case COMPARATOR:
+		{
+			printf(" %s ", t->cItem);
+		}
+		
 		case VAL:
 		{
-
-	
-
-			if(t->item == NOTHING)
-			{
-				WriteCode(t->first);
-				break;
-			}
-			else
-			{
-#ifdef CODEGENDEBUG
-	printf("t->item %f at line", t->item, __LINE__);
-#endif	
-			}
-			//printf("%s",symTab[t->item]->identifier);
-			// if(t->item != CONST && t->item != EXPR)
-			// {
-				// if(t->item < 0 || t->item > currentSymTabSize)
-				// {
-					// printf("unknown identifier");
-				// }
-				// //printf("HERE %s", t->item);
-				// printf("WriteCode t ");
-			// }
-			// else
-			// {
-				// printf("WriteCode h ");
-				// WriteCode(t->first);
-			// }
+			WriteCode(t->first);
 			break;
 		}
 		case TYPE:
 		{
 			printf("%s ", t->cItem);
 			currentType = &(t->cItem[0]);
-			//currentType = t->cItem[0];
 			break;
 		}
 		case CONST:
 		{
 			printf("%s", symTab[t->item]->identifier);
+			
+			return;
 		}
 	}
 
