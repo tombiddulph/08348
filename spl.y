@@ -43,7 +43,7 @@ void yyerror (char *);
 							ASSIGNMENT_STATEMENT, WRITE_STATEMENT, READ_STATEMENT, IF_STATEMENT,
 							IF_STATEMENT_ELSE, DO_STATEMENT, WHILE_STATEMENT, NEWLINE_STATEMENT,
 							FOR_STATEMENT, FOR_BODY, WRITE_BLOCK, CONDITIONAL, OUTPUT_BLOCK,
-							CONDITIONAL_NOT, CONDITIONAL_AND, CONDITIONAL_OR, CONDITION, EXPR,
+							 CONDITION, EXPR,
 							VAL_ID, VAL_BRACKETS, VAL_NEGATIVE, VAL, COMPARATOR_EQUAL_TO,
 							COMPARATOR_NOT_EQUAL_TO, COMPARATOR_LESS_THAN, COMPARATOR_GREATER_THAN,
 							COMPARATOR_LESS_THAN_EQUAL_TO, COMPARATOR_GREATER_THAN_EQUAL_TO,
@@ -57,7 +57,7 @@ void yyerror (char *);
 							"ASSIGNMENT_STATEMENT", "WRITE_STATEMENT", "READ_STATEMENT", "IF_STATEMENT", 
 							"IF_STATEMENT_ELSE", "DO_STATEMENT", "WHILE_STATEMENT", "NEWLINE_STATEMENT", 
 							"FOR_STATEMENT", "FOR_BODY", "WRITE_BLOCK", "CONDITIONAL", "OUTPUT_BLOCK",
-							"CONDITIONAL_NOT", "CONDITIONAL_AND", "CONDITIONAL_OR", "CONDITION", "EXPR", 
+							 "CONDITION", "EXPR", 
 							"VAL_ID", "VAL_BRACKETS", "VAL_NEGATIVE", "VAL", "COMPARATOR_EQUAL_TO", 
 							"COMPARATOR_NOT_EQUAL_TO", "COMPARATOR_LESS_THAN", "COMPARATOR_GREATER_THAN", 
 							"COMPARATOR_LESS_THAN_EQUAL_TO", "COMPARATOR_GREATER_THAN_EQUAL_TO", 
@@ -439,6 +439,7 @@ const					: INTEGER_CONSTANT_T
 						}
 						| REAL_CONSTANT_T
 						{
+
 							$$ = create_node_constant($1,"float", CONST, NULL, NULL);
 						}
 						| CHARACTER_CONSTANT_T
@@ -453,10 +454,12 @@ const					: INTEGER_CONSTANT_T
 
 BINARY_TREE create_node(int iVal, int case_identifier, BINARY_TREE b1, BINARY_TREE b2)
 {
+	#ifndef DEBUG
 	if(case_identifier == PROGRAM)
 	{	
 		programName = symTab[iVal]->identifier;
 	}
+	#endif
 	
 	BINARY_TREE b;
 	b = (BINARY_TREE)malloc(sizeof(TREE_NODE));
@@ -555,9 +558,7 @@ void PrintTree(BINARY_TREE t)
 			{
 				break;
 			}
-			case CONDITIONAL_AND:
-			case CONDITIONAL_NOT:
-			case CONDITIONAL_OR:
+			case CONDITIONAL:
 			{
 				printf("Conditional -> %s\n", NodeIdentifier(t));
 				break;
@@ -705,7 +706,7 @@ void WriteCode(BINARY_TREE t)
 		}
 		case READ_STATEMENT:
 		{
-			printf("scanf(\"%s &%s);\n", GetCTypeFlag(symTab[t->item]->nodeType), symTab[t->item]->identifier);
+			printf("scanf(\" %s&%s);\n", GetCTypeFlag(symTab[t->item]->nodeType), symTab[t->item]->identifier);
 		}
 		case WRITE_STATEMENT:
 		{
@@ -927,19 +928,7 @@ void WriteCode(BINARY_TREE t)
 			}
 			break;
 		}
-		case CONDITIONAL_NOT:
-		{
-			WriteCode(t->first);
-			break;
-		}
-		case CONDITIONAL_AND:
-		{
-			break;
-		}
-		case CONDITIONAL_OR:
-		{
-			break;
-		}
+		
 		case CONDITION:
 		{
 			if(t->item != NOTHING)
