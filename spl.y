@@ -110,8 +110,23 @@ void Print(BINARY_TREE t);
 	void PrintTree(BINARY_TREE t);
 	int BufferSize(char *format, ...);
 	#define NEWLINE "\n"
-#endif	
+
+#else
+	
+#define debug_print(a, args...) printf("\t\t%s(%s:%d) " a,  __func__,__FILE__, __LINE__, ##args)
+#define debug_println(a, args...) debug_print(a "\n", ##args)
+
+
+
+char *currentType;
+int declarationWritten;
+const char *GetCTypeFlag(char *typeToken);
+void PrintComment(char *comment);  
+int forLoopCount = 0;
+const char *  programName;
 void WriteCode(BINARY_TREE t);
+#endif	
+
 
 /* ------------- symbol table definition --------------------------- */
 
@@ -128,8 +143,7 @@ SYMTABNODEPTR  symTab[SYMTABSIZE];
 
 int currentSymTabSize = 0;
 
-int forLoopCount = 0;
-const char *  programName;
+
 %}
 
 %start  program
@@ -178,9 +192,11 @@ program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 							
 #ifdef DEBUG							
 						PrintTree(parseTree);
+#else
+						WriteCode(parseTree);
+						
 #endif							
 						 
-						WriteCode(parseTree);
 						
 							
 						}
@@ -592,145 +608,11 @@ void PrintTree(BINARY_TREE t)
 		
 			
 }			
-#endif
+#else
 
 
 
-void Print(BINARY_TREE t)
-{
- 
-	if(t == NULL) return;
 
-	
-	
-	
-	switch(t->nodeIdentifier)
-		{
-		
-			case PROGRAM:
-			{
-
-				 printf("PROGRAM -> %s\n", Identifier(t));
-
-
-				 break;
-			}
-
-			case BLOCK_DECLARATIONS:
-			{
-				/* printf(" TEST %s\n", symTab[t->item]->identifier); */
-				break;
-			}
-			case DECLARATIONS:
-			{
-				/* printf(" TEST %s\n", symTab[t->item]->identifier); */
-				break;
-			}
-			case STATEMENT_BLOCK:
-			{
-				/* printf("STATEMENT_BLOCK\n"); */
-				break;
-			}
-			case OP_ADD:
-			case OP_DIVIDE:
-			case OP_MINUS:
-			case OP_MULTIPLY:
-			{
-				break;
-			}
-			case CONDITIONAL_AND:
-			case CONDITIONAL_NOT:
-			case CONDITIONAL_OR:
-			{
-				printf("Conditional -> %s\n", NodeIdentifier(t));
-				break;
-			}
-			case COMPARATOR_EQUAL_TO:
-			case COMPARATOR_NOT_EQUAL_TO:
-			case COMPARATOR_LESS_THAN:
-			case COMPARATOR_GREATER_THAN:
-			case COMPARATOR_LESS_THAN_EQUAL_TO:
-			case COMPARATOR_GREATER_THAN_EQUAL_TO:
-			{
-					printf("Comparator -> [%s] %s\n",t->cItem, NodeIdentifier(t));
-					break;
-			}
-			case CONST:
-			{
-				
-				printf(" Constant [%s] -> %s\n", NodeType(t), Identifier(t));
-				break;
-			}
-			/* case VAL_ID: */
-			/* { */
-			/* 	printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType);*/
-			/* 	break;*/
-			/* }*/
-			case TYPE:
-			{
-				printf("Type -> %s\n ", t->cItem);
-				break;
-			}
-
-			default:
-			{
-				if(t->nodeIdentifier >= 0 && t->nodeIdentifier < sizeof NodeName)
-				{
-					printf(" Node identifier -> %s\n", NodeIdentifier(t));
-					
-				}
-				else
-				{
-					printf(" Unkown node identifier -> %d\n", t->nodeIdentifier);
-					
-				}
-
-
-				if(t->item > 0  && t->item < SYMTABSIZE)
-
-				{
-						printf("Identifier -> %s\n", Identifier(t));
-				}
-			}
-		}
-		Print(t->first);
-		Print(t->second);
-}
-
-
-void PrintComment(char *comment)  
-{ 
-	printf("/* %s */\n",comment);
-}
-
-const char *GetCTypeFlag(char *typeToken)
-{
-				if(strcmp(typeToken, "CHARACTER_CONSTANT") == 0  || strcmp(typeToken, "char") == 0)
-				{
-					return "%c\", ";
-				}
-				else if(strcmp(typeToken, "INTEGER_CONSTANT") == 0  || strcmp(typeToken, "int") == 0)
-				{
-					return "%d\", ";
-				}
-				else if(strcmp(typeToken, "REAL_CONSTANT") == 0  || strcmp(typeToken, "float") == 0)
-				{
-					return "%f\", ";
-					
-				}
-				else
-				{
-					yyerror("Unexpected type");
-				}
-}
-
-#define debug_print(a, args...) printf("\t\t%s(%s:%d) " a,  __func__,__FILE__, __LINE__, ##args)
-#define debug_println(a, args...) debug_print(a "\n", ##args)
-
-
-
-char *currentType;
-int declarationWritten;
 void WriteCode(BINARY_TREE t)
 {
 	
@@ -1103,9 +985,37 @@ void WriteCode(BINARY_TREE t)
 		}
 	}
 
-	/* WriteCode(t->third); */
+	
 }
 
+
+void PrintComment(char *comment)  
+{ 
+	printf("/* %s */\n",comment);
+}
+
+const char *GetCTypeFlag(char *typeToken)
+{
+				if(strcmp(typeToken, "CHARACTER_CONSTANT") == 0  || strcmp(typeToken, "char") == 0)
+				{
+					return "%c\", ";
+				}
+				else if(strcmp(typeToken, "INTEGER_CONSTANT") == 0  || strcmp(typeToken, "int") == 0)
+				{
+					return "%d\", ";
+				}
+				else if(strcmp(typeToken, "REAL_CONSTANT") == 0  || strcmp(typeToken, "float") == 0)
+				{
+					return "%f\", ";
+					
+				}
+				else
+				{
+					yyerror("Unexpected type");
+				}
+}
+
+#endif
 /* Put other auxiliary functions here */
 
 #include "lex.yy.c"
