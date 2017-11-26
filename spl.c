@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 int yyparse(void);
 
 
@@ -16,4 +17,5 @@ int main(void)
 void yyerror(char *s)
 {
     fprintf(stderr, "Error : Exiting %s\n", s);
+	exit(-1);
 }

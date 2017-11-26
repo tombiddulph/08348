@@ -67,7 +67,7 @@ void yyerror (char *);
 							,"EXPR_INNER" , "FOR_BODY_INNER"
 						};
 
-						//enum Types { CHARATER, int}		
+	 
 
 #ifndef TRUE
 #define TRUE 1
@@ -80,6 +80,8 @@ void yyerror (char *);
 #ifndef NULL
 #define NULL 0
 #endif
+
+
 
 /* ------------- parse tree definition --------------------------- */
 
@@ -102,6 +104,7 @@ typedef  TREE_NODE       *BINARY_TREE;
 
 BINARY_TREE create_node(int,int,BINARY_TREE,BINARY_TREE);
 BINARY_TREE create_node_characterArray(char*,int,BINARY_TREE,BINARY_TREE);
+BINARY_TREE create_node_constant(int, char*, int, BINARY_TREE, BINARY_TREE);
 void Print(BINARY_TREE t);
 #ifdef DEBUG
 	void PrintTree(BINARY_TREE t);
@@ -122,9 +125,11 @@ typedef  SYMTABNODE        *SYMTABNODEPTR;
 
 SYMTABNODEPTR  symTab[SYMTABSIZE]; 
 
+
 int currentSymTabSize = 0;
 
 int forLoopCount = 0;
+const char *  programName;
 %}
 
 %start  program
@@ -137,7 +142,7 @@ int forLoopCount = 0;
     BINARY_TREE  tVal;
 }
 
-// These are lexical tokens
+/* These are lexical tokens */
 
 %token<iVal> ID_T BRA_T INTEGER_CONSTANT_T REAL_CONSTANT_T CHARACTER_CONSTANT_T  NOT_T
 
@@ -323,7 +328,7 @@ expr					: val
 						}
 						;
 
-val						:  ID_T
+val						: ID_T
 						{
 							$$ = create_node($1, VAL_ID, NULL, NULL);
 						}
@@ -403,15 +408,15 @@ type					: INTEGER_T
 
 const					: INTEGER_CONSTANT_T
 						{
-							$$ = create_node($1, CONST, NULL, NULL);
+							$$ = create_node_constant($1,"int", CONST, NULL, NULL);
 						}
 						| REAL_CONSTANT_T
 						{
-							$$ = create_node($1, CONST, NULL, NULL);
+							$$ = create_node_constant($1,"float", CONST, NULL, NULL);
 						}
 						| CHARACTER_CONSTANT_T
 						{
-							$$ = create_node($1, CONST, NULL, NULL);
+							$$ = create_node_constant($1, "char", CONST, NULL, NULL);
 						}
 						;
 %%
@@ -421,6 +426,11 @@ const					: INTEGER_CONSTANT_T
 
 BINARY_TREE create_node(int iVal, int case_identifier, BINARY_TREE b1, BINARY_TREE b2)
 {
+	if(case_identifier == PROGRAM)
+	{	
+		programName = symTab[iVal]->identifier;
+	}
+	
 	BINARY_TREE b;
 	b = (BINARY_TREE)malloc(sizeof(TREE_NODE));
 	b->item = iVal;
@@ -444,6 +454,18 @@ BINARY_TREE create_node_characterArray(char* iVal, int case_identifier, BINARY_T
 	return (b);
 }
 
+BINARY_TREE create_node_constant(int iVal, char* cVal, int case_identifier, BINARY_TREE b1, BINARY_TREE b2)
+{
+	BINARY_TREE b;
+	b = (BINARY_TREE)malloc(sizeof(TREE_NODE));
+	b->item = iVal;
+	b->nodeIdentifier = case_identifier;
+	b->first = b1;
+	b->second = b2;
+	b->unionType = 'c';
+	symTab[iVal]->nodeType = cVal;
+	return (b);
+}
 
 
 
@@ -471,11 +493,6 @@ void PrintTree(BINARY_TREE t)
 {
 
 	if(t == NULL) return;
-
-
-
-
-
 		
 		switch(t->nodeIdentifier)
 		{
@@ -686,17 +703,6 @@ void PrintComment(char *comment)
 	printf("/* %s */\n",comment);
 }
 
-int CheckItem(BINARY_TREE t)
-{
-	if(t->item > currentSymTabSize || t->item < 0)
-	{
-		yyerror("Unkown item %s");
-		return FALSE;
-	}
-	
-	return TRUE;
-}
-
 const char *GetCTypeFlag(char *typeToken)
 {
 				if(strcmp(typeToken, "CHARACTER_CONSTANT") == 0  || strcmp(typeToken, "char") == 0)
@@ -722,7 +728,7 @@ const char *GetCTypeFlag(char *typeToken)
 #define debug_println(a, args...) debug_print(a "\n", ##args)
 
 
-//#define CODEGENDEBUG
+
 char *currentType;
 int declarationWritten;
 void WriteCode(BINARY_TREE t)
@@ -822,6 +828,7 @@ void WriteCode(BINARY_TREE t)
 		}
 		case OUTPUT_BLOCK:
 		{
+			
 			printf("printf(\"");
 			
 			if(t->first != NULL)
@@ -829,32 +836,47 @@ void WriteCode(BINARY_TREE t)
 				
 				if(t->first->first != NULL)
 				{
+					
 					int item = t->first->first->item;
 
 					if(item > 0 && item < SYMTABSIZE)
 					{
+					
 						printf("%s", GetCTypeFlag(symTab[item]->nodeType));
+						
 					}
-
-					printf("%d",t->first->first->second->second->item);
+					
+					if(t->first->first->first != NULL)
+					{
+						if(t->first->first->first->first != NULL)
+						{
+							/*if(t->first->first->second->first != NULL)
+							{
+								printf("-- %s  -- ", symTab[t->first->first->second->second->item]->nodeType);
+							}*/
+							printf("%s", GetCTypeFlag(symTab[t->first->first->first->first->item]->nodeType));
+						}
+					}
+					
+					
 				}
+				
 				else if(t->first != NULL)
 				{
+					
 					int item = t->first->item;
 					if(item > 0 && item < SYMTABSIZE)
 					{
+						
 						printf("%s", GetCTypeFlag(symTab[t->first->item]->nodeType));
 					}
 				
 			
 				}
-				else
-				{
-					printf("1");
-					printf("__%s__", t->item);
-				}
+				
 			}
 			
+		
 			WriteCode(t->first);
 			printf(");\n");
 			WriteCode(t->second);
@@ -876,16 +898,36 @@ void WriteCode(BINARY_TREE t)
 		}
 		case IDENTIFIER_BLOCK:
 		{	
+		
+		
+		
 			if(t->unionType == 'i')
 			{
+					if(t->item > currentSymTabSize || t->item < 0)
+					{
+						char buf[256];
+						snprintf(buf, sizeof(buf), "%s%s", "Unkown identifer" , t->item);
+						yyerror(buf);
+					}
+					
+					
+				
 					if(symTab[t->item]->nodeType == "NOTHING")
 					{
-						if(strcmp(currentType, "r") == 0)
-						{
-							*currentType = 'f';
-						}
-	
 						symTab[t->item]->nodeType = strcmp(currentType, "r") == 0  ?  "f" : currentType ;
+					}
+					
+					if(strcmp(symTab[t->item]->identifier, programName) == 0) /* check variable names against the program name */
+					{
+						char buf[256];
+						snprintf(buf, 
+								sizeof(buf), 
+								"%s%s", 
+								"Identifier with the same name as the program are not allowed " , 
+								programName); 
+								
+						yyerror(buf);
+						return;
 					}
 					printf("%s", symTab[t->item]->identifier);
 					if(t->first != NULL)
@@ -918,7 +960,7 @@ void WriteCode(BINARY_TREE t)
 		case IF_STATEMENT_ELSE_INNER:
 		{
 			WriteCode(t->first);
-			printf("{\nelse \n{\n  ");
+		printf("}\nelse \n{\n  ");
 			WriteCode(t->second);
 			printf("}\n");
 			break;
@@ -1023,13 +1065,8 @@ void WriteCode(BINARY_TREE t)
 		}
 		case EXPR:
 		{
-			
 			WriteCode(t->first);
-			if(t->second != NULL)
-			{
-				WriteCode(t->second);	
-				
-			}
+			WriteCode(t->second);	
 			break;
 		}
 		case EXPR_INNER:
@@ -1048,6 +1085,7 @@ void WriteCode(BINARY_TREE t)
 		
 		case VAL:
 		{
+			
 			WriteCode(t->first);
 			break;
 		}
