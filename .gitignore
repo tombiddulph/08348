@@ -61,3 +61,5 @@ b.SPL
 c.SPL
 d.SPL
 e.SPL
+*.log
+Tests/*.c

@@ -1,2 +1,2 @@
-#error
+#warning
 1
