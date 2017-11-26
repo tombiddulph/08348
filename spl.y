@@ -66,7 +66,18 @@ void yyerror (char *);
 							,"STATEMENT", "IDENTIFIER_BLOCK", "OP", "COMPARATOR", "DECLARATION", "IF_STATEMENT_ELSE_INNER"
 							,"EXPR_INNER" , "FOR_BODY_INNER"
 						};
-
+	
+		char* ReservedKeywords[] = {
+				"auto",	"double",	"int",	"struct",
+				"break",	"else",	"long",	"switch",
+				"case",	"enum",	"register",	"typedef",
+				"char",	"extern",	"return",	"union",
+				"const",	"float",	"short",	"unsigned",
+				"continue",	"for",	"signed",	"void",
+				"default",	"goto",	"sizeof",	"volatile",
+				"do",	"if",	"static",	"while"
+		};
+						
 	 
 
 #ifndef TRUE
@@ -799,7 +810,9 @@ void WriteCode(BINARY_TREE t)
 						symTab[t->item]->nodeType = strcmp(currentType, "r") == 0  ?  "f" : currentType ;
 					}
 					
-					if(strcmp(symTab[t->item]->identifier, programName) == 0) /* check variable names against the program name */
+					char * id = symTab[t->item]->identifier;
+					
+					if(strcmp(id, programName) == 0) /* check variable names against the program name */
 					{
 						char buf[256];
 						snprintf(buf, 
@@ -811,7 +824,23 @@ void WriteCode(BINARY_TREE t)
 						yyerror(buf);
 						return;
 					}
-					printf("%s", symTab[t->item]->identifier);
+					
+					int i, len;
+					len = sizeof(ReservedKeywords)/sizeof(ReservedKeywords[0]);
+					for( i = 0; i < len; ++i)
+					{
+						if(!strcmp(ReservedKeywords[i], id))
+						{
+							printf("HERE");
+							char buf[sizeof(id)+1];
+							snprintf(buf, sizeof(buf), "%s%s", "_", id);
+							strcpy(symTab[t->item]->identifier, buf);
+							strcpy(id, buf);
+							break;
+						}
+					}
+					
+					printf("%s", id);
 					if(t->first != NULL)
 					{
 						printf(", ");
@@ -1011,7 +1040,14 @@ const char *GetCTypeFlag(char *typeToken)
 				}
 				else
 				{
-					yyerror("Unexpected type");
+					char buf[256];
+						snprintf(buf, 
+								sizeof(buf), 
+								"%s%s", 
+								"unknown type token -> ", 
+								typeToken); 
+								
+						yyerror(buf);
 				}
 }
 
