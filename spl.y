@@ -20,7 +20,7 @@ extern int yydebug;
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
-
+#include <time.h>
 
 /* make forward declarations to avoid compiler warnings */
 int yylex (void);
@@ -97,11 +97,11 @@ void yyerror (char *);
 /* ------------- parse tree definition --------------------------- */
 
 struct treeNode {
-    union{
-		int item;
-		char *cItem;
-	};
-	char unionType;
+    
+	int item;
+	char *cItem;
+	
+
     int  nodeIdentifier;
     struct treeNode *first;
     struct treeNode *second;
@@ -136,7 +136,11 @@ void PrintComment(char *comment);
 int forLoopCount = 0;
 const char *  programName;
 void WriteCode(BINARY_TREE t);
+time_t t;
+
 #endif	
+
+
 
 
 /* ------------- symbol table definition --------------------------- */
@@ -144,6 +148,7 @@ void WriteCode(BINARY_TREE t);
 struct symTabNode {
     char identifier[IDLENGTH];
 	char *nodeType;
+	int id;
 };
 
 typedef  struct symTabNode SYMTABNODE;
@@ -199,12 +204,18 @@ int currentSymTabSize = 0;
 program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 						{
 						
+							if($1 != $5)
+							{
+								YYABORT;
+							}
+
 							BINARY_TREE parseTree = create_node($1, PROGRAM, $3, NULL);
 							
 #ifdef DEBUG							
 						PrintTree(parseTree);
 #else
 						WriteCode(parseTree);
+						srand(time(NULL));
 						
 #endif							
 						 
@@ -464,10 +475,11 @@ BINARY_TREE create_node(int iVal, int case_identifier, BINARY_TREE b1, BINARY_TR
 	BINARY_TREE b;
 	b = (BINARY_TREE)malloc(sizeof(TREE_NODE));
 	b->item = iVal;
+	b->cItem = "EMPTY";
 	b->nodeIdentifier = case_identifier;
 	b->first = b1;
 	b->second = b2;
-	b->unionType = 'i';
+
 	return (b);
 }
 
@@ -476,11 +488,12 @@ BINARY_TREE create_node_characterArray(char* iVal, int case_identifier, BINARY_T
 {
 	BINARY_TREE b;
 	b = (BINARY_TREE)malloc(sizeof(TREE_NODE));
+	b->item = 0;
 	b->cItem = iVal;
 	b->nodeIdentifier = case_identifier;
 	b->first = b1;
 	b->second = b2;
-	b->unionType = 'c';
+
 	return (b);
 }
 
@@ -489,10 +502,10 @@ BINARY_TREE create_node_constant(int iVal, char* cVal, int case_identifier, BINA
 	BINARY_TREE b;
 	b = (BINARY_TREE)malloc(sizeof(TREE_NODE));
 	b->item = iVal;
+	b->cItem = cVal;
 	b->nodeIdentifier = case_identifier;
 	b->first = b1;
 	b->second = b2;
-	b->unionType = 'c';
 	symTab[iVal]->nodeType = cVal;
 	return (b);
 }
@@ -514,14 +527,10 @@ int BufferSize(char *format, ...)
     va_end(args);
     return result + 1;
 }
-
-
-
-
+		
 
 void PrintTree(BINARY_TREE t)
 {
-
 	if(t == NULL) return;
 		
 		switch(t->nodeIdentifier)
@@ -529,46 +538,16 @@ void PrintTree(BINARY_TREE t)
 		
 			case PROGRAM:
 			{
-
 				 printf("PROGRAM -> %s\n", Identifier(t));
-
-
 				 break;
 			}
-
-			case BLOCK_DECLARATIONS:
-			{
-				/* printf(" TEST %s\n", symTab[t->item]->identifier);*/
-				break;
-			}
-			case DECLARATIONS:
-			{
-				/* printf(" TEST %s\n", symTab[t->item]->identifier);*/
-				break;
-			}
-			case STATEMENT_BLOCK:
-			{
-				/* printf("STATEMENT_BLOCK\n"); */
-				break;
-			}
-			case OP_ADD:
-			case OP_DIVIDE:
-			case OP_MINUS:
-			case OP_MULTIPLY:
-			{
-				break;
-			}
-			case CONDITIONAL:
+			
+			case CONDITION:
 			{
 				printf("Conditional -> %s\n", NodeIdentifier(t));
 				break;
 			}
-			case COMPARATOR_EQUAL_TO:
-			case COMPARATOR_NOT_EQUAL_TO:
-			case COMPARATOR_LESS_THAN:
-			case COMPARATOR_GREATER_THAN:
-			case COMPARATOR_LESS_THAN_EQUAL_TO:
-			case COMPARATOR_GREATER_THAN_EQUAL_TO:
+			case COMPARATOR:
 			{
 					printf("Comparator -> [%s] %s\n",t->cItem, NodeIdentifier(t));
 					break;
@@ -579,17 +558,11 @@ void PrintTree(BINARY_TREE t)
 				printf(" Constant [%s] -> %s\n", NodeType(t), Identifier(t));
 				break;
 			}
-			case VAL_ID:
-			{
-			  /*	printf(" Val Identifier %s of type %s\n",  symTab[t->item]->identifier, symTab[t->item]->nodeType); */
-			 	break;
-			 }
 			case TYPE:
 			{
 				printf("Type -> %s\n ", t->cItem);
 				break;
 			}
-
 			default:
 			{
 				if(t->nodeIdentifier >= 0 && t->nodeIdentifier < sizeof NodeName)
@@ -602,14 +575,11 @@ void PrintTree(BINARY_TREE t)
 					printf(" Unkown node identifier -> %d\n", t->nodeIdentifier);
 					
 				}
-
-
 				if(t->item > 0  && t->item < SYMTABSIZE)
-
 				{
 				
 					
-					printf("Identifier -> %s\n", Identifier(t));
+					printf(" Identifier -> %s\n", Identifier(t));
 				}
 			}
 		}
@@ -620,6 +590,7 @@ void PrintTree(BINARY_TREE t)
 		
 			
 }			
+
 #else
 
 
@@ -715,7 +686,10 @@ void WriteCode(BINARY_TREE t)
 		}
 		case ASSIGNMENT_STATEMENT:
 		{
+			GetCTypeFlag(symTab[t->item]->nodeType);
 			printf("\n%s = ", symTab[t->item]->identifier);
+			
+			printf("-_-%s", NodeName[t->first->nodeIdentifier]);
 			WriteCode(t->first);
 			printf(";\n");
 			break;
@@ -795,15 +769,17 @@ void WriteCode(BINARY_TREE t)
 		
 		
 		
-			if(t->unionType == 'i')
-			{
-					if(t->item > currentSymTabSize || t->item < 0)
+			if(t->item > currentSymTabSize || t->item < 0)
 					{
 						char buf[256];
-						snprintf(buf, sizeof(buf), "%s%s", "Unkown identifer" , t->item);
+						snprintf(buf, sizeof(buf), "%s%s", "Unkown identifier" , t->item);
 						yyerror(buf);
 					}
 					
+
+
+
+				
 					
 				
 					if(symTab[t->item]->nodeType == "NOTHING")
@@ -832,7 +808,6 @@ void WriteCode(BINARY_TREE t)
 					{
 						if(!strcmp(ReservedKeywords[i], id))
 						{
-							printf("HERE");
 							char buf[sizeof(id)+1];
 							snprintf(buf, sizeof(buf), "%s%s", "_", id);
 							strcpy(symTab[t->item]->identifier, buf);
@@ -841,13 +816,32 @@ void WriteCode(BINARY_TREE t)
 						}
 					}
 					
+					len = sizeof(symTab)/sizeof(symTab[0]);
+					
+					int count = 0;
+
+					// for(i = 0; i < currentSymTabSize-1; i++)
+					// {
+					// 	printf("i count %d\n", i);
+					// 	for(int j = i + 1; j < currentSymTabSize; j++)
+					// 	{
+								
+					// 		if(strcmp(symTab[i]->identifier, symTab[j]->identifier) == 0)
+					// 		{
+					// 			printf("duplicate identifier");
+					// 		}							
+					// 	}
+					// }
+
+
+				
 					printf("%s", id);
 					if(t->first != NULL)
 					{
 						printf(", ");
 						WriteCode(t->first);
 					}
-			}
+			
 				break;
 		}
 
@@ -1000,6 +994,11 @@ void WriteCode(BINARY_TREE t)
 			printf("%s", symTab[t->item]->identifier);
 			
 			break;
+		}
+		default:
+		{
+			WriteCode(t->first);
+			WriteCode(t->second);
 		}
 	}
 

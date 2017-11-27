@@ -160,6 +160,7 @@ int installId(char *id, char *token)
              symTab[currentSymTabSize]->nodeType = "NOTHING";
         }
 
+        *id = rand();
        return(currentSymTabSize++);
     }
 }
