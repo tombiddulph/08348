@@ -579,8 +579,6 @@ void PrintTree(BINARY_TREE t)
 				}
 				if(t->item > 0  && t->item < SYMTABSIZE)
 				{
-				
-					
 					printf(" Identifier -> %s\n", Identifier(t));
 				}
 			}
@@ -742,6 +740,7 @@ void WriteCode(BINARY_TREE t)
 			BINARY_TREE temp = t->second;
 			if(temp!= NULL)
 			{
+				
 				int count = 1;
 				while(temp != NULL) 
 				{			
@@ -758,22 +757,35 @@ void WriteCode(BINARY_TREE t)
 
 				short i;
 				
-				
-				for(i = 0; i < count; ++i)
+			
+				if(count == 2)
 				{
-					if(i == 0)
+					formatFlags[0] = GetCTypeFlag(symTab[t->first->first->item]->nodeType, 0);
+					variables[0] = symTab[t->first->first->item]->identifier;
+					formatFlags[1] = GetCTypeFlag(symTab[bTree->first->item]->nodeType, 0);
+					variables[1] = symTab[bTree->first->item]->identifier;
+				}
+				else
+				{
+					for(i = 0; i < count; ++i)
 					{
-						formatFlags[i] = GetCTypeFlag(symTab[t->first->first->item]->nodeType, 0);
-						variables[i] = symTab[t->first->first->item]->identifier;
-					}
-					else
-					{
-						formatFlags[i] = GetCTypeFlag(symTab[bTree->first->first->item]->nodeType, 0);
-						variables[i] = symTab[bTree->first->first->item]->identifier;
-						bTree = bTree->second;
+						if(i == 0)
+						{
+						
+							formatFlags[i] = GetCTypeFlag(symTab[t->first->first->item]->nodeType, 0);
+							variables[i] = symTab[t->first->first->item]->identifier;
+						}
+						else
+						{
+						
+							formatFlags[i] = GetCTypeFlag(symTab[bTree->first->first->item]->nodeType, 0);
+					   		variables[i] = symTab[bTree->first->first->item]->identifier;				
+							bTree = bTree->second;
+						}
 					}
 				}
 
+			
 				char *formatOutput = malloc(sizeof(formatFlags) + 1);
 				char *variableOuput = malloc(sizeof(variables) + 1 + (1 * count));
 
@@ -786,7 +798,7 @@ void WriteCode(BINARY_TREE t)
 					strcat(variableOuput, variables[i]);
 				}
 
-				printf("%s\", %s);\n", formatOutput, variableOuput);
+				printf("\"%s\", %s);\n", formatOutput, variableOuput);
 			
 
 				free(formatOutput);
@@ -1052,7 +1064,7 @@ void WriteCode(BINARY_TREE t)
 				WriteCode(t->first->first);
 				break;
 			}
-			
+
 			printf("(");
 			
 			
