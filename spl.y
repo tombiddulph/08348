@@ -1126,11 +1126,11 @@ const char *GetCTypeFlag(char *typeToken, int comma)
 				}
 				else if(strcmp(typeToken, "INTEGER_CONSTANT") == 0  || strcmp(typeToken, "int") == 0)
 				{
-					return comma == 1 ? "%d\", " : "%d ";
+					return comma == 1 ? "%d\", " : "%d";
 				}
 				else if(strcmp(typeToken, "REAL_CONSTANT") == 0  || strcmp(typeToken, "float") == 0)
 				{
-					return comma == 1 ? "%g\", " : "%g ";
+					return comma == 1 ? "%g\", " : "%g";
 					
 				}
 				else
