@@ -691,8 +691,16 @@ void WriteCode(BINARY_TREE t)
 		case ASSIGNMENT_STATEMENT:
 		{
 			
-			printf("%s = ", symTab[t->item]->identifier );
+			if(strcmp(symTab[t->item]->nodeType, "NOTHING") ==0)
+			{
+				char buf[32];
+				snprintf(buf, sizeof(buf), "%s%s", " attempting to assing to undeclared identifier" , t->item);
+				yyerror(buf);
+			};
 			
+			printf("%s = ", symTab[t->item]->identifier);
+			
+		
 			
 			if(t->first != NULL)
 			{
@@ -797,15 +805,8 @@ void WriteCode(BINARY_TREE t)
 					int item = t->first->first->item;
 
 					if(item > 0 && item < SYMTABSIZE)
-					{
-					
-						if(strcmp(symTab[item]->nodeType, "float") == 0)
-						{
-						//	printf("\n REAL \n");
-						}
-						
-						printf("%s", GetCTypeFlag(symTab[item]->nodeType, 1));
-						
+					{				
+						printf("%s", GetCTypeFlag(symTab[item]->nodeType, 1));	
 					}
 					
 					if(t->first->first->first != NULL)
