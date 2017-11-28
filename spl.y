@@ -42,7 +42,7 @@ void yyerror (char *);
 							PROGRAM, DECLARATIONS, BLOCK_DECLARATIONS, BLOCK, STATEMENT_BLOCK,
 							ASSIGNMENT_STATEMENT, WRITE_STATEMENT, READ_STATEMENT, IF_STATEMENT,
 							IF_STATEMENT_ELSE, DO_STATEMENT, WHILE_STATEMENT, NEWLINE_STATEMENT,
-							FOR_STATEMENT, FOR_BODY, WRITE_BLOCK, CONDITIONAL, OUTPUT_BLOCK,
+							FOR_STATEMENT, FOR_BLOCK, WRITE_BLOCK, CONDITIONAL, OUTPUT_BLOCK, OUTPUT_BLOCK_COMMA,
 							 CONDITION, EXPR,
 							VAL_ID, VAL_BRACKETS, VAL_NEGATIVE, VAL, COMPARATOR_EQUAL_TO,
 							COMPARATOR_NOT_EQUAL_TO, COMPARATOR_LESS_THAN, COMPARATOR_GREATER_THAN,
@@ -56,7 +56,7 @@ void yyerror (char *);
 							"PROGRAM", "DECLARATIONS", "BLOCK_DECLARATIONS", "BLOCK", "STATEMENT_BLOCK", 
 							"ASSIGNMENT_STATEMENT", "WRITE_STATEMENT", "READ_STATEMENT", "IF_STATEMENT", 
 							"IF_STATEMENT_ELSE", "DO_STATEMENT", "WHILE_STATEMENT", "NEWLINE_STATEMENT", 
-							"FOR_STATEMENT", "FOR_BODY", "WRITE_BLOCK", "CONDITIONAL", "OUTPUT_BLOCK",
+							"FOR_STATEMENT", "FOR_BLOCK", "WRITE_BLOCK", "CONDITIONAL", "OUTPUT_BLOCK", "OUTPUT_BLOCK_COMMA",
 							 "CONDITION", "EXPR", 
 							"VAL_ID", "VAL_BRACKETS", "VAL_NEGATIVE", "VAL", "COMPARATOR_EQUAL_TO", 
 							"COMPARATOR_NOT_EQUAL_TO", "COMPARATOR_LESS_THAN", "COMPARATOR_GREATER_THAN", 
@@ -308,7 +308,7 @@ statement				: expr ASSIGNMENT_T ID_T
 
 for_block				: ID_T IS_T expr BY_T expr TO_T expr 
 						{
-							$$ = create_node($1, FOR_BODY, $3, create_node(NOTHING, FOR_BODY, $5, $7));
+							$$ = create_node($1, FOR_BLOCK, $3, create_node(NOTHING, FOR_BLOCK, $5, $7));
 						}						
 						;
 
@@ -722,6 +722,20 @@ void WriteCode(BINARY_TREE t)
 		}
 		case OUTPUT_BLOCK:
 		{
+			int count = 0;
+			
+			printf("1");
+			BINARY_TREE bTree = t->second;
+			while(bTree != NULL) 
+			{	
+				printf("here");
+				bTree = bTree->second;
+				++count;
+			}
+			
+			
+			printf("Tree count %i", count);
+			exit(99);
 			
 			printf("printf(\"");
 			
@@ -787,6 +801,8 @@ void WriteCode(BINARY_TREE t)
 				
 			}
 			printf(");\n");
+			
+			
 			WriteCode(t->second);
 			break;
 		}
@@ -909,7 +925,7 @@ void WriteCode(BINARY_TREE t)
 			printf("}\n");
 			break;
 		}
-		case FOR_BODY:
+		case FOR_BLOCK:
 		{
 			printf("%s = ", symTab[t->item]->identifier);
 			t->assigned = 1;
