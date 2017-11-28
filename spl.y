@@ -100,12 +100,10 @@ struct treeNode {
     
 	int item;
 	char *cItem;
-	
-
     int  nodeIdentifier;
     struct treeNode *first;
     struct treeNode *second;
-
+	int assigned;
   };
 
 typedef  struct treeNode TREE_NODE;
@@ -149,6 +147,8 @@ struct symTabNode {
     char identifier[IDLENGTH];
 	char *nodeType;
 	int id;
+	int assigned;
+	
 };
 
 typedef  struct symTabNode SYMTABNODE;
@@ -479,6 +479,7 @@ BINARY_TREE create_node(int iVal, int case_identifier, BINARY_TREE b1, BINARY_TR
 	b->nodeIdentifier = case_identifier;
 	b->first = b1;
 	b->second = b2;
+	b->assigned = 0;
 
 	return (b);
 }
@@ -493,7 +494,7 @@ BINARY_TREE create_node_characterArray(char* iVal, int case_identifier, BINARY_T
 	b->nodeIdentifier = case_identifier;
 	b->first = b1;
 	b->second = b2;
-
+	b->assigned = 0;
 	return (b);
 }
 
@@ -507,6 +508,7 @@ BINARY_TREE create_node_constant(int iVal, char* cVal, int case_identifier, BINA
 	b->first = b1;
 	b->second = b2;
 	symTab[iVal]->nodeType = cVal;
+	b->assigned = 0;
 	return (b);
 }
 
@@ -678,6 +680,8 @@ void WriteCode(BINARY_TREE t)
 		case READ_STATEMENT:
 		{
 			printf("scanf(\" %s&%s);\n", GetCTypeFlag(symTab[t->item]->nodeType), symTab[t->item]->identifier);
+			symTab[t->item]->assigned = 1;
+			break;
 		}
 		case WRITE_STATEMENT:
 		{
@@ -686,10 +690,32 @@ void WriteCode(BINARY_TREE t)
 		}
 		case ASSIGNMENT_STATEMENT:
 		{
-			GetCTypeFlag(symTab[t->item]->nodeType);
-			printf("\n%s = ", symTab[t->item]->identifier);
 			
-			printf("-_-%s", NodeName[t->first->nodeIdentifier]);
+			printf("\n%s = %s %s", symTab[t->item]->identifier, symTab[t->item]->nodeType, NodeName[t->item]);
+			
+			
+			if(t->first != NULL)
+			{
+				if(t->first->first != NULL)
+				{
+					
+					if(t->first->first->nodeIdentifier)
+					{
+
+						
+						if(t->first->first->nodeIdentifier != VAL && t->first->first->nodeIdentifier != VAL_NEGATIVE)
+						{
+							if((symTab[t->first->first->item]->nodeType) && strcmp(symTab[t->first->first->item]->nodeType, "NOTHING") == 0)
+							{
+								yyerror("undeclared variable");
+						
+							}
+						}
+					}
+				}
+			}
+			symTab[t->item]->assigned = 1;
+			t->assigned = 1;
 			WriteCode(t->first);
 			printf(";\n");
 			break;
@@ -710,6 +736,11 @@ void WriteCode(BINARY_TREE t)
 					if(item > 0 && item < SYMTABSIZE)
 					{
 					
+						if(strcmp(symTab[item]->nodeType, "float") == 0)
+						{
+						//	printf("\n REAL \n");
+						}
+						
 						printf("%s", GetCTypeFlag(symTab[item]->nodeType));
 						
 					}
@@ -718,10 +749,6 @@ void WriteCode(BINARY_TREE t)
 					{
 						if(t->first->first->first->first != NULL)
 						{
-							/*if(t->first->first->second->first != NULL)
-							{
-								printf("-- %s  -- ", symTab[t->first->first->second->second->item]->nodeType);
-							}*/
 							printf("%s", GetCTypeFlag(symTab[t->first->first->first->first->item]->nodeType));
 						}
 					}
@@ -746,6 +773,19 @@ void WriteCode(BINARY_TREE t)
 			
 		
 			WriteCode(t->first);
+			if(t->first != NULL)
+			{
+				
+				
+				if(t->first->nodeIdentifier == VAL_ID && symTab[t->first->item]->assigned == 0)
+				{
+					if(symTab[t->first->item]->assigned == 0)
+					{
+						yyerror("Attempting to print uninitalized variable");
+					}
+				}
+				
+			}
 			printf(");\n");
 			WriteCode(t->second);
 			break;
@@ -775,12 +815,8 @@ void WriteCode(BINARY_TREE t)
 						snprintf(buf, sizeof(buf), "%s%s", "Unkown identifier" , t->item);
 						yyerror(buf);
 					}
-					
-
-
-
+							
 				
-					
 				
 					if(symTab[t->item]->nodeType == "NOTHING")
 					{
@@ -818,23 +854,7 @@ void WriteCode(BINARY_TREE t)
 					
 					len = sizeof(symTab)/sizeof(symTab[0]);
 					
-					int count = 0;
-
-					// for(i = 0; i < currentSymTabSize-1; i++)
-					// {
-					// 	printf("i count %d\n", i);
-					// 	for(int j = i + 1; j < currentSymTabSize; j++)
-					// 	{
-								
-					// 		if(strcmp(symTab[i]->identifier, symTab[j]->identifier) == 0)
-					// 		{
-					// 			printf("duplicate identifier");
-					// 		}							
-					// 	}
-					// }
-
-
-				
+							
 					printf("%s", id);
 					if(t->first != NULL)
 					{
@@ -866,13 +886,22 @@ void WriteCode(BINARY_TREE t)
 		case IF_STATEMENT_ELSE_INNER:
 		{
 			WriteCode(t->first);
-		printf("}\nelse \n{\n  ");
+			printf("}\nelse \n{\n  ");
 			WriteCode(t->second);
 			printf("}\n");
 			break;
 		}
 		case FOR_STATEMENT:
 		{
+
+			
+
+			if(strcmp(symTab[t->first->item]->nodeType, "REAL_CONSTANT") == 0  || strcmp(symTab[t->first->item]->nodeType, "float") == 0)
+			{
+					
+					yyerror("Floats are unspported as loop counters");
+			}
+			
 			printf("register int by%d;\nfor(", ++forLoopCount);
 			WriteCode(t->first);
 			printf(")\n{\n");
@@ -883,12 +912,16 @@ void WriteCode(BINARY_TREE t)
 		case FOR_BODY:
 		{
 			printf("%s = ", symTab[t->item]->identifier);
+			t->assigned = 1;
+			symTab[t->item]->assigned = 1;
 			WriteCode(t->first);
 			printf("; by%d = ", forLoopCount);
 			WriteCode(t->second->first);
 			printf(",((%s-(",symTab[t->item]->identifier);
-			WriteCode(t->second->second);
+			WriteCode(t->second->second);	
 			printf(")) * (( by%d > 0 ) - ( by%d < 0 ))) <=0; %s += by%d", forLoopCount, forLoopCount, symTab[t->item]->identifier, forLoopCount);
+			
+			
 			
 			
 			break;
@@ -986,7 +1019,9 @@ void WriteCode(BINARY_TREE t)
 		case TYPE:
 		{
 			printf("%s ", t->cItem);
+			
 			currentType = &(t->cItem[0]);
+			
 			break;
 		}
 		case CONST:
@@ -1023,7 +1058,7 @@ const char *GetCTypeFlag(char *typeToken)
 				}
 				else if(strcmp(typeToken, "REAL_CONSTANT") == 0  || strcmp(typeToken, "float") == 0)
 				{
-					return "%f\", ";
+					return "%g\", ";
 					
 				}
 				else
@@ -1038,6 +1073,7 @@ const char *GetCTypeFlag(char *typeToken)
 						yyerror(buf);
 				}
 }
+
 
 #endif
 /* Put other auxiliary functions here */
