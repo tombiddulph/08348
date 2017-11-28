@@ -691,12 +691,15 @@ void WriteCode(BINARY_TREE t)
 		case ASSIGNMENT_STATEMENT:
 		{
 			
-			if(strcmp(symTab[t->item]->nodeType, "NOTHING") ==0)
+			if(strcmp(symTab[t->item]->nodeType, "NOTHING") == 0)
 			{
-				char buf[32];
+				char buf[556];
 				snprintf(buf, sizeof(buf), "%s%s", " attempting to assing to undeclared identifier" , t->item);
+				printf("ERROR ");
 				yyerror(buf);
-			};
+				return;
+			}
+			
 			
 			printf("%s = ", symTab[t->item]->identifier);
 			
@@ -709,12 +712,14 @@ void WriteCode(BINARY_TREE t)
 					
 					if(t->first->first->nodeIdentifier)
 					{
-
 						
-						if(t->first->first->nodeIdentifier != VAL && t->first->first->nodeIdentifier != VAL_NEGATIVE)
+						int ident = t->first->first->nodeIdentifier;
+						if(ident!= VAL && ident != VAL_NEGATIVE && ident != VAL_BRACKETS)
 						{
+							
 							if((symTab[t->first->first->item]->nodeType) && strcmp(symTab[t->first->first->item]->nodeType, "NOTHING") == 0)
 							{
+								
 								yyerror("undeclared variable");
 						
 							}
@@ -837,8 +842,7 @@ void WriteCode(BINARY_TREE t)
 			
 		
 			WriteCode(t->first);
-			if(t->first != NULL)
-			{
+			
 				
 				
 				if(t->first->nodeIdentifier == VAL_ID && symTab[t->first->item]->assigned == 0)
@@ -849,7 +853,7 @@ void WriteCode(BINARY_TREE t)
 					}
 				}
 				
-			}
+			
 			printf(");\n");
 			
 			
@@ -1045,6 +1049,7 @@ void WriteCode(BINARY_TREE t)
 		}
 		case VAL_BRACKETS:
 		{
+			
 			printf("(");
 			WriteCode(t->first);
 			printf(")");
@@ -1058,6 +1063,7 @@ void WriteCode(BINARY_TREE t)
 		}
 		case EXPR:
 		{
+			
 			WriteCode(t->first);
 			WriteCode(t->second);	
 			break;
