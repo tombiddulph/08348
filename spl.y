@@ -770,32 +770,11 @@ void WriteCode(BINARY_TREE t)
 
 				strcpy(formatOutput, formatFlags[0]);
 				strcpy(variableOuput, variables[0]);
-				// for(i = 1; i < count; ++i)
-				// {
-				// 	strcat(formatOutput, formatFlags[i]);
-				// 	strcat(variableOuput, ",");
-				// 	strcat(variableOuput, variables[i]);
-				// }
-
 				for(i = 1; i < count; ++i)
 				{
-
-					if(i == 0)
-					{
-						strcpy(formatOutput, formatFlags[0]);
-						strcpy(variableOuput, variables[0]);
-					}
 					strcat(formatOutput, formatFlags[i]);
-				
-					if(sizeof(variables[i]) -1 == 3)
-					{
-						printf("\n %s \n", &variables[i][1]);
-						strcat(variableOuput, ((const char )variables[i][1]));
-					}
-					else
-					{
-						strcat(variableOuput, variables[i]);
-					}
+					strcat(variableOuput, ",");
+					strcat(variableOuput, variables[i]);
 				}
 
 				printf("%s\", %s);\n", formatOutput, variableOuput);
