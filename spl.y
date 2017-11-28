@@ -737,7 +737,7 @@ void WriteCode(BINARY_TREE t)
 		{
 			
 			
-			printf("printf(\"");
+			printf("printf(");
 			
 			BINARY_TREE temp = t->second;
 			if(temp!= NULL)
@@ -751,10 +751,6 @@ void WriteCode(BINARY_TREE t)
 					
 				
 				BINARY_TREE bTree = t->second;
-				
-
-				
-				BINARY_TREE *trees[count];
 				
 				const char *formatFlags[count];
 				const char *variables[count];
@@ -799,9 +795,8 @@ void WriteCode(BINARY_TREE t)
 				break;
 			}
 			
-			
-			
-			if(t->first != NULL)
+		
+			else if(t->first != NULL)
 			{
 				
 				if(t->first->first != NULL)
@@ -811,14 +806,15 @@ void WriteCode(BINARY_TREE t)
 
 					if(item > 0 && item < SYMTABSIZE)
 					{				
-						printf("%s", GetCTypeFlag(symTab[item]->nodeType, 1));	
+						
+						printf("\"%s", GetCTypeFlag(symTab[item]->nodeType, 1));	
 					}
 					
 					if(t->first->first->first != NULL)
 					{
 						if(t->first->first->first->first != NULL)
 						{
-							printf("%s", GetCTypeFlag(symTab[t->first->first->first->first->item]->nodeType, 1));
+							printf("\"%s", GetCTypeFlag(symTab[t->first->first->first->first->item]->nodeType, 1));
 						}
 					}
 					
@@ -832,7 +828,7 @@ void WriteCode(BINARY_TREE t)
 					if(item > 0 && item < SYMTABSIZE)
 					{
 						
-						printf("%s", GetCTypeFlag(symTab[t->first->item]->nodeType, 1));
+						printf("\"%s", GetCTypeFlag(symTab[t->first->item]->nodeType, 1));
 					}
 				
 			
@@ -1050,7 +1046,17 @@ void WriteCode(BINARY_TREE t)
 		case VAL_BRACKETS:
 		{
 			
+			if(t->first->nodeIdentifier == EXPR && t->first->first->nodeIdentifier == VAL_ID)
+			{
+				printf("\"%s", GetCTypeFlag(symTab[t->first->first->item]->nodeType, 1));
+				WriteCode(t->first->first);
+				break;
+			}
+			
 			printf("(");
+			
+			
+			
 			WriteCode(t->first);
 			printf(")");
 			break;
