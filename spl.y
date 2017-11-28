@@ -129,7 +129,7 @@ void Print(BINARY_TREE t);
 
 char *currentType;
 int declarationWritten;
-const char *GetCTypeFlag(char *typeToken);
+const char *GetCTypeFlag(char *typeToken, int comma);
 void PrintComment(char *comment);  
 int forLoopCount = 0;
 const char *  programName;
@@ -679,7 +679,7 @@ void WriteCode(BINARY_TREE t)
 		}
 		case READ_STATEMENT:
 		{
-			printf("scanf(\" %s&%s);\n", GetCTypeFlag(symTab[t->item]->nodeType), symTab[t->item]->identifier);
+			printf("scanf(\" %s&%s);\n", GetCTypeFlag(symTab[t->item]->nodeType, 1), symTab[t->item]->identifier);
 			symTab[t->item]->assigned = 1;
 			break;
 		}
@@ -691,7 +691,7 @@ void WriteCode(BINARY_TREE t)
 		case ASSIGNMENT_STATEMENT:
 		{
 			
-			printf("\n%s = %s %s", symTab[t->item]->identifier, symTab[t->item]->nodeType, NodeName[t->item]);
+			printf("%s = ", symTab[t->item]->identifier );
 			
 			
 			if(t->first != NULL)
@@ -722,22 +722,71 @@ void WriteCode(BINARY_TREE t)
 		}
 		case OUTPUT_BLOCK:
 		{
-			int count = 0;
 			
-			printf("1");
-			BINARY_TREE bTree = t->second;
-			while(bTree != NULL) 
-			{	
-				printf("here");
-				bTree = bTree->second;
-				++count;
+			
+			printf("printf(\"");
+			
+			BINARY_TREE temp = t->second;
+			if(temp!= NULL)
+			{
+				int count = 1;
+				while(temp != NULL) 
+				{			
+					temp = temp->second;
+					++count;
+				}
+					
+				
+				BINARY_TREE bTree = t->second;
+				
+
+				
+				BINARY_TREE *trees[count];
+				
+				const char *formatFlags[count];
+				const char *variables[count];
+				
+
+				short i;
+				
+				
+				for(i = 0; i < count; ++i)
+				{
+					if(i == 0)
+					{
+						formatFlags[i] = GetCTypeFlag(symTab[t->first->first->item]->nodeType, 0);
+						variables[i] = symTab[t->first->first->item]->identifier;
+					}
+					else
+					{
+						formatFlags[i] = GetCTypeFlag(symTab[bTree->first->first->item]->nodeType, 0);
+						variables[i] = symTab[bTree->first->first->item]->identifier;
+						bTree = bTree->second;
+					}
+				}
+
+				char *formatOutput = malloc(sizeof(formatFlags) + 1);
+				char *variableOuput = malloc(sizeof(variables) + 1 + (1 * count));
+
+				strcpy(formatOutput, formatFlags[0]);
+				strcpy(variableOuput, variables[0]);
+				for(i = 1; i < count; ++i)
+				{
+					strcat(formatOutput, formatFlags[i]);
+					strcat(variableOuput, ",");
+					strcat(variableOuput, variables[i]);
+				}
+
+				printf("%s\", %s);\n", formatOutput, variableOuput);
+			
+
+				free(formatOutput);
+				free(variableOuput);
+				
+				break;
 			}
 			
 			
-			printf("Tree count %i", count);
-			exit(99);
-			
-			printf("printf(\"");
 			
 			if(t->first != NULL)
 			{
@@ -755,7 +804,7 @@ void WriteCode(BINARY_TREE t)
 						//	printf("\n REAL \n");
 						}
 						
-						printf("%s", GetCTypeFlag(symTab[item]->nodeType));
+						printf("%s", GetCTypeFlag(symTab[item]->nodeType, 1));
 						
 					}
 					
@@ -763,7 +812,7 @@ void WriteCode(BINARY_TREE t)
 					{
 						if(t->first->first->first->first != NULL)
 						{
-							printf("%s", GetCTypeFlag(symTab[t->first->first->first->first->item]->nodeType));
+							printf("%s", GetCTypeFlag(symTab[t->first->first->first->first->item]->nodeType, 1));
 						}
 					}
 					
@@ -777,7 +826,7 @@ void WriteCode(BINARY_TREE t)
 					if(item > 0 && item < SYMTABSIZE)
 					{
 						
-						printf("%s", GetCTypeFlag(symTab[t->first->item]->nodeType));
+						printf("%s", GetCTypeFlag(symTab[t->first->item]->nodeType, 1));
 					}
 				
 			
@@ -1062,19 +1111,19 @@ void PrintComment(char *comment)
 	printf("/* %s */\n",comment);
 }
 
-const char *GetCTypeFlag(char *typeToken)
+const char *GetCTypeFlag(char *typeToken, int comma)
 {
 				if(strcmp(typeToken, "CHARACTER_CONSTANT") == 0  || strcmp(typeToken, "char") == 0)
 				{
-					return "%c\", ";
+					return  comma == 1 ? "%c\", " : "%c";
 				}
 				else if(strcmp(typeToken, "INTEGER_CONSTANT") == 0  || strcmp(typeToken, "int") == 0)
 				{
-					return "%d\", ";
+					return comma == 1 ? "%d\", " : "%d ";
 				}
 				else if(strcmp(typeToken, "REAL_CONSTANT") == 0  || strcmp(typeToken, "float") == 0)
 				{
-					return "%g\", ";
+					return comma == 1 ? "%g\", " : "%g ";
 					
 				}
 				else
