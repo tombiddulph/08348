@@ -922,18 +922,7 @@ void WriteCode(BINARY_TREE t)
 		
 			char * id = symTab[t->item]->identifier;
 			int i;
-			/*for( i = 0; i < currentSymTabSize; i++)
-			{
-				if(strcmp(symTab[i]->identifier, id ) == 0)
-				{
-					printf("here");
-					if(t->item != i)
-					{
-						printf("duplicate identifier");
-					}
-				}
-			}*/
-		
+	
 
 			if(t->item > currentSymTabSize || t->item < 0)
 					{
