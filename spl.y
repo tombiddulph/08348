@@ -20,7 +20,8 @@ extern int yydebug;
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
-#include <time.h>
+#include <math.h>
+
 
 /* make forward declarations to avoid compiler warnings */
 int yylex (void);
@@ -116,8 +117,14 @@ BINARY_TREE create_node_characterArray(char*,int,BINARY_TREE,BINARY_TREE);
 BINARY_TREE create_node_constant(int, char*, int, BINARY_TREE, BINARY_TREE);
 void Print(BINARY_TREE t);
 #ifdef DEBUG
-	void PrintTree(BINARY_TREE t);
+	void PrintTree(BINARY_TREE ,int);
+	int LineCount(BINARY_TREE);
 	int BufferSize(char *format, ...);
+	
+	int lineNumber = 0;
+	int lineCount = 0;
+	int offSet = 0;
+	
 	#define NEWLINE "\n"
 
 #else
@@ -134,7 +141,7 @@ void PrintComment(char *comment);
 int forLoopCount = 0;
 const char *  programName;
 void WriteCode(BINARY_TREE t);
-time_t t;
+
 
 #endif	
 
@@ -208,11 +215,13 @@ program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 							{
 								YYABORT;
 							}
-
+							
 							BINARY_TREE parseTree = create_node($1, PROGRAM, $3, NULL);
 							
-#ifdef DEBUG							
-						PrintTree(parseTree);
+#ifdef DEBUG					
+						LineCount(parseTree);
+						
+						PrintTree(parseTree, 1);
 #else
 						WriteCode(parseTree);
 						srand(time(NULL));
@@ -530,63 +539,100 @@ int BufferSize(char *format, ...)
     return result + 1;
 }
 		
+int LenCalc(int x)
+{
+	 return x > 1000 ? 4 : x > 100 ? 3 : x > 10 ? 2 : 1;
+}
+		
+		
+int LineCount(BINARY_TREE t)
+{
+	
+	if(t == NULL) 
+	{
+		offSet = LenCalc(lineCount);
+		return lineCount;
+	}
+	
+	++lineCount;
+	LineCount(t->first);
+	LineCount(t->second);
+		
+}
 
-void PrintTree(BINARY_TREE t)
+
+
+void PrintTree(BINARY_TREE t, int indent)
 {
 	if(t == NULL) return;
 		
+		printf("Line: %d  ", lineNumber++);
+		int i;
+		int j = offSet - LenCalc(lineNumber);
+		
+			
+		if(offSet - LenCalc(lineNumber) > 0)
+		{
+			printf("%*s", j , " ");
+		}
+		printf("|");
+		
+		
+		for(int i = 0; i < indent; ++i) { printf("-"); }
+		printf("\\ ");
 		switch(t->nodeIdentifier)
 		{
 		
 			case PROGRAM:
 			{
-				 printf("PROGRAM -> %s\n", Identifier(t));
+				 printf("PROGRAM -> %s", Identifier(t));
 				 break;
 			}
 			
 			case CONDITION:
 			{
-				printf("Conditional -> %s\n", NodeIdentifier(t));
+				printf("Conditional -> %s", NodeIdentifier(t));
 				break;
 			}
 			case COMPARATOR:
 			{
-					printf("Comparator -> [%s] %s\n",t->cItem, NodeIdentifier(t));
+					printf("Comparator -> [%s] %s",t->cItem, NodeIdentifier(t));
 					break;
 			}
 			case CONST:
 			{
 				
-				printf(" Constant [%s] -> %s\n", NodeType(t), Identifier(t));
+				printf("Constant [%s] -> %s", NodeType(t), Identifier(t));
 				break;
 			}
 			case TYPE:
 			{
-				printf("Type -> %s\n ", t->cItem);
+				printf("Type -> %s", t->cItem);
 				break;
 			}
 			default:
 			{
 				if(t->nodeIdentifier >= 0 && t->nodeIdentifier < sizeof NodeName)
 				{
-					printf(" Node identifier -> %s\n", NodeIdentifier(t));
+					printf("Node identifier -> %s", NodeIdentifier(t));
 					
+				}
+				else if(t->item > 0  && t->item < SYMTABSIZE)
+				{
+					printf("Identifier -> %s", Identifier(t));
 				}
 				else
 				{
-					printf(" Unkown node identifier -> %d\n", t->nodeIdentifier);
+					printf("Unkown node identifier -> %d", t->nodeIdentifier);
 					
 				}
-				if(t->item > 0  && t->item < SYMTABSIZE)
-				{
-					printf(" Identifier -> %s\n", Identifier(t));
-				}
+				
 			}
 		}
 	
-		
-			PrintTree(t->first);
-			PrintTree(t->second);
+			printf("\n");
+			PrintTree(t->first, ++indent);
+			PrintTree(t->second, ++indent);
 		
 			
 }			
