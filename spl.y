@@ -119,8 +119,7 @@ void Print(BINARY_TREE t);
 #ifdef DEBUG
 	void PrintTree(BINARY_TREE ,int);
 	int LineCount(BINARY_TREE);
-	int BufferSize(char *format, ...);
-	
+	int LenCalc(int);
 	int lineNumber = 0;
 	int lineCount = 0;
 	int offSet = 0;
@@ -136,8 +135,8 @@ void Print(BINARY_TREE t);
 
 char *currentType;
 int declarationWritten;
-const char *GetCTypeFlag(char *typeToken, int comma);
-void PrintComment(char *comment);  
+const char *GetCTypeFlag(char*, int);
+void PrintComment(char *);  
 int forLoopCount = 0;
 const char *  programName;
 void WriteCode(BINARY_TREE t);
@@ -224,7 +223,6 @@ program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 						PrintTree(parseTree, 1);
 #else
 						WriteCode(parseTree);
-						srand(time(NULL));
 						
 #endif							
 						 
@@ -529,16 +527,7 @@ BINARY_TREE create_node_constant(int iVal, char* cVal, int case_identifier, BINA
 
 #ifdef DEBUG
 
-/*  function found here - https://stackoverflow.com/questions/3919995/determining-sprintf-buffer-size-whats-the-standard*/
-int BufferSize(char *format, ...)
-{
-	va_list args;
-	va_start(args, format);
-	int result = vsnprintf(NULL, 0, format, args);
-    va_end(args);
-    return result + 1;
-}
-		
+
 int LenCalc(int x)
 {
 	 return x > 1000 ? 4 : x > 100 ? 3 : x > 10 ? 2 : 1;
@@ -567,7 +556,7 @@ void PrintTree(BINARY_TREE t, int indent)
 	if(t == NULL) return;
 		
 		printf("Line: %d  ", lineNumber++);
-		int i;
+		
 		int j = offSet - LenCalc(lineNumber);
 		
 			
@@ -577,8 +566,8 @@ void PrintTree(BINARY_TREE t, int indent)
 		}
 		printf("|");
 		
-		
-		for(int i = 0; i < indent; ++i) { printf("-"); }
+		int i;
+		for(i = 0; i < indent; ++i) { printf("-"); }
 		printf("\\ ");
 		switch(t->nodeIdentifier)
 		{
@@ -640,7 +629,7 @@ void PrintTree(BINARY_TREE t, int indent)
 #else
 
 
-
+int codeGenIndent = 0;
 
 void WriteCode(BINARY_TREE t)
 {
@@ -1007,7 +996,9 @@ void WriteCode(BINARY_TREE t)
 			printf("if(");
 			WriteCode(t->first);
 			printf(")\n{\n  ");
+			codeGenIndent = 4;
 			WriteCode(t->second);
+			codeGenIndent = 0;
 			printf("\n}\n");
 
 			break;
@@ -1066,6 +1057,7 @@ void WriteCode(BINARY_TREE t)
 		case DO_STATEMENT:
 		{
 			printf("do\n{\n");
+			codeGenIndent = 1;
 			WriteCode(t->first);
 			printf("} while (");
 			WriteCode(t->second);
@@ -1117,7 +1109,7 @@ void WriteCode(BINARY_TREE t)
 		case VAL_BRACKETS:
 		{
 			
-			if(t->first->nodeIdentifier == EXPR && t->first->first->nodeIdentifier == VAL_ID)
+			if(t->first->nodeIdentifier == EXPR && t->first->first->nodeIdentifier == VAL_ID && t->first->second->second == NULL)
 			{
 				printf("\"%s", GetCTypeFlag(symTab[t->first->first->item]->nodeType, 1));
 				WriteCode(t->first->first);
