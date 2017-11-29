@@ -616,7 +616,7 @@ void WriteCode(BINARY_TREE t)
 			printf("#include <stdio.h>\n");
 			printf("int main(void) \n{\n\n");
 			WriteCode(t->first);
-			printf("\nreturn 0;\n}\n /* End program -> %s */\n", symTab[t->item]);
+			printf("\nreturn 0;\n}\n /* End program -> %s */\n", symTab[t->item]->identifier);
 			return;
 		}
 
@@ -692,7 +692,7 @@ void WriteCode(BINARY_TREE t)
 			if(strcmp(symTab[t->item]->nodeType, "NOTHING") == 0)
 			{
 				char buf[556];
-				snprintf(buf, sizeof(buf), "%s%s", " attempting to assing to undeclared identifier" , t->item);
+				snprintf(buf, sizeof(buf), "%s%s", " attempting to assingn to undeclared identifier" , symTab[t->item]->identifier);
 				printf("ERROR ");
 				yyerror(buf);
 				return;
@@ -885,23 +885,36 @@ void WriteCode(BINARY_TREE t)
 		case IDENTIFIER_BLOCK:
 		{	
 		
+			char * id = symTab[t->item]->identifier;
+			int i;
+			/*for( i = 0; i < currentSymTabSize; i++)
+			{
+				if(strcmp(symTab[i]->identifier, id ) == 0)
+				{
+					printf("here");
+					if(t->item != i)
+					{
+						printf("duplicate identifier");
+					}
+				}
+			}*/
 		
-		
+
 			if(t->item > currentSymTabSize || t->item < 0)
 					{
 						char buf[256];
-						snprintf(buf, sizeof(buf), "%s%s", "Unkown identifier" , t->item);
+						snprintf(buf, sizeof(buf), "%s %i", "Unkown identifier" , t->item);
 						yyerror(buf);
 					}
 							
 				
 				
-					if(symTab[t->item]->nodeType == "NOTHING")
+					if(strcmp(symTab[t->item]->nodeType,"NOTHING") == 0)
 					{
-						symTab[t->item]->nodeType = strcmp(currentType, "r") == 0  ?  "f" : currentType ;
+						symTab[t->item]->nodeType = strncmp(currentType, "r", 1) == 0  ?  "f" : currentType ;
 					}
 					
-					char * id = symTab[t->item]->identifier;
+					
 					
 					if(strcmp(id, programName) == 0) /* check variable names against the program name */
 					{
@@ -916,7 +929,7 @@ void WriteCode(BINARY_TREE t)
 						return;
 					}
 					
-					int i, len;
+					 int len;
 					len = sizeof(ReservedKeywords)/sizeof(ReservedKeywords[0]);
 					for( i = 0; i < len; ++i)
 					{
@@ -930,7 +943,7 @@ void WriteCode(BINARY_TREE t)
 						}
 					}
 					
-					len = sizeof(symTab)/sizeof(symTab[0]);
+					
 					
 							
 					printf("%s", id);
@@ -1161,6 +1174,7 @@ const char *GetCTypeFlag(char *typeToken, int comma)
 								typeToken); 
 								
 						yyerror(buf);
+						return "ERROR";
 				}
 }
 
