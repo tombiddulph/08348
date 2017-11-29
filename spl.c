@@ -19,3 +19,8 @@ void yyerror(char *s)
     fprintf(stderr, "Error : Exiting %s\n", s);
 	exit(-1);
 }
+
+void yywarning(char *s)
+{
+	 fprintf(stderr, "Warning : %s\n", s);
+}

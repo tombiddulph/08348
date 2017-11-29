@@ -1,3 +1,4 @@
+
 %{
 
 /* SPL01.y - SPL01 parser */
@@ -16,16 +17,20 @@
    
 extern int yydebug;
 
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdarg.h>
 #include <string.h>
 #include <math.h>
+#include <limits.h>
 
 
 /* make forward declarations to avoid compiler warnings */
 int yylex (void);
 void yyerror (char *);
+void yywarning (char *);
 
 /* 
    Some constants.
@@ -132,7 +137,7 @@ void Print(BINARY_TREE t);
 #define debug_println(a, args...) debug_print(a "\n", ##args)
 
 
-
+char lastType[20];
 char *currentType;
 int declarationWritten;
 const char *GetCTypeFlag(char*, int);
@@ -140,7 +145,9 @@ void PrintComment(char *);
 int forLoopCount = 0;
 const char *  programName;
 void WriteCode(BINARY_TREE t);
+int CheckIfConst(char * type);
 
+void AssignTypes(BINARY_TREE t);
 
 #endif	
 
@@ -152,7 +159,6 @@ void WriteCode(BINARY_TREE t);
 struct symTabNode {
     char identifier[IDLENGTH];
 	char *nodeType;
-	int id;
 	int assigned;
 	
 };
@@ -168,9 +174,12 @@ int currentSymTabSize = 0;
 
 %}
 
+
+
 %start  program
 
 %debug
+
 
 %union 
 {
@@ -210,12 +219,9 @@ int currentSymTabSize = 0;
 program             	: ID_T COLON_T block ENDP_T ID_T FULL_STOP_T
 						{
 						
-							if($1 != $5)
-							{
-								YYABORT;
-							}
-							
 							BINARY_TREE parseTree = create_node($1, PROGRAM, $3, NULL);
+
+	
 							
 #ifdef DEBUG					
 						LineCount(parseTree);
@@ -550,9 +556,9 @@ int LineCount(BINARY_TREE t)
 }
 
 
-
 void PrintTree(BINARY_TREE t, int indent)
 {
+	
 	if(t == NULL) return;
 		
 		printf("Line: %d  ", lineNumber++);
@@ -628,8 +634,30 @@ void PrintTree(BINARY_TREE t, int indent)
 
 #else
 
+void AssignTypes(BINARY_TREE t)
+{
 
-int codeGenIndent = 0;
+	
+	switch(t->nodeIdentifier)
+	{
+		case IDENTIFIER_BLOCK:
+		{
+			break;
+		}
+		case TYPE:
+		{
+			printf("TYPE %s", t->cItem);
+			break;
+		}
+		default:
+		{
+			AssignTypes(t->first);
+			AssignTypes(t->second);
+		}
+	}
+
+	
+}
 
 void WriteCode(BINARY_TREE t)
 {
@@ -643,10 +671,15 @@ void WriteCode(BINARY_TREE t)
 	{
 		case PROGRAM:
 		{
-			#ifdef CODEGENDEBUG
-				debug_println("in Program");
-			#endif
 			declarationWritten = 0;
+
+			
+
+			if(t->item < 0 || t->item > SYMTABSIZE)
+			{
+				printf("Unrecognised variable");
+			}
+
 			printf("\n/* Spl program name -> %s */\n", symTab[t->item]->identifier);
 			printf("#include <stdio.h>\n");
 			printf("int main(void) \n{\n\n");
@@ -657,13 +690,7 @@ void WriteCode(BINARY_TREE t)
 
 		case BLOCK:
 		{
-			#ifdef CODEGENDEBUG
-			 debug_println("Block first");
-			#endif
 			WriteCode(t->first);
-			#ifdef CODEGENDEBUG
-			 debug_println("Block second");
-			#endif
 			WriteCode(t->second);
 			break;
 		}
@@ -699,15 +726,10 @@ void WriteCode(BINARY_TREE t)
 		}
 		case STATEMENT_BLOCK:
 		{
-			
+	
 			WriteCode(t->first);
-			#ifdef CODEGENDEBUG
-			 debug_println("STATEMENT_BLOCK first");
-			#endif
 			WriteCode(t->second);
-				#ifdef CODEGENDEBUG
-			 debug_println("STATEMENT_BLOCK second");
-			#endif
+		
 			break;
 		}
 		case READ_STATEMENT:
@@ -733,13 +755,14 @@ void WriteCode(BINARY_TREE t)
 				return;
 			}
 			
-			
+			strcpy(lastType, symTab[t->item]->nodeType);
 			printf("%s = ", symTab[t->item]->identifier);
 			
-		
+			
 			
 			if(t->first != NULL)
 			{
+				
 				if(t->first->first != NULL)
 				{
 					
@@ -752,14 +775,17 @@ void WriteCode(BINARY_TREE t)
 							
 							if((symTab[t->first->first->item]->nodeType) && strcmp(symTab[t->first->first->item]->nodeType, "NOTHING") == 0)
 							{
-								
 								yyerror("undeclared variable");
-						
 							}
 						}
 					}
 				}
 			}
+
+			
+		
+			
+
 			symTab[t->item]->assigned = 1;
 			t->assigned = 1;
 			WriteCode(t->first);
@@ -921,8 +947,10 @@ void WriteCode(BINARY_TREE t)
 		{	
 		
 			char * id = symTab[t->item]->identifier;
-			int i;
+			
 	
+					
+			
 
 			if(t->item > currentSymTabSize || t->item < 0)
 					{
@@ -938,6 +966,9 @@ void WriteCode(BINARY_TREE t)
 						symTab[t->item]->nodeType = strncmp(currentType, "r", 1) == 0  ?  "f" : currentType ;
 					}
 					
+
+			
+			
 					
 					
 					if(strcmp(id, programName) == 0) /* check variable names against the program name */
@@ -953,7 +984,7 @@ void WriteCode(BINARY_TREE t)
 						return;
 					}
 					
-					 int len;
+					 int len, i;
 					len = sizeof(ReservedKeywords)/sizeof(ReservedKeywords[0]);
 					for( i = 0; i < len; ++i)
 					{
@@ -985,9 +1016,7 @@ void WriteCode(BINARY_TREE t)
 			printf("if(");
 			WriteCode(t->first);
 			printf(")\n{\n  ");
-			codeGenIndent = 4;
 			WriteCode(t->second);
-			codeGenIndent = 0;
 			printf("\n}\n");
 
 			break;
@@ -1046,7 +1075,6 @@ void WriteCode(BINARY_TREE t)
 		case DO_STATEMENT:
 		{
 			printf("do\n{\n");
-			codeGenIndent = 1;
 			WriteCode(t->first);
 			printf("} while (");
 			WriteCode(t->second);
@@ -1156,6 +1184,28 @@ void WriteCode(BINARY_TREE t)
 		}
 		case CONST:
 		{
+
+			if(CheckIfConst(lastType) == 1 &&  symTab[t->item]->identifier[0] !=  '\'')
+			{
+				if(strcmp(lastType, symTab[t->item]->nodeType) != 0)
+				{
+					if(strcmp(lastType, "float") == 0 && strcmp(symTab[t->item]->nodeType, "int") == 0)
+					{
+						char buf[100];
+						snprintf(buf, sizeof(buf), "%s %s %s %s", "Attempt to a assign the value of a", symTab[t->item]->nodeType , "to a", lastType);
+						yywarning(buf);
+
+					}
+					else
+					{
+						char buf[100];
+						snprintf(buf, sizeof(buf), "%s %s %s %s", "Attempt to a assign the value of a",  symTab[t->item]->nodeType , "to a", lastType);
+						yyerror(buf);
+						return;
+					}
+				}
+			}
+			
 			printf("%s", symTab[t->item]->identifier);
 			
 			break;
@@ -1174,6 +1224,15 @@ void WriteCode(BINARY_TREE t)
 void PrintComment(char *comment)  
 { 
 	printf("/* %s */\n",comment);
+}
+
+int CheckIfConst(char * type)
+{
+	if(strcmp(type, "int") == 0  || strcmp(type, "char") == 0 || strcmp(type, "float") == 0 )
+	{
+		return 1;
+	}
+	return 0;
 }
 
 const char *GetCTypeFlag(char *typeToken, int comma)
